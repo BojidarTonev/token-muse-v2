@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
+import Providers from "@/components/Providers";
+import Navbar from "@/components/Navbar";
+
+// Import Solana Web3.js script
+import Script from "next/script";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -21,13 +26,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        {/* Add Phantom wallet detection */}
+        <Script
+          src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body
         className={`${montserrat.variable} font-montserrat antialiased min-h-screen flex flex-col`}
       >
-        <div className="flex-grow">
-          {children}
-        </div>
-        <Footer />
+        <Providers>
+          <Navbar />
+          <div className="flex-grow pt-20">
+            {children}
+          </div>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

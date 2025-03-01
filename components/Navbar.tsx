@@ -2,31 +2,16 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
-import { Wallet, Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import { WalletButton } from './WalletButton';
+import { useAuth } from '@/hooks/useAuth';
 
 const Navbar = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  
-  // Check if we're on the client side before using window
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 900);
-    };
-    
-    // Initial check
-    checkIfMobile();
-    
-    // Add event listener for window resize
-    window.addEventListener('resize', checkIfMobile);
-    
-    // Cleanup
-    return () => window.removeEventListener('resize', checkIfMobile);
-  }, []);
+  const { isAuthenticated } = useAuth();
   
   const isActive = (path: string) => {
     return pathname === path;
@@ -40,10 +25,10 @@ const Navbar = () => {
     setIsMenuOpen(false);
   };
   
-  const navLinks = [
+  // Base navigation links available to all users
+  const baseNavLinks = [
     { path: '/agents', label: 'Agents' },
     { path: '/network', label: 'Networks' },
-    { path: '/create-narrative', label: 'Create Narrative' },
     { path: '/roadmap', label: 'Roadmap' },
     { path: '/tokenomics', label: 'Tokenomics' },
     { path: '/dao', label: 'DAO' },
@@ -66,7 +51,7 @@ const Navbar = () => {
       
       {/* Desktop Navigation */}
       <div className="hidden md:flex items-center space-x-6">
-        {navLinks.map((link) => (
+        {baseNavLinks.map((link) => (
           <Link 
             key={link.path}
             href={link.path} 
@@ -85,11 +70,8 @@ const Navbar = () => {
       </div>
       
       <div className="flex items-center gap-4">
-        {/* Connect Wallet Button - Always visible but text hidden on mobile */}
-        <Button variant="app" size="sm" className="rounded-full flex items-center gap-2">
-          <Wallet className="w-4 h-4" />
-          <span className={isMobile ? "hidden" : "inline"}>Connect Wallet</span>
-        </Button>
+        {/* Connect Wallet Button */}
+        <WalletButton />
         
         {/* Mobile Menu Button */}
         <button 
@@ -109,7 +91,7 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden fixed inset-0 top-[73px] bg-background/95 backdrop-blur-sm z-40 flex flex-col">
           <div className="flex flex-col p-6 space-y-2 bg-background/95">
-            {navLinks.map((link) => (
+            {baseNavLinks.map((link) => (
               <Link 
                 key={link.path}
                 href={link.path} 
