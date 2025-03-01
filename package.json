@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "install": "npm install --legacy-peer-deps"
+    "postinstall": "echo 'Installation completed with legacy-peer-deps'"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.6",
