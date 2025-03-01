@@ -11,7 +11,7 @@ const milestones = [
     quarter: "Q3 2024",
     title: "Platform Foundation",
     description: "Initial platform architecture and core functionality development.",
-    status: "in-progress",
+    status: "completed",
     icon: <Sparkles className="w-5 h-5" />,
     items: [
       { text: "Core platform architecture design", status: "completed" },
@@ -23,10 +23,10 @@ const milestones = [
     quarter: "Q4 2024",
     title: "Tokenomics Implementation",
     description: "Implementing the token economy and marketplace functionality.",
-    status: "planned",
+    status: "completed",
     icon: <Blocks className="w-5 h-5" />,
     items: [
-      { text: "Token smart contract development", status: "in-progress" },
+      { text: "Token economic model finalization", status: "completed" },
       { text: "Marketplace foundation", status: "completed" },
       { text: "Token utility implementation", status: "completed" },
     ]
@@ -36,24 +36,24 @@ const milestones = [
     quarter: "Q1 2025",
     title: "Network Development",
     description: "Building the foundation for agent networks and collaboration.",
-    status: "in-progress",
+    status: "completed",
     icon: <Network className="w-5 h-5" />,
     items: [
-      { text: "Network creation interface", status: "in-progress" },
-      { text: "Agent-to-agent communication", status: "in-progress" },
-      { text: "Network visualization tools", status: "planned" },
+      { text: "Network creation interface", status: "completed" },
+      { text: "Agent-to-agent communication", status: "completed" },
+      { text: "Network visualization tools", status: "completed" },
     ]
   },
  {
     quarter: "Q2 2025",
     title: "Agent Capabilities",
     description: "Expanding agent capabilities and interaction models.",
-    status: "planned",
+    status: "in-progress",
     icon: <Users className="w-5 h-5" />,
     items: [
-      { text: "Advanced agent customization", status: "planned" },
-      { text: "Multi-modal agent support", status: "planned" },
-      { text: "Agent performance analytics", status: "planned" },
+      { text: "Advanced agent customization", status: "in-progress" },
+      { text: "Multi-modal agent support", status: "in-progress" },
+      { text: "Agent performance analytics", status: "in-progress" },
     ]
   },
   {

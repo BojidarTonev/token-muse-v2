@@ -180,8 +180,8 @@ export default function TokenomicsPage() {
                             </linearGradient>
                           </defs>
                           <circle cx="50" cy="50" r="45" fill="transparent" stroke="var(--chart-2)" strokeWidth="10" />
-                          <path d="M50,5 A45,45 0 0,1 95,50" fill="transparent" stroke="var(--primary)" strokeWidth="10" />
-                          <text x="50" y="45" textAnchor="middle" dominantBaseline="middle" fill="currentColor" fontSize="16" fontWeight="bold">25%</text>
+                          <path d="M50,5 A45,45 0 0,1 50,95 A45,45 0 0,1 5,50" fill="transparent" stroke="var(--primary)" strokeWidth="10" />
+                          <text x="50" y="45" textAnchor="middle" dominantBaseline="middle" fill="currentColor" fontSize="16" fontWeight="bold">75%</text>
                           <text x="50" y="60" textAnchor="middle" dominantBaseline="middle" fill="currentColor" fontSize="10">Burn Rate</text>
                         </svg>
                       </div>
@@ -207,10 +207,10 @@ export default function TokenomicsPage() {
                           <Flame className="w-4 h-4 text-primary" />
                           <span className="text-sm font-medium">Developer Token Burn</span>
                         </div>
-                        <span className="text-sm font-bold">25%</span>
+                        <span className="text-sm font-bold">75%</span>
                       </div>
                       <div className="w-full bg-background/50 h-2 rounded-full">
-                        <div className="bg-primary h-2 rounded-full" style={{ width: '25%' }}></div>
+                        <div className="bg-primary h-2 rounded-full" style={{ width: '75%' }}></div>
                       </div>
                     </div>
                     
@@ -249,7 +249,7 @@ export default function TokenomicsPage() {
                 <ScrollReveal animation="slideUp" delay={0.1}>
                   <div className="feature-card text-center">
                     <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-2xl font-bold text-primary">40%</span>
+                      <span className="text-2xl font-bold text-primary">70%</span>
                     </div>
                     <h3 className="font-semibold mb-2">Community & Ecosystem</h3>
                     <p className="text-sm text-foreground/70">
@@ -261,7 +261,7 @@ export default function TokenomicsPage() {
                 <ScrollReveal animation="slideUp" delay={0.2}>
                   <div className="feature-card text-center">
                     <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-2xl font-bold text-primary">25%</span>
+                      <span className="text-2xl font-bold text-primary">30%</span>
                     </div>
                     <h3 className="font-semibold mb-2">Team & Advisors</h3>
                     <p className="text-sm text-foreground/70">
