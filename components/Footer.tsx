@@ -63,7 +63,7 @@ const Footer = () => {
               <h3 className="text-sm font-semibold mb-3">Connect</h3>
               <div className="flex space-x-4">
                 <a 
-                  href="https://twitter.com/tokenmuse" 
+                  href="https://x.com/TokenMuse_AI" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="p-2 rounded-full bg-background hover:bg-primary/10 text-foreground/60 hover:text-primary transition-colors"
@@ -73,10 +73,8 @@ const Footer = () => {
                   </svg>
                 </a>
                 <a 
-                  href="https://www.npmjs.com/package/tokenmuse" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-full bg-background hover:bg-primary/10 text-foreground/60 hover:text-primary transition-colors relative"
+                  className="p-2 rounded-full bg-background text-foreground/40 cursor-not-allowed relative"
+                  aria-disabled="true"
                 >
                   <Package className="w-5 h-5" />
                   <span className="absolute -top-2 -right-2 bg-primary/20 text-primary text-[10px] font-medium px-1.5 py-0.5 rounded-full">Soon</span>
