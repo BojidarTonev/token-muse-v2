@@ -2,19 +2,33 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Download, Construction, MessageSquare, Code, Zap } from "lucide-react";
+import { ArrowLeft, Download, Construction, MessageSquare, Code, Zap, Send, User, Bot } from "lucide-react";
 import Link from "next/link";
 import { PageTransition } from "@/components/motion";
 import { Agent } from "@/lib/supabase";
 import { useAppSelector } from "@/redux/store";
 import { fetchWithPublicKey } from "@/lib/api-utils";
 import Image from "next/image";
+import { Textarea } from "@/components/ui/textarea";
+
+// Define message interface
+interface ChatMessage {
+  id: string;
+  content: string;
+  sender: 'user' | 'agent';
+  timestamp: Date;
+}
 
 export default function AgentDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const [agentId, setAgentId] = useState<string | null>(null);
   const [agent, setAgent] = useState<Agent | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  // Chat state
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [isSending, setIsSending] = useState(false);
   
   // Use Redux store for authentication state
   const { isAuthenticated, publicKey } = useAppSelector(state => state.appState);
@@ -75,6 +89,36 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
     fetchAgentDetails();
   }, [agentId, isAuthenticated, publicKey]);
 
+  // Handle sending a message
+  const handleSendMessage = () => {
+    if (!inputMessage.trim()) return;
+    
+    // Add user message
+    const userMessage: ChatMessage = {
+      id: Date.now().toString(),
+      content: inputMessage,
+      sender: 'user',
+      timestamp: new Date()
+    };
+    
+    setMessages(prev => [...prev, userMessage]);
+    setInputMessage('');
+    setIsSending(true);
+    
+    // Simulate agent response after a delay
+    setTimeout(() => {
+      const agentMessage: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        content: `This is a simulated response from ${agent?.name || 'the agent'}. The actual integration with the agent's API will be implemented soon.`,
+        sender: 'agent',
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, agentMessage]);
+      setIsSending(false);
+    }, 1500);
+  };
+
   // Show loading state
   if (loading) {
     return (
@@ -112,13 +156,6 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
   // For now, let's use the mock data for related agents and capabilities
   // In a real app, these would come from the API
   const capabilities = agent.capabilities || ["AI Assistant", "Text Generation", "Knowledge Base"];
-  
-  // Define default usage samples since they don't exist on the Agent type
-  const usageSamples = [
-    "Ask me about any topic",
-    "Generate creative content",
-    "Help with problem-solving"
-  ];
   
   return (
     <div className="bg-background text-foreground">
@@ -200,33 +237,115 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
             </div>
           </div>
           
-          {/* Usage examples */}
+          {/* Chat with Agent */}
           <div className="mb-12">
             <div className="flex items-center gap-2 mb-6">
-              <h2 className="text-2xl font-bold">Example Prompts</h2>
+              <h2 className="text-2xl font-bold">Chat with Agent</h2>
               <div className="bg-primary/20 text-primary px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
                 <Construction className="w-3 h-3" />
-                Coming Soon
+                Beta
               </div>
             </div>
-            <div className="space-y-4">
-              {usageSamples.map((sample: string, index: number) => (
-                <div key={`sample-${index}`} className="feature-card p-4">
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-full bg-primary/10 mt-1">
-                      <MessageSquare className="w-4 h-4 text-primary" />
+            
+            <div className="feature-card p-0 overflow-hidden">
+              {/* Chat header */}
+              <div className="p-4 border-b border-border/30 bg-background/50 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                  <Bot className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-medium">{agent.name}</h3>
+                  <p className="text-xs text-foreground/60">{agent.type || 'AI Agent'}</p>
+                </div>
+              </div>
+              
+              {/* Chat messages */}
+              <div className="p-6 max-h-[400px] overflow-y-auto flex flex-col gap-4">
+                {messages.length === 0 ? (
+                  <div className="text-center py-8">
+                    <MessageSquare className="w-12 h-12 text-foreground/20 mx-auto mb-3" />
+                    <p className="text-foreground/50 font-medium">Start a conversation with {agent.name}</p>
+                    <p className="text-sm text-foreground/40 mt-1">Ask a question or provide a prompt</p>
+                  </div>
+                ) : (
+                  messages.map((message) => (
+                    <div 
+                      key={message.id} 
+                      className={`flex gap-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      {message.sender === 'agent' && (
+                        <div className="w-8 h-8 rounded-full bg-primary/20 flex-shrink-0 flex items-center justify-center">
+                          <Bot className="w-4 h-4 text-primary" />
+                        </div>
+                      )}
+                      
+                      <div 
+                        className={`max-w-[80%] p-3 rounded-lg ${
+                          message.sender === 'user' 
+                            ? 'bg-primary text-primary-foreground' 
+                            : 'bg-background/50 border border-border/30'
+                        }`}
+                      >
+                        <p className="text-sm">{message.content}</p>
+                        <p className="text-[10px] mt-1 opacity-70 text-right">
+                          {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </p>
+                      </div>
+                      
+                      {message.sender === 'user' && (
+                        <div className="w-8 h-8 rounded-full bg-foreground/10 flex-shrink-0 flex items-center justify-center">
+                          <User className="w-4 h-4 text-foreground/70" />
+                        </div>
+                      )}
                     </div>
-                    <div>
-                      <p className="text-foreground/90">{sample}</p>
-                      <div className="mt-2 flex justify-end">
-                        <Button variant="ghost" size="sm" className="text-xs text-primary hover:bg-primary/10" disabled>
-                          Coming Soon
-                        </Button>
+                  ))
+                )}
+                
+                {isSending && (
+                  <div className="flex gap-3 justify-start">
+                    <div className="w-8 h-8 rounded-full bg-primary/20 flex-shrink-0 flex items-center justify-center">
+                      <Bot className="w-4 h-4 text-primary" />
+                    </div>
+                    <div className="bg-background/50 border border-border/30 p-3 rounded-lg">
+                      <div className="flex gap-1">
+                        <div className="w-2 h-2 rounded-full bg-foreground/30 animate-pulse"></div>
+                        <div className="w-2 h-2 rounded-full bg-foreground/30 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                        <div className="w-2 h-2 rounded-full bg-foreground/30 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
                       </div>
                     </div>
                   </div>
+                )}
+              </div>
+              
+              {/* Chat input */}
+              <div className="p-4 border-t border-border/30 bg-background/50">
+                <div className="flex gap-2">
+                  <Textarea 
+                    placeholder={`Message ${agent.name}...`}
+                    className="resize-none bg-background/30 min-h-[50px] max-h-[120px]"
+                    value={inputMessage}
+                    onChange={(e) => setInputMessage(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSendMessage();
+                      }
+                    }}
+                  />
+                  <Button 
+                    variant="app" 
+                    size="icon" 
+                    className="h-[50px] w-[50px] flex-shrink-0"
+                    onClick={handleSendMessage}
+                    disabled={!inputMessage.trim() || isSending}
+                  >
+                    <Send className="h-5 w-5" />
+                  </Button>
                 </div>
-              ))}
+                <p className="text-xs text-foreground/40 mt-2 text-center">
+                  Press Enter to send, Shift+Enter for new line
+                </p>
+              </div>
             </div>
           </div>
           
