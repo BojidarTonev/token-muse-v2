@@ -4,15 +4,71 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
-import { Sparkles, Network, MessageSquare } from "lucide-react";
+import { Sparkles, Network, MessageSquare, ExternalLink, BarChart3 } from "lucide-react";
 import { PageTransition, AnimatedElement, StaggerContainer, ScrollReveal } from "@/components/motion";
 
+// Flag to control visibility of trading cards
+const SHOW_TRADING_CARDS = false;
+
 export default function Home() {
+  const pumpfunUrl = "https://pump.fun/token/muse";
+  const dexscreenerUrl = "https://dexscreener.com/solana/muse";
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       
       <PageTransition>
+        {/* Trading Cards - Conditionally rendered */}
+        {SHOW_TRADING_CARDS && (
+          <div className="fixed top-24 right-6 z-40 flex flex-col gap-3 md:flex-col md:items-end">
+            <AnimatedElement animation="fadeIn" delay={0.2}>
+              <Link href={pumpfunUrl} target="_blank" rel="noopener noreferrer">
+                <div className="feature-card p-3 hover:bg-background/80 transition-colors cursor-pointer group w-auto md:w-auto">
+                  <div className="flex items-center gap-2">
+                    <div className="p-1.5 rounded-full bg-primary/10 flex-shrink-0">
+                      <Image 
+                        src="/token-icon.svg" 
+                        alt="MUSE Token" 
+                        width={20} 
+                        height={20}
+                      />
+                    </div>
+                    <div className="hidden sm:block">
+                      <div className="text-xs font-medium">pump.fun</div>
+                      <div className="text-[10px] text-foreground/60">Trade $MUSE</div>
+                    </div>
+                    <div className="sm:hidden">
+                      <div className="text-xs font-medium">pump.fun</div>
+                    </div>
+                    <ExternalLink className="w-3 h-3 text-foreground/40 group-hover:text-primary transition-colors ml-1" />
+                  </div>
+                </div>
+              </Link>
+            </AnimatedElement>
+            
+            <AnimatedElement animation="fadeIn" delay={0.3}>
+              <Link href={dexscreenerUrl} target="_blank" rel="noopener noreferrer">
+                <div className="feature-card p-3 hover:bg-background/80 transition-colors cursor-pointer group w-auto md:w-auto">
+                  <div className="flex items-center gap-2">
+                    <div className="p-1.5 rounded-full bg-primary/10 flex-shrink-0">
+                      <BarChart3 className="w-4 h-4 text-primary" />
+                    </div>
+                    <div className="hidden sm:block">
+                      <div className="text-xs font-medium">DexScreener</div>
+                      <div className="text-[10px] text-foreground/60">View Chart</div>
+                    </div>
+                    <div className="sm:hidden">
+                      <div className="text-xs font-medium">DexScreener</div>
+                    </div>
+                    <ExternalLink className="w-3 h-3 text-foreground/40 group-hover:text-primary transition-colors ml-1" />
+                  </div>
+                </div>
+              </Link>
+            </AnimatedElement>
+          </div>
+        )}
+        
         {/* Hero Section */}
         <section className="relative pt-32 pb-20 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
           <div className="absolute top-0 right-0 w-full h-full overflow-hidden pointer-events-none">
