@@ -12,6 +12,12 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const isActive = (path: string) => {
+    if (path === '/agents' && (pathname === '/create-agent' || pathname.startsWith('/agents/'))) {
+      return true;
+    }
+    if (path === '/network' && pathname === '/create-network') {
+      return true;
+    }
     return pathname === path;
   };
   

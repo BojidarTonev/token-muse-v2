@@ -121,6 +121,21 @@ export default function AgentsPage() {
       );
     }
 
+    // Show login prompt if viewing all agents but not authenticated
+    if (activeTab === 'all-agents' && !isAuthenticated) {
+      return (
+        <div className="bg-card rounded-lg p-8 text-center shadow-sm">
+          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Users className="w-8 h-8 text-primary" />
+          </div>
+          <h3 className="text-xl font-semibold mb-2">Connect Your Wallet</h3>
+          <p className="text-foreground/70 mb-6 max-w-md mx-auto">
+            Connect your wallet to browse all available agents and interact with the Token Muse ecosystem.
+          </p>
+        </div>
+      );
+    }
+
     if (displayedAgents.length === 0) {
       return (
         <div className="bg-card rounded-lg p-8 text-center shadow-sm">
@@ -133,12 +148,14 @@ export default function AgentsPage() {
               <p className="text-foreground/70 mb-6 max-w-md mx-auto">
                 You haven&apos;t created any agents yet. Create your first agent to get started.
               </p>
-              <Link href="/create-agent">
-                <Button variant="app" className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" />
-                  Create Your First Agent
-                </Button>
-              </Link>
+              <div className="flex justify-center">
+                <Link href="/create-agent">
+                  <Button variant="app" className="flex items-center gap-2 cursor-pointer">
+                    <Sparkles className="w-4 h-4" />
+                    Create Your First Agent
+                  </Button>
+                </Link>
+              </div>
             </>
           ) : (
             <>
@@ -220,7 +237,7 @@ export default function AgentsPage() {
               
               <div className="mt-4 md:mt-0">
                 <Link href="/create-agent">
-                  <Button variant="app" className="flex items-center gap-2" disabled={!isAuthenticated}>
+                  <Button variant="app" className="flex items-center gap-2 cursor-pointer" disabled={!isAuthenticated}>
                     <Sparkles className="w-4 h-4" />
                     Create Agent
                   </Button>
@@ -232,7 +249,7 @@ export default function AgentsPage() {
           <AnimatedElement animation="fadeIn" delay={0.2}>
             <div className="flex mb-8 border-b border-border">
               <button
-                className={`px-4 py-2 font-medium text-sm flex items-center gap-2 ${
+                className={`px-4 py-2 font-medium text-sm flex items-center gap-2 cursor-pointer ${
                   activeTab === 'my-agents' 
                     ? 'text-primary border-b-2 border-primary' 
                     : 'text-foreground/70 hover:text-foreground'
@@ -243,7 +260,7 @@ export default function AgentsPage() {
                 My Agents
               </button>
               <button
-                className={`px-4 py-2 font-medium text-sm flex items-center gap-2 ${
+                className={`px-4 py-2 font-medium text-sm flex items-center gap-2 cursor-pointer ${
                   activeTab === 'all-agents' 
                     ? 'text-primary border-b-2 border-primary' 
                     : 'text-foreground/70 hover:text-foreground'

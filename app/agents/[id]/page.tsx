@@ -8,6 +8,7 @@ import { PageTransition } from "@/components/motion";
 import { Agent } from "@/lib/supabase";
 import { useAppSelector } from "@/redux/store";
 import { fetchWithPublicKey } from "@/lib/api-utils";
+import Image from "next/image";
 
 export default function AgentDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const [agentId, setAgentId] = useState<string | null>(null);
@@ -126,9 +127,9 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
           {/* Back button */}
           <div className="mb-8">
             <Link href="/agents">
-              <Button variant="ghost" className="flex items-center gap-2 hover:bg-background/50">
+              <Button variant="ghost" className="flex items-center gap-2 hover:bg-background/50 cursor-pointer">
                 <ArrowLeft className="w-4 h-4" />
-                Back to Agents
+                <span>Back to Agents</span>
               </Button>
             </Link>
           </div>
@@ -136,9 +137,11 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
           {/* Agent header */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             <div className="feature-card flex items-center justify-center p-8">
-              <img
+              <Image
                 src={`/agent-${agent.type?.toLowerCase() || 'text'}.svg`}
                 alt={agent.name || 'AI Agent'}
+                width={176}
+                height={176}
                 className="w-44 h-44 object-contain transition-transform duration-300 hover:scale-105"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
@@ -155,13 +158,6 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
                   </div>
                   <h1 className="text-3xl font-bold mb-2">{agent.name}</h1>
                   <p className="text-foreground/70 mb-4">{agent.description || "No description provided."}</p>
-                </div>
-                
-                <div className="flex flex-wrap gap-2">
-                  <div className="bg-primary/20 text-primary px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
-                    <Construction className="w-3 h-3" />
-                    Coming Soon
-                  </div>
                 </div>
               </div>
               
