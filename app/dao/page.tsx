@@ -226,7 +226,7 @@ export default function DAOPage() {
                   <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold">3</div>
                   <h3 className="text-lg font-semibold mb-2 mt-2">Implementation</h3>
                   <p className="text-sm text-foreground/70">
-                    Approved proposals enter a 48-hour timelock before being implemented by the protocol's smart contracts.
+                    Approved proposals enter a 48-hour timelock before being implemented by the protocol&#39;s smart contracts.
                   </p>
                   <div className="mt-4 flex justify-end">
                     <Lightbulb className="w-5 h-5 text-primary" />

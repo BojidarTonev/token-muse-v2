@@ -1,7 +1,7 @@
 'use client'
 
 import Navbar from "@/components/Navbar";
-import { Coins, Flame, Lock, Percent, CheckCircle } from "lucide-react";
+import { Flame, Percent, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import { PageTransition, AnimatedElement, StaggerContainer, ScrollReveal } from "@/components/motion";
 

@@ -4,9 +4,10 @@ import { supabase } from '@/lib/supabase';
 // GET /api/narratives/[narrativeId] - Get a specific narrative
 export async function GET(
   request: NextRequest,
-  { params }: { params: { narrativeId: string } }
+  context: { params: Promise<{ narrativeId: string }> }
 ) {
   try {
+    const params = await context.params;
     const { narrativeId } = params;
     const publicKey = request.headers.get('x-public-key');
     
@@ -88,9 +89,10 @@ export async function GET(
 // PUT /api/narratives/[narrativeId] - Update a specific narrative
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { narrativeId: string } }
+  context: { params: Promise<{ narrativeId: string }> }
 ) {
   try {
+    const params = await context.params;
     const { narrativeId } = params;
     const publicKey = request.headers.get('x-public-key');
     
@@ -201,9 +203,10 @@ export async function PUT(
 // DELETE /api/narratives/[narrativeId] - Delete a specific narrative
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { narrativeId: string } }
+  context: { params: Promise<{ narrativeId: string }> }
 ) {
   try {
+    const params = await context.params;
     const { narrativeId } = params;
     const publicKey = request.headers.get('x-public-key');
     

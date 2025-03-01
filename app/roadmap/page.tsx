@@ -220,7 +220,7 @@ export default function RoadmapPage() {
                   <div className="md:w-2/3">
                     <h3 className="text-xl font-semibold mb-4">Decentralized Autonomous Organization</h3>
                     <p className="text-foreground/80 mb-4">
-                      We're building a DAO to give our community direct control over the platform's future. Token holders will be able to propose and vote on key decisions, ensuring the platform evolves according to the needs of its users.
+                      We&lsquo;re building a DAO to give our community direct control over the platform&#39;s future. Token holders will be able to propose and vote on key decisions, ensuring the platform evolves according to the needs of its users.
                     </p>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">

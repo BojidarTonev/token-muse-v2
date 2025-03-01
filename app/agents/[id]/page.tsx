@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Download, Construction, MessageSquare, Code, Zap } from "lucide-react";
 import Link from "next/link";
@@ -9,11 +9,8 @@ import { Agent } from "@/lib/supabase";
 import { useAppSelector } from "@/redux/store";
 import { fetchWithPublicKey } from "@/lib/api-utils";
 
-export default function AgentDetailsPage({ params }: { params: { id: string } }) {
-  // Unwrap params using React.use()
-  const unwrappedParams = params instanceof Promise ? use(params) : params;
-  const agentId = unwrappedParams.id;
-  
+export default function AgentDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const [agentId, setAgentId] = useState<string | null>(null);
   const [agent, setAgent] = useState<Agent | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -21,8 +18,25 @@ export default function AgentDetailsPage({ params }: { params: { id: string } })
   // Use Redux store for authentication state
   const { isAuthenticated, publicKey } = useAppSelector(state => state.appState);
 
+  // Handle params resolution
+  useEffect(() => {
+    const resolveParams = async () => {
+      try {
+        const resolvedParams = await params;
+        setAgentId(resolvedParams.id);
+      } catch (err) {
+        console.error('Error resolving params:', err);
+        setError('Invalid agent ID');
+      }
+    };
+    
+    resolveParams();
+  }, [params]);
+
   // Fetch agent data
   useEffect(() => {
+    if (!agentId) return;
+    
     const fetchAgentDetails = async () => {
       try {
         setLoading(true);
@@ -97,7 +111,9 @@ export default function AgentDetailsPage({ params }: { params: { id: string } })
   // For now, let's use the mock data for related agents and capabilities
   // In a real app, these would come from the API
   const capabilities = agent.capabilities || ["AI Assistant", "Text Generation", "Knowledge Base"];
-  const usageSamples = agent.usage_samples || [
+  
+  // Define default usage samples since they don't exist on the Agent type
+  const usageSamples = [
     "Ask me about any topic",
     "Generate creative content",
     "Help with problem-solving"
@@ -121,23 +137,12 @@ export default function AgentDetailsPage({ params }: { params: { id: string } })
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             <div className="feature-card flex items-center justify-center p-8">
               <img
-                src={agent.image_url || `/agent-${agent.type?.toLowerCase() || 'text'}.svg`}
+                src={`/agent-${agent.type?.toLowerCase() || 'text'}.svg`}
                 alt={agent.name || 'AI Agent'}
                 className="w-44 h-44 object-contain transition-transform duration-300 hover:scale-105"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  try {
-                    const safeType = agent.type ? agent.type.toLowerCase() : 'text';
-                    target.src = `/agent-${safeType}.svg`;
-                  } catch {
-                    target.src = "/agent-writer.svg";
-                  }
-                  
-                  // If that fails too, use a generic fallback
-                  target.onerror = () => {
-                    target.src = "/agent-writer.svg";
-                    target.onerror = null; // Prevent infinite loop
-                  };
+                  target.src = "/agent-writer.svg"; // Fallback to a default SVG
                 }}
               />
             </div>
@@ -167,7 +172,7 @@ export default function AgentDetailsPage({ params }: { params: { id: string } })
                 </div>
                 <div className="bg-background/50 p-3 rounded-md border border-border/10">
                   <div className="text-xs text-foreground/60">Version</div>
-                  <div className="font-medium">{agent.version || "1.0.0"}</div>
+                  <div className="font-medium">1.0.0</div>
                 </div>
                 <div className="bg-background/50 p-3 rounded-md border border-border/10">
                   <div className="text-xs text-foreground/60">Created</div>
@@ -176,7 +181,7 @@ export default function AgentDetailsPage({ params }: { params: { id: string } })
                 <div className="bg-background/50 p-3 rounded-md border border-border/10 sm:col-span-3">
                   <div className="text-xs text-foreground/60">Token Cost</div>
                   <div className="font-medium flex items-center gap-2">
-                    <span>{agent.token_cost || 100} $MUSE</span>
+                    <span>100 $MUSE</span>
                     <span className="text-xs text-foreground/40">per generation</span>
                   </div>
                 </div>
@@ -209,7 +214,7 @@ export default function AgentDetailsPage({ params }: { params: { id: string } })
               </div>
             </div>
             <div className="space-y-4">
-              {usageSamples.map((sample, index) => (
+              {usageSamples.map((sample: string, index: number) => (
                 <div key={`sample-${index}`} className="feature-card p-4">
                   <div className="flex items-start gap-3">
                     <div className="p-2 rounded-full bg-primary/10 mt-1">
@@ -243,7 +248,7 @@ export default function AgentDetailsPage({ params }: { params: { id: string } })
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold mb-3">API Access</h3>
                   <p className="text-sm text-foreground/70 mb-4">
-                    Soon you'll be able to integrate this agent directly into your applications with our simple API. 
+                    Soon you&lsquo;ll be able to integrate this agent directly into your applications with our simple API. 
                     Access the full capabilities programmatically and build powerful solutions.
                   </p>
                   <Button variant="outline" className="flex items-center gap-2" disabled>
@@ -255,8 +260,8 @@ export default function AgentDetailsPage({ params }: { params: { id: string } })
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold mb-3">Download SDK</h3>
                   <p className="text-sm text-foreground/70 mb-4">
-                    We're developing a comprehensive SDK to easily incorporate this agent into your projects with minimal setup.
-                    Join our waitlist to be the first to know when it's available.
+                    We&lsquo;re developing a comprehensive SDK to easily incorporate this agent into your projects with minimal setup.
+                    Join our waitlist to be the first to know when it&lsquo;s available.
                   </p>
                   <Button variant="outline" className="flex items-center gap-2" disabled>
                     <Download className="w-4 h-4" />

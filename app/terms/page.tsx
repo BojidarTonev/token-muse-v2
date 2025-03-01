@@ -104,7 +104,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-semibold mb-4 text-foreground">8. Modifications to Terms</h2>
             <p>
-              We reserve the right to modify these terms at any time. If we make changes to these terms, we will provide notice of such changes by updating the "Last Updated" date at the bottom of these terms and by providing additional notification if required by applicable law. Your continued use of the platform following the posting of revised terms means that you accept and agree to the changes.
+              We reserve the right to modify these terms at any time. If we make changes to these terms, we will provide notice of such changes by updating the &ldquo;Last Updated&ldquo; date at the bottom of these terms and by providing additional notification if required by applicable law. Your continued use of the platform following the posting of revised terms means that you accept and agree to the changes.
             </p>
           </section>
           

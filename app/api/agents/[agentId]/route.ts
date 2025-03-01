@@ -4,9 +4,10 @@ import { supabase } from '@/lib/supabase';
 // GET /api/agents/[agentId] - Get a specific agent
 export async function GET(
   request: NextRequest,
-  { params }: { params: { agentId: string } }
+  context: { params: Promise<{ agentId: string }> }
 ) {
   try {
+    const params = await context.params;
     const { agentId } = params;
     const publicKey = request.headers.get('x-public-key');
     
@@ -65,9 +66,10 @@ export async function GET(
 // PUT /api/agents/[agentId] - Update a specific agent
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { agentId: string } }
+  context: { params: Promise<{ agentId: string }> }
 ) {
   try {
+    const params = await context.params;
     const { agentId } = params;
     const publicKey = request.headers.get('x-public-key');
     
@@ -144,9 +146,10 @@ export async function PUT(
 // DELETE /api/agents/[agentId] - Delete a specific agent
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { agentId: string } }
+  context: { params: Promise<{ agentId: string }> }
 ) {
   try {
+    const params = await context.params;
     const { agentId } = params;
     const publicKey = request.headers.get('x-public-key');
     

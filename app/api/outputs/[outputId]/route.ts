@@ -4,9 +4,10 @@ import { supabase } from '@/lib/supabase';
 // GET /api/outputs/[outputId] - Get a specific output
 export async function GET(
   request: NextRequest,
-  { params }: { params: { outputId: string } }
+  context: { params: Promise<{ outputId: string }> }
 ) {
   try {
+    const params = await context.params;
     const { outputId } = params;
     const publicKey = request.headers.get('x-public-key');
     
@@ -65,9 +66,10 @@ export async function GET(
 // PUT /api/outputs/[outputId] - Update a specific output
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { outputId: string } }
+  context: { params: Promise<{ outputId: string }> }
 ) {
   try {
+    const params = await context.params;
     const { outputId } = params;
     const publicKey = request.headers.get('x-public-key');
     
@@ -155,9 +157,10 @@ export async function PUT(
 // DELETE /api/outputs/[outputId] - Delete a specific output
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { outputId: string } }
+  context: { params: Promise<{ outputId: string }> }
 ) {
   try {
+    const params = await context.params;
     const { outputId } = params;
     const publicKey = request.headers.get('x-public-key');
     

@@ -68,7 +68,7 @@ export default function NetworkPage() {
                 <h2 className="text-xl font-semibold">This Feature is Under Development</h2>
               </div>
               <p className="text-foreground/80 mb-4">
-                We're working hard to bring you Agent Networks - a revolutionary way to connect multiple specialized AI agents 
+                We&lsquo;re working hard to bring you Agent Networks - a revolutionary way to connect multiple specialized AI agents 
                 into powerful collaborative systems. Stay tuned for the release!
               </p>
               <div className="bg-background/50 p-4 rounded-lg">
@@ -187,7 +187,7 @@ export default function NetworkPage() {
             <section>
               <h2 className="text-2xl font-semibold mb-4">Planned Network Templates</h2>
               <p className="text-foreground/70 mb-8">
-                These are some of the network templates we're developing for the initial release. Each template will provide a starting point that you can customize for your specific needs.
+                These are some of the network templates we&lsquo;re developing for the initial release. Each template will provide a starting point that you can customize for your specific needs.
               </p>
               
               <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6" delay={0.1}>

@@ -1,10 +1,9 @@
 'use client';
 
-import { ReactNode, useId } from 'react';
+import { ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import { store } from '@/redux/store';
 import { Toaster } from 'sonner';
-import { AnimatePresence } from 'framer-motion';
 import { AnimationProvider } from '@/hooks/useAnimationPreference';
 
 interface ProvidersProps {
@@ -12,9 +11,6 @@ interface ProvidersProps {
 }
 
 export default function Providers({ children }: ProvidersProps) {
-  // Generate a stable ID for the key
-  const contentId = useId();
-  
   return (
     <Provider store={store}>
       <AnimationProvider>

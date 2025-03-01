@@ -1,7 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { connectWallet, disconnectWallet, isPhantomInstalled, signMessage } from '@/lib/wallet';
+import React, { createContext, useContext, ReactNode } from 'react';
+import { signMessage } from '@/lib/wallet';
 import { useAuth } from '@/hooks/useAuth';
 
 // Define the context type

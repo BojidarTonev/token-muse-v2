@@ -29,8 +29,8 @@ export const addAuthHeaders = (publicKey: string | null, headers: HeadersInit = 
   }
   
   const authToken = getAuthToken();
-  const newHeaders: HeadersInit = {
-    ...headers,
+  const newHeaders: Record<string, string> = {
+    ...(headers as Record<string, string>),
     'x-public-key': publicKey,
   };
   

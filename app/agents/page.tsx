@@ -164,27 +164,13 @@ export default function AgentsPage() {
                 <div className="relative w-full h-48 mb-4 rounded-md overflow-hidden bg-background/50">
                   <div className="absolute inset-0 flex items-center justify-center">
                     <img
-                      src={agent.image_url || `/agent-${(agent.type || 'text').toLowerCase()}.svg`}
+                      src={`/agent-${(agent.type || 'text').toLowerCase()}.svg`}
                       alt={agent.name || 'AI Agent'}
                       className="w-24 h-24 object-contain transition-transform duration-300 group-hover:scale-110"
                       onError={(e) => {
                         // Fallback to a default image if the specified one fails to load
                         const target = e.target as HTMLImageElement;
-                        
-                        try {
-                          // Always use the type-based fallback for simplicity and reliability
-                          const safeType = agent.type ? agent.type.toLowerCase() : 'text';
-                          target.src = `/agent-${safeType}.svg`;
-                        } catch {
-                          // If there's any error, use a generic fallback
-                          target.src = "/agent-writer.svg";
-                        }
-                        
-                        // If that fails too, use a generic fallback
-                        target.onerror = () => {
-                          target.src = "/agent-writer.svg";
-                          target.onerror = null; // Prevent infinite loop
-                        };
+                        target.src = "/agent-writer.svg"; // Simple fallback
                       }}
                     />
                   </div>

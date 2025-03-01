@@ -4,9 +4,10 @@ import { supabase } from '@/lib/supabase';
 // GET /api/networks/[networkId] - Get a specific network
 export async function GET(
   request: NextRequest,
-  { params }: { params: { networkId: string } }
+  context: { params: Promise<{ networkId: string }> }
 ) {
   try {
+    const params = await context.params;
     const { networkId } = params;
     const publicKey = request.headers.get('x-public-key');
     
@@ -75,9 +76,10 @@ export async function GET(
 // PUT /api/networks/[networkId] - Update a specific network
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { networkId: string } }
+  context: { params: Promise<{ networkId: string }> }
 ) {
   try {
+    const params = await context.params;
     const { networkId } = params;
     const publicKey = request.headers.get('x-public-key');
     
@@ -161,9 +163,10 @@ export async function PUT(
 // DELETE /api/networks/[networkId] - Delete a specific network
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { networkId: string } }
+  context: { params: Promise<{ networkId: string }> }
 ) {
   try {
+    const params = await context.params;
     const { networkId } = params;
     const publicKey = request.headers.get('x-public-key');
     
