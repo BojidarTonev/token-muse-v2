@@ -22,7 +22,11 @@ function getErrorMessage(error: unknown): string {
   return String(error);
 }
 
-export const WalletButton = () => {
+interface WalletButtonProps {
+  showText?: boolean;
+}
+
+export const WalletButton = ({ showText = true }: WalletButtonProps) => {
   const { isAuthenticated, publicKey, isLoading, error, isWalletInstalled, connect, disconnect } = useAuth();
   const [isConnecting, setIsConnecting] = useState(false);
   const [isDisconnecting, setIsDisconnecting] = useState(false);
@@ -97,13 +101,13 @@ export const WalletButton = () => {
       >
         {isLoading || isConnecting ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Connecting...
+            <Loader2 className={`h-4 w-4 animate-spin ${showText ? 'mr-2' : ''}`} />
+            {showText && 'Connecting...'}
           </>
         ) : (
           <>
-            <Wallet className="mr-2 h-4 w-4" />
-            Connect Wallet
+            <Wallet className={`h-4 w-4 ${showText ? 'mr-2' : ''}`} />
+            {showText && 'Connect Wallet'}
           </>
         )}
       </Button>
@@ -120,13 +124,13 @@ export const WalletButton = () => {
     >
       {isLoading || isDisconnecting ? (
         <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Disconnecting...
+          <Loader2 className={`h-4 w-4 animate-spin ${showText ? 'mr-2' : ''}`} />
+          {showText && 'Disconnecting...'}
         </>
       ) : (
         <>
-          <LogOut className="mr-2 h-4 w-4" />
-          {formatPublicKey(publicKey || '')}
+          <LogOut className={`h-4 w-4 ${showText ? 'mr-2' : ''}`} />
+          {showText && formatPublicKey(publicKey || '')}
         </>
       )}
     </Button>

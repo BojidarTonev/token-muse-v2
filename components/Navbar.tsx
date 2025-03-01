@@ -4,12 +4,31 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, AlertCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { WalletButton } from './WalletButton';
 
 const Navbar = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showWalletText, setShowWalletText] = useState(true);
+  
+  // Handle responsive wallet button display
+  useEffect(() => {
+    const handleResize = () => {
+      setShowWalletText(window.innerWidth >= 1000);
+    };
+    
+    // Set initial value
+    handleResize();
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   
   const isActive = (path: string) => {
     if (path === '/agents' && (pathname === '/create-agent' || pathname.startsWith('/agents/'))) {
@@ -87,7 +106,7 @@ const Navbar = () => {
       
       <div className="flex items-center gap-4">
         {/* Connect Wallet Button */}
-        <WalletButton />
+        <WalletButton showText={showWalletText} />
         
         {/* Mobile Menu Button */}
         <button 

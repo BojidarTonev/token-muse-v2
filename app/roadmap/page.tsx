@@ -46,14 +46,14 @@ const milestones = [
   },
  {
     quarter: "Q2 2025",
-    title: "Agent Capabilities",
-    description: "Expanding agent capabilities and interaction models.",
+    title: "Narrative Engine",
+    description: "Implementing collaborative narrative generation capabilities.",
     status: "in-progress",
     icon: <Users className="w-5 h-5" />,
     items: [
-      { text: "Advanced agent customization", status: "in-progress" },
-      { text: "Multi-modal agent support", status: "in-progress" },
-      { text: "Agent performance analytics", status: "in-progress" },
+      { text: "Multi-agent narrative collaboration", status: "in-progress" },
+      { text: "Context-aware content generation", status: "in-progress" },
+      { text: "Narrative visualization and editing tools", status: "in-progress" },
     ]
   },
   {
