@@ -210,7 +210,7 @@ export default function AgentsPage() {
                 
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-foreground/60">ID: #{agent.id.substring(0, 8)}</span>
-                  <Button variant="outline" size="sm" className="text-primary border-primary hover:bg-primary/10">
+                  <Button variant="outline" size="sm" className="text-primary border-primary hover:bg-primary/10 cursor-pointer">
                     View Details
                   </Button>
                 </div>

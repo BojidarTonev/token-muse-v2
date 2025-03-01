@@ -364,11 +364,26 @@ export default function RoadmapPage() {
               <div className="feature-card p-6 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-xl"></div>
                 
+                {/* Development Banner */}
+                <div className="mb-6 w-full">
+                  <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 flex items-center gap-4">
+                    <div className="p-3 rounded-full bg-primary/20 flex-shrink-0">
+                      <Clock className="w-5 h-5 text-primary" />
+                    </div>
+                    <div className="text-left">
+                      <h3 className="font-semibold text-primary mb-1">Coming Soon</h3>
+                      <p className="text-sm text-foreground/70">
+                        Community Feature Voting is currently in development and will be available with our DAO governance launch in Q3 2025.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
                 <p className="text-foreground/70 mb-8 max-w-2xl">
-                  Help shape the future of TokenMuse by voting on upcoming features and priorities. This is a preview of how our DAO governance will work.
+                  Help shape the future of TokenMuse by voting on upcoming features and priorities. This preview shows how our DAO governance will work.
                 </p>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-8 opacity-70">
                   <ScrollReveal animation="fadeIn" delay={0.3}>
                     <div className="bg-background/50 p-5 rounded-lg border border-border/10 relative overflow-hidden">
                       <div className="absolute top-0 right-0 h-full w-1 bg-primary/20 rounded-r-lg"></div>
@@ -406,7 +421,7 @@ export default function RoadmapPage() {
                 
                 <AnimatedElement animation="fadeIn" delay={0.5}>
                   <div className="text-center">
-                    <Button variant="app" className="rounded-full px-8">
+                    <Button variant="app" className="rounded-full px-8" disabled>
                       Vote on Features
                     </Button>
                   </div>

@@ -51,7 +51,7 @@ export default function TokenomicsPage() {
                         </div>
                         <div>
                           <h3 className="font-semibold">Burn Mechanism</h3>
-                          <p className="text-sm text-foreground/70">25% of developer tokens will be burned to reduce supply and increase scarcity.</p>
+                          <p className="text-sm text-foreground/70">75% of developer tokens will be burned to reduce supply and increase scarcity.</p>
                         </div>
                       </div>
                       
