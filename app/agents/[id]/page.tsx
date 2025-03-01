@@ -317,7 +317,7 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
                   messages.map((message) => (
                     <div 
                       key={message.id} 
-                      className={`flex gap-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}
+                      className={`flex gap-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       {message.sender === 'agent' && (
                         <div className="w-8 h-8 rounded-full bg-primary/20 flex-shrink-0 flex items-center justify-center">
@@ -330,7 +330,7 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
                           message.sender === 'user' 
                             ? 'bg-primary text-primary-foreground' 
                             : 'bg-background/50 border border-border/30'
-                        } transition-all duration-300 ease-in-out`}
+                        }`}
                       >
                         <p className="text-sm">{message.content}</p>
                         <p className="text-[10px] mt-1 opacity-70 text-right">
@@ -352,17 +352,11 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
                     <div className="w-8 h-8 rounded-full bg-primary/20 flex-shrink-0 flex items-center justify-center">
                       <Bot className="w-4 h-4 text-primary" />
                     </div>
-                    <div className="bg-background/50 border border-border/30 p-4 rounded-lg max-w-[80%]">
-                      <div className="flex items-center gap-2">
-                        <div className="flex gap-1.5">
-                          <div className="w-2.5 h-2.5 rounded-full bg-primary/40 animate-pulse"></div>
-                          <div className="w-2.5 h-2.5 rounded-full bg-primary/60 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                          <div className="w-2.5 h-2.5 rounded-full bg-primary/80 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-                        </div>
-                        <span className="text-xs text-foreground/50 ml-1">Thinking...</span>
-                      </div>
-                      <div className="mt-1.5 text-[10px] text-foreground/30 text-right">
-                        {agent.name} is generating a response
+                    <div className="bg-background/50 border border-border/30 p-3 rounded-lg">
+                      <div className="flex gap-1">
+                        <div className="w-2 h-2 rounded-full bg-foreground/30 animate-pulse"></div>
+                        <div className="w-2 h-2 rounded-full bg-foreground/30 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                        <div className="w-2 h-2 rounded-full bg-foreground/30 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
                       </div>
                     </div>
                   </div>
@@ -391,11 +385,7 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
                     onClick={handleSendMessage}
                     disabled={!inputMessage.trim() || isSending}
                   >
-                    {isSending ? (
-                      <div className="animate-spin h-5 w-5 border-2 border-primary/30 border-t-primary rounded-full" />
-                    ) : (
-                      <Send className="h-5 w-5" />
-                    )}
+                    <Send className="h-5 w-5" />
                   </Button>
                 </div>
                 <p className="text-xs text-foreground/40 mt-2 text-center">
