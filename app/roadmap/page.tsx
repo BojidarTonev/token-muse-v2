@@ -142,10 +142,10 @@ export default function RoadmapPage() {
                       <h3 className="text-lg md:text-xl font-semibold">Platform Development</h3>
                     </div>
                     <div className="w-full bg-background/50 h-3 rounded-full mb-2 overflow-hidden">
-                      <div className="bg-primary h-3 rounded-full" style={{ width: '25%' }}></div>
+                      <div className="bg-primary h-3 rounded-full" style={{ width: '75%' }}></div>
                     </div>
                     <div className="flex justify-between text-xs text-foreground/60 mb-4">
-                      <span>25% complete</span>
+                      <span>75% complete</span>
                       <span className="text-primary font-medium">In Progress</span>
                     </div>
                     <p className="text-sm text-foreground/70">
@@ -166,10 +166,10 @@ export default function RoadmapPage() {
                       <h3 className="text-lg md:text-xl font-semibold">Network Development</h3>
                     </div>
                     <div className="w-full bg-background/50 h-3 rounded-full mb-2 overflow-hidden">
-                      <div className="bg-primary h-3 rounded-full" style={{ width: '40%' }}></div>
+                      <div className="bg-primary h-3 rounded-full" style={{ width: '90%' }}></div>
                     </div>
                     <div className="flex justify-between text-xs text-foreground/60 mb-4">
-                      <span>40% complete</span>
+                      <span>90% complete</span>
                       <span className="text-primary font-medium">In Progress</span>
                     </div>
                     <p className="text-sm text-foreground/70">
@@ -190,10 +190,10 @@ export default function RoadmapPage() {
                       <h3 className="text-lg md:text-xl font-semibold">DAO Governance</h3>
                     </div>
                     <div className="w-full bg-background/50 h-3 rounded-full mb-2 overflow-hidden">
-                      <div className="bg-primary h-3 rounded-full" style={{ width: '80%' }}></div>
+                      <div className="bg-primary h-3 rounded-full" style={{ width: '60%' }}></div>
                     </div>
                     <div className="flex justify-between text-xs text-foreground/60 mb-4">
-                      <span>80% complete</span>
+                      <span>60% complete</span>
                       <span className="text-secondary-foreground font-medium">In Progress</span>
                     </div>
                     <p className="text-sm text-foreground/70">

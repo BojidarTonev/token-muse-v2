@@ -129,14 +129,7 @@ export default function NetworkPage() {
                       ? 'bg-primary text-primary-foreground' 
                       : 'hover:bg-background/80'
                   }`}
-                  onClick={() => {
-                    if (isAuthenticated) {
-                      setViewMode('my');
-                    } else {
-                      // Redirect to login or show login prompt
-                      alert('Please log in to view your networks');
-                    }
-                  }}
+                  onClick={() => setViewMode('my')}
                 >
                   My Networks
                 </button>
@@ -339,7 +332,19 @@ export default function NetworkPage() {
           ) : (
             <ScrollReveal animation="fadeIn" delay={0.2}>
               <section className="mb-16">
-                {isLoading ? (
+                {!isAuthenticated ? (
+                  <div className="feature-card text-center py-16 flex flex-col items-center">
+                    <div className="mb-6">
+                      <div className="mx-auto w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
+                        <Users className="w-10 h-10 text-primary" />
+                      </div>
+                    </div>
+                    <h2 className="text-2xl font-semibold mb-3">Authentication Required</h2>
+                    <p className="text-foreground/70 max-w-md mx-auto mb-8 text-center">
+                      You need to be logged in to view and manage your networks. Please log in to access this functionality.
+                    </p>
+                  </div>
+                ) : isLoading ? (
                   <div className="flex justify-center items-center py-20">
                     <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
                   </div>

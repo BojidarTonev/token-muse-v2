@@ -188,6 +188,8 @@ export default function CreateNetworkPage() {
       
       // Add agents to network
       for (const agent of selectedAgents) {
+        console.log(`Adding agent ${agent.id} with role ${agent.role} to network ${networkId}`);
+        
         const agentResponse = await fetchWithPublicKey(
           `/api/networks/${networkId}/agents`,
           publicKey,
@@ -197,14 +199,16 @@ export default function CreateNetworkPage() {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ 
-              agent_id: agent.id,
+              agentId: agent.id,
               role: agent.role 
             }),
           }
         );
         
         if (!agentResponse.ok) {
-          throw new Error(`Failed to add agent ${agent.id} to network`);
+          const errorData = await agentResponse.json();
+          console.error(`Failed to add agent ${agent.id} to network:`, errorData);
+          throw new Error(`Failed to add agent ${agent.id} to network: ${errorData.error || 'Unknown error'}`);
         }
       }
       

@@ -14,10 +14,13 @@ export async function GET(request: NextRequest) {
       );
     }
     
-    // Fetch the networks from the database
+    // Fetch the networks from the database with agent counts
     const { data: networks, error } = await supabase
       .from('networks')
-      .select('*')
+      .select(`
+        *,
+        network_agents:network_agents(count)
+      `)
       .eq('owner_key', publicKey);
     
     if (error) {
@@ -28,8 +31,15 @@ export async function GET(request: NextRequest) {
       );
     }
     
+    // Process the networks to add agent_count property
+    const processedNetworks = networks.map(network => ({
+      ...network,
+      agent_count: network.network_agents?.[0]?.count || 0,
+      network_agents: undefined // Remove the raw count data
+    }));
+    
     // Return the networks
-    return NextResponse.json({ networks });
+    return NextResponse.json({ networks: processedNetworks });
   } catch (error) {
     console.error('Error in GET /api/networks:', error);
     return NextResponse.json(
@@ -54,7 +64,9 @@ export async function POST(request: NextRequest) {
     
     // Parse the request body
     const body = await request.json();
-    const { name, description, purpose, image_url, token_id } = body;
+    // Extract network data from the body, which may be wrapped in a 'network' object
+    const networkData = body.network || body;
+    const { name, description, purpose, image_url, token_id } = networkData;
     
     // Validate the request
     if (!name) {

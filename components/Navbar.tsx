@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { WalletButton } from './WalletButton';
 
@@ -15,7 +15,10 @@ const Navbar = () => {
     if (path === '/agents' && (pathname === '/create-agent' || pathname.startsWith('/agents/'))) {
       return true;
     }
-    if (path === '/network' && pathname === '/create-network') {
+    if (path === '/network' && (pathname === '/create-network' || pathname.startsWith('/network/'))) {
+      return true;
+    }
+    if (path === '/narrative' && pathname.startsWith('/narrative')) {
       return true;
     }
     return pathname === path;
@@ -33,6 +36,7 @@ const Navbar = () => {
   const baseNavLinks = [
     { path: '/agents', label: 'Agents' },
     { path: '/network', label: 'Networks' },
+    { path: '/narrative', label: 'Narrative', badge: 'Coming Soon' },
     { path: '/roadmap', label: 'Roadmap' },
     { path: '/tokenomics', label: 'Tokenomics' },
     { path: '/dao', label: 'DAO' },
@@ -65,7 +69,15 @@ const Navbar = () => {
                 : 'text-foreground/80 hover:text-foreground'
             }`}
           >
-            {link.label}
+            <div className="flex items-center gap-1.5">
+              {link.label}
+              {link.badge && (
+                <span className="text-[10px] px-1.5 py-0.5 bg-amber-500/10 text-amber-500 rounded-full font-medium flex items-center gap-0.5">
+                  <AlertCircle className="w-2 h-2" />
+                  {link.badge}
+                </span>
+              )}
+            </div>
             {isActive(link.path) && (
               <span className="absolute -bottom-1.5 left-0 w-full h-0.5 bg-primary rounded-full"></span>
             )}
@@ -106,7 +118,15 @@ const Navbar = () => {
                 }`}
                 onClick={closeMenu}
               >
-                {link.label}
+                <div className="flex items-center gap-2">
+                  {link.label}
+                  {link.badge && (
+                    <span className="text-xs px-2 py-0.5 bg-amber-500/10 text-amber-500 rounded-full font-medium flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {link.badge}
+                    </span>
+                  )}
+                </div>
               </Link>
             ))}
             

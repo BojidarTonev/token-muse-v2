@@ -20,7 +20,9 @@ export async function POST(
     
     // Parse the request body
     const body = await request.json();
-    const { agentId, role } = body;
+    // Support both agent_id and agentId formats
+    const agentId = body.agentId || body.agent_id;
+    const { role } = body;
     
     // Validate the request
     if (!agentId) {
@@ -53,12 +55,11 @@ export async function POST(
       );
     }
     
-    // Check if the agent exists and belongs to the user
+    // Check if the agent exists (without checking owner_key to allow public agents)
     const { data: existingAgent, error: agentError } = await supabase
       .from('agents')
       .select('*')
       .eq('id', agentId)
-      .eq('owner_key', publicKey)
       .single();
     
     if (agentError) {
@@ -161,65 +162,25 @@ export async function GET(
       );
     }
     
-    // Check if the agent exists and belongs to the user
-    const { data: existingAgent, error: agentError } = await supabase
-      .from('agents')
-      .select('*')
-      .eq('id', networkId)
-      .eq('owner_key', publicKey)
-      .single();
+    // Get all agents in the network
+    const { data: networkAgents, error: agentsError } = await supabase
+      .from('network_agents')
+      .select(`
+        *,
+        agent:agents(*)
+      `)
+      .eq('network_id', networkId);
     
-    if (agentError) {
-      console.error('Error fetching agent:', agentError);
+    if (agentsError) {
+      console.error('Error fetching network agents:', agentsError);
       return NextResponse.json(
-        { error: 'Error fetching agent' },
+        { error: 'Error fetching network agents' },
         { status: 500 }
       );
     }
     
-    if (!existingAgent) {
-      return NextResponse.json(
-        { error: 'Agent not found' },
-        { status: 404 }
-      );
-    }
-    
-    // Check if the agent is already in the network
-    const { data: existingNetworkAgent } = await supabase
-      .from('network_agents')
-      .select('*')
-      .eq('network_id', networkId)
-      .eq('agent_id', networkId)
-      .single();
-    
-    if (existingNetworkAgent) {
-      return NextResponse.json(
-        { error: 'Agent is already in the network' },
-        { status: 400 }
-      );
-    }
-    
-    // Add the agent to the network
-    const { data: networkAgent, error: insertError } = await supabase
-      .from('network_agents')
-      .insert([{
-        network_id: networkId,
-        agent_id: networkId,
-        role: 'agent'
-      }])
-      .select()
-      .single();
-    
-    if (insertError) {
-      console.error('Error adding agent to network:', insertError);
-      return NextResponse.json(
-        { error: 'Error adding agent to network' },
-        { status: 500 }
-      );
-    }
-    
-    // Return the network agent
-    return NextResponse.json({ networkAgent }, { status: 201 });
+    // Return the network agents
+    return NextResponse.json({ networkAgents });
   } catch (error) {
     console.error('Error in GET /api/networks/[networkId]/agents:', error);
     return NextResponse.json(
