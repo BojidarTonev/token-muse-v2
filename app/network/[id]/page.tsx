@@ -18,7 +18,15 @@ import {
   Check,
   ArrowRight,
   ExternalLink,
-  AlertCircle
+  AlertCircle,
+  Clock,
+  Settings,
+  FileText,
+  Image,
+  Video,
+  Bell,
+  BarChart,
+  Calendar
 } from "lucide-react";
 import Link from "next/link";
 import { PageTransition, AnimatedElement } from "@/components/motion";
@@ -55,11 +63,6 @@ export default function NetworkDetailsPage() {
   const [networkAgents, setNetworkAgents] = useState<NetworkAgent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
-  // Prompt state
-  const [prompt, setPrompt] = useState("");
-  const [promptResponse, setPromptResponse] = useState<string | null>(null);
-  const [isPrompting, setIsPrompting] = useState(false);
   
   // UI state
   const [activeTab, setActiveTab] = useState<'overview' | 'prompt' | 'sdk' | 'api'>('overview');
@@ -101,53 +104,6 @@ export default function NetworkDetailsPage() {
     
     fetchNetworkDetails();
   }, [networkId, isAuthenticated, publicKey]);
-  
-  // Handle prompt submission
-  const handlePromptSubmit = async () => {
-    if (!prompt.trim() || !isAuthenticated || !publicKey) {
-      return;
-    }
-    
-    try {
-      setIsPrompting(true);
-      setPromptResponse(null);
-      
-      // This is a placeholder for the actual API call
-      // In a real implementation, you would call an API endpoint to process the prompt
-      // For now, we'll simulate a response after a delay
-      setTimeout(() => {
-        setPromptResponse(`This is a simulated response to your prompt: "${prompt}"\n\nIn a real implementation, this would be processed by the network's agents working together to generate a response.`);
-        setIsPrompting(false);
-      }, 2000);
-      
-      // Actual implementation would look something like this:
-      /*
-      const response = await fetchWithPublicKey(
-        `/api/networks/${networkId}/prompt`,
-        publicKey,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ prompt }),
-        }
-      );
-      
-      if (!response.ok) {
-        throw new Error('Failed to process prompt');
-      }
-      
-      const data = await response.json();
-      setPromptResponse(data.response);
-      */
-    } catch (err) {
-      console.error('Error processing prompt:', err);
-      setPromptResponse('Error processing your prompt. Please try again.');
-    } finally {
-      setIsPrompting(false);
-    }
-  };
   
   // Copy to clipboard function
   const copyToClipboard = (text: string, type: 'sdk' | 'api') => {
@@ -345,52 +301,185 @@ export default function NetworkDetailsPage() {
         return (
           <div className="space-y-6">
             <div className="feature-card">
-              <h3 className="text-lg font-medium mb-4">Prompt Network</h3>
-              <p className="text-foreground/70 mb-6">
-                Send a prompt to this network to leverage the combined capabilities of all its agents.
-                The network will process your prompt and generate a response based on the collaboration of its agents.
-              </p>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Your Prompt</label>
-                  <Textarea 
-                    placeholder="Enter your prompt for the network..." 
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    rows={5}
-                    className="resize-none"
-                  />
-                </div>
-                
-                <div className="flex justify-end">
-                  <Button 
-                    variant="app" 
-                    className="flex items-center gap-2 cursor-pointer"
-                    onClick={handlePromptSubmit}
-                    disabled={!prompt.trim() || isPrompting}
-                  >
-                    {isPrompting ? (
-                      <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-background"></div>
-                        Processing...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4" />
-                        Send Prompt
-                      </>
-                    )}
-                  </Button>
+              <div className="flex items-center gap-3 mb-4">
+                <h3 className="text-lg font-medium">Automated Content Engine</h3>
+                <div className="px-3 py-1 bg-amber-500/10 text-amber-500 rounded-full text-xs font-medium flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" />
+                  In Development
                 </div>
               </div>
               
-              {promptResponse && (
-                <div className="mt-6 p-4 bg-background/50 rounded-lg border border-border">
-                  <div className="text-sm font-medium mb-2">Network Response:</div>
-                  <div className="whitespace-pre-wrap">{promptResponse}</div>
+              <p className="text-foreground/70 mb-6">
+                Transform your content strategy with our advanced multi-agent content generation system. 
+                This network-powered engine will leverage the unique capabilities of each agent in your network 
+                to create sophisticated, multi-modal content across various formats.
+              </p>
+              
+              <div className="bg-background/50 p-5 rounded-lg mb-6">
+                <h4 className="font-medium mb-4 flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  Key Capabilities
+                </h4>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex gap-3">
+                    <div className="p-2 rounded-full bg-blue-500/10 flex-shrink-0 mt-1">
+                      <Cpu className="w-4 h-4 text-blue-500" />
+                    </div>
+                    <div>
+                      <span className="font-medium text-sm">Multi-modal Generation</span>
+                      <p className="text-xs text-foreground/70 mt-1">
+                        Automatically create text, code, images, audio, and video content from a single prompt, with each agent handling its specialized domain.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-3">
+                    <div className="p-2 rounded-full bg-purple-500/10 flex-shrink-0 mt-1">
+                      <Clock className="w-4 h-4 text-purple-500" />
+                    </div>
+                    <div>
+                      <span className="font-medium text-sm">Intelligent Scheduling</span>
+                      <p className="text-xs text-foreground/70 mt-1">
+                        Set up automated publishing schedules across multiple platforms with smart timing optimization.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-3">
+                    <div className="p-2 rounded-full bg-green-500/10 flex-shrink-0 mt-1">
+                      <Settings className="w-4 h-4 text-green-500" />
+                    </div>
+                    <div>
+                      <span className="font-medium text-sm">Customizable Workflows</span>
+                      <p className="text-xs text-foreground/70 mt-1">
+                        Design sophisticated content pipelines with agent-specific tasks, review stages, and approval processes.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-3">
+                    <div className="p-2 rounded-full bg-amber-500/10 flex-shrink-0 mt-1">
+                      <BarChart className="w-4 h-4 text-amber-500" />
+                    </div>
+                    <div>
+                      <span className="font-medium text-sm">Performance Analytics</span>
+                      <p className="text-xs text-foreground/70 mt-1">
+                        Track content performance and automatically refine generation parameters based on audience engagement.
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              )}
+              </div>
+              
+              <div className="bg-background/50 p-5 rounded-lg mb-6 border border-dashed border-primary/30">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 rounded-full bg-primary/10">
+                    <Network className="w-4 h-4 text-primary" />
+                  </div>
+                  <h4 className="font-medium">How It Works</h4>
+                </div>
+                
+                <p className="text-sm text-foreground/70 mb-4">
+                  The Automated Content Engine analyzes your network's agent composition and capabilities to create an 
+                  intelligent content generation pipeline. Each agent contributes its specialized expertise:
+                </p>
+                
+                <div className="space-y-3 mb-4">
+                  {networkAgents.map(({ agent_id, role, agents: agent }) => (
+                    <div key={agent_id} className="flex items-start gap-3 bg-background/30 p-3 rounded-md">
+                      {renderAgentIcon(agent)}
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-sm">{agent.name}</span>
+                          {renderRoleBadge(role)}
+                        </div>
+                        <p className="text-xs text-foreground/70 mt-1">
+                          {role === "processor" && "Processes and structures raw content data"}
+                          {role === "analyzer" && "Analyzes content for quality and relevance"}
+                          {role === "creator" && "Generates creative content elements"}
+                          {role === "validator" && "Ensures content accuracy and compliance"}
+                          {role === "primary" && "Orchestrates the content generation process"}
+                          {!["processor", "analyzer", "creator", "validator", "primary"].includes(role) && 
+                            `Contributes ${agent.type || "specialized"} capabilities to the content pipeline`}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="bg-background/50 p-5 rounded-lg border border-border">
+                <h4 className="font-medium mb-4">Preview Experience</h4>
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Content Brief</label>
+                    <Textarea 
+                      placeholder="Describe the content you want to generate..." 
+                      rows={3}
+                      className="resize-none bg-background/30"
+                      disabled
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Output Formats</label>
+                      <div className="bg-background/30 p-3 rounded-md border border-border/50 flex flex-wrap gap-2 opacity-60">
+                        <div className="px-2 py-1 bg-background/50 rounded-md text-xs flex items-center gap-1">
+                          <FileText className="w-3 h-3" />
+                          Blog Post
+                        </div>
+                        <div className="px-2 py-1 bg-background/50 rounded-md text-xs flex items-center gap-1">
+                          <Code className="w-3 h-3" />
+                          Code
+                        </div>
+                        <div className="px-2 py-1 bg-background/50 rounded-md text-xs flex items-center gap-1">
+                          <Image className="w-3 h-3" />
+                          Images
+                        </div>
+                        <div className="px-2 py-1 bg-background/50 rounded-md text-xs flex items-center gap-1">
+                          <Video className="w-3 h-3" />
+                          Video
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Publishing Schedule</label>
+                      <div className="bg-background/30 p-3 rounded-md border border-border/50 opacity-60">
+                        <div className="flex items-center gap-2 text-xs text-foreground/70">
+                          <Calendar className="w-3 h-3" />
+                          <span>Schedule not configured</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-end">
+                    <Button 
+                      variant="app" 
+                      className="flex items-center gap-2 cursor-pointer"
+                      disabled
+                    >
+                      <Sparkles className="w-4 h-4" />
+                      Generate Content
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex justify-center mt-6">
+                <Button 
+                  variant="outline" 
+                  className="flex items-center gap-2 cursor-pointer"
+                  disabled
+                >
+                  <Bell className="w-4 h-4" />
+                  Get Notified When Available
+                </Button>
+              </div>
             </div>
           </div>
         );
