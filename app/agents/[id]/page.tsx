@@ -90,7 +90,7 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
   }, [agentId, isAuthenticated, publicKey]);
 
   // Handle sending a message
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
     
     // Add user message
@@ -105,18 +105,64 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
     setInputMessage('');
     setIsSending(true);
     
-    // Simulate agent response after a delay
-    setTimeout(() => {
+    try {
+      // Prepare message history for the API
+      const messageHistory = messages.map(msg => ({
+        content: msg.content,
+        sender: msg.sender
+      }));
+      
+      // Prepare headers with authentication
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+      
+      // Add authentication headers if authenticated
+      if (isAuthenticated && publicKey) {
+        headers['x-public-key'] = publicKey;
+      }
+      
+      // Call the chat API
+      const response = await fetch(`/api/agents/${agentId}/chat`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          message: inputMessage,
+          messageHistory
+        }),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to get response from agent');
+      }
+      
+      const data = await response.json();
+      
+      // Add agent response
       const agentMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        content: `This is a simulated response from ${agent?.name || 'the agent'}. The actual integration with the agent's API will be implemented soon.`,
+        content: data.response,
         sender: 'agent',
         timestamp: new Date()
       };
       
       setMessages(prev => [...prev, agentMessage]);
+    } catch (err) {
+      console.error('Error getting agent response:', err);
+      
+      // Add error message
+      const errorMessage: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        content: "I'm sorry, I encountered an error while processing your request. Please try again later.",
+        sender: 'agent',
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsSending(false);
-    }, 1500);
+    }
   };
 
   // Show loading state
@@ -271,7 +317,7 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
                   messages.map((message) => (
                     <div 
                       key={message.id} 
-                      className={`flex gap-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                      className={`flex gap-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}
                     >
                       {message.sender === 'agent' && (
                         <div className="w-8 h-8 rounded-full bg-primary/20 flex-shrink-0 flex items-center justify-center">
@@ -284,7 +330,7 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
                           message.sender === 'user' 
                             ? 'bg-primary text-primary-foreground' 
                             : 'bg-background/50 border border-border/30'
-                        }`}
+                        } transition-all duration-300 ease-in-out`}
                       >
                         <p className="text-sm">{message.content}</p>
                         <p className="text-[10px] mt-1 opacity-70 text-right">
@@ -306,11 +352,17 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
                     <div className="w-8 h-8 rounded-full bg-primary/20 flex-shrink-0 flex items-center justify-center">
                       <Bot className="w-4 h-4 text-primary" />
                     </div>
-                    <div className="bg-background/50 border border-border/30 p-3 rounded-lg">
-                      <div className="flex gap-1">
-                        <div className="w-2 h-2 rounded-full bg-foreground/30 animate-pulse"></div>
-                        <div className="w-2 h-2 rounded-full bg-foreground/30 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                        <div className="w-2 h-2 rounded-full bg-foreground/30 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                    <div className="bg-background/50 border border-border/30 p-4 rounded-lg max-w-[80%]">
+                      <div className="flex items-center gap-2">
+                        <div className="flex gap-1.5">
+                          <div className="w-2.5 h-2.5 rounded-full bg-primary/40 animate-pulse"></div>
+                          <div className="w-2.5 h-2.5 rounded-full bg-primary/60 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                          <div className="w-2.5 h-2.5 rounded-full bg-primary/80 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                        </div>
+                        <span className="text-xs text-foreground/50 ml-1">Thinking...</span>
+                      </div>
+                      <div className="mt-1.5 text-[10px] text-foreground/30 text-right">
+                        {agent.name} is generating a response
                       </div>
                     </div>
                   </div>
@@ -339,7 +391,11 @@ export default function AgentDetailsPage({ params }: { params: Promise<{ id: str
                     onClick={handleSendMessage}
                     disabled={!inputMessage.trim() || isSending}
                   >
-                    <Send className="h-5 w-5" />
+                    {isSending ? (
+                      <div className="animate-spin h-5 w-5 border-2 border-primary/30 border-t-primary rounded-full" />
+                    ) : (
+                      <Send className="h-5 w-5" />
+                    )}
                   </Button>
                 </div>
                 <p className="text-xs text-foreground/40 mt-2 text-center">
