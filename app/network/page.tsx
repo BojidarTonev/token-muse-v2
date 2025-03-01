@@ -41,32 +41,30 @@ export default function NetworkPage() {
       
       <PageTransition>
         <main className="pt-24 pb-16 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
-            <AnimatedElement animation="slideUp">
+          <AnimatedElement animation="fadeIn" delay={0.1}>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
               <div>
                 <h1 className="text-3xl font-bold mb-2">Agent Networks</h1>
                 <p className="text-foreground/70 max-w-xl">
                   Connect multiple AI agents into collaborative networks to tackle complex creative and problem-solving tasks.
                 </p>
               </div>
-            </AnimatedElement>
-            
-            <AnimatedElement animation="slideLeft" delay={0.2}>
+              
               <div className="mt-4 md:mt-0">
                 <Button variant="app" className="flex items-center gap-2">
                   <Plus className="w-4 h-4" />
                   Create Network
                 </Button>
               </div>
-            </AnimatedElement>
-          </div>
+            </div>
+          </AnimatedElement>
           
           {/* Featured Network */}
-          <ScrollReveal animation="scale" threshold={0.1} className="mb-16">
-            <section>
+          <ScrollReveal animation="fadeIn" delay={0.2}>
+            <section className="mb-16">
               <div className="feature-card overflow-hidden">
                 <div className="flex flex-col md:flex-row gap-8">
-                  <div className="md:w-1/2">
+                  <AnimatedElement animation="slideRight" delay={0.3} className="md:w-1/2">
                     <h2 className="text-2xl font-semibold mb-4">Featured Network</h2>
                     <h3 className="text-xl font-medium mb-2 text-primary">Narrative Engine</h3>
                     <p className="text-foreground/70 mb-6">
@@ -94,9 +92,9 @@ export default function NetworkPage() {
                     <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
                       View Network Details
                     </Button>
-                  </div>
+                  </AnimatedElement>
                   
-                  <div className="md:w-1/2 relative min-h-[300px]">
+                  <AnimatedElement animation="scale" delay={0.4} className="md:w-1/2 relative min-h-[300px]">
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="relative w-full h-full">
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 glow">
@@ -146,27 +144,20 @@ export default function NetworkPage() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </AnimatedElement>
                 </div>
               </div>
             </section>
           </ScrollReveal>
           
           {/* Network List */}
-          <section>
-            <AnimatedElement animation="slideUp" delay={0.3}>
+          <ScrollReveal animation="fadeIn" delay={0.3}>
+            <section>
               <h2 className="text-2xl font-semibold mb-8">Your Networks</h2>
-            </AnimatedElement>
-            
-            <StaggerContainer delayFactor={0.4} staggerChildren={0.1}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {networks.map((network) => (
-                  <ScrollReveal 
-                    key={network.id} 
-                    animation="slideUp" 
-                    className="h-full"
-                    threshold={0.1}
-                  >
+              
+              <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6" delay={0.1}>
+                {networks.map((network, index) => (
+                  <ScrollReveal key={network.id} animation="slideUp" delay={index * 0.05}>
                     <div className="feature-card group cursor-pointer h-full">
                       <div className="relative w-full h-48 mb-4 rounded-md overflow-hidden bg-background/50">
                         <div className="absolute inset-0 flex items-center justify-center">
@@ -203,7 +194,7 @@ export default function NetworkPage() {
                 ))}
                 
                 {/* Create New Network Card */}
-                <ScrollReveal animation="fadeIn" delay={0.2} threshold={0.1}>
+                <ScrollReveal animation="fadeIn" delay={0.4}>
                   <div className="border-2 border-dashed border-border rounded-lg p-6 flex flex-col items-center justify-center text-center h-[350px] hover:border-primary/50 transition-colors cursor-pointer">
                     <div className="w-16 h-16 rounded-full bg-background flex items-center justify-center mb-4">
                       <Plus className="w-8 h-8 text-primary" />
@@ -218,9 +209,9 @@ export default function NetworkPage() {
                     </Button>
                   </div>
                 </ScrollReveal>
-              </div>
-            </StaggerContainer>
-          </section>
+              </StaggerContainer>
+            </section>
+          </ScrollReveal>
         </main>
       </PageTransition>
     </div>

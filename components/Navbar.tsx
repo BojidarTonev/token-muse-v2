@@ -5,13 +5,11 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import WalletButton from './WalletButton';
-import { useAuth } from '@/hooks/useAuth';
+import { WalletButton } from './WalletButton';
 
 const Navbar = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isAuthenticated } = useAuth();
   
   const isActive = (path: string) => {
     return pathname === path;
@@ -38,7 +36,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-background/80 backdrop-blur-md border-b border-border/20">
       <div className="flex items-center gap-2">
         <Link href="/" className="flex items-center gap-2">
-          <Image 
+          <Image
             src="/logo.jpg" 
             alt="TokenMuse Logo" 
             width={32} 

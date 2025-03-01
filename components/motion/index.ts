@@ -1,4 +1,4 @@
-export { default as PageTransition } from './PageTransition';
-export { default as AnimatedElement } from './AnimatedElement';
-export { default as StaggerContainer } from './StaggerContainer';
-export { default as ScrollReveal } from './ScrollReveal'; 
+export * from './PageTransition';
+export * from './StaggerContainer';
+export * from './AnimatedElement';
+export * from './ScrollReveal'; 

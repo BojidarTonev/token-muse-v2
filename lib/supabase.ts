@@ -29,6 +29,7 @@ export type Agent = {
   description?: string;
   type: string;
   capabilities: string[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   parameters: Record<string, any>;
   image_url?: string;
   owner_key: string;
@@ -73,6 +74,7 @@ export type Output = {
   id: string;
   content_url: string;
   content_type: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content_metadata?: Record<string, any>;
   agent_id?: string;
   narrative_id?: string;

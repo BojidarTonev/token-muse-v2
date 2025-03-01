@@ -117,6 +117,7 @@ export async function PUT(
     const { content_url, content_type, content_metadata, token_id } = body;
     
     // Prepare the update data
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const updateData: any = {};
     
     if (content_url !== undefined) updateData.content_url = content_url;

@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   try {
     // Parse the request body
     const body = await request.json();
-    const { publicKey, signature } = body;
+    const { publicKey } = body;
     
     // Validate the request
     if (!publicKey) {

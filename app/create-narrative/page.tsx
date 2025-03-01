@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Network, FileText, Image as ImageIcon, Music, Code, Sparkles } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, Network, FileText, Image as ImageIcon, Music, Code } from "lucide-react";
 
 export default function CreateNarrativePage() {
   return (

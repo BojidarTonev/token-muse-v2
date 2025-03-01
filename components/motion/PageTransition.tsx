@@ -1,5 +1,3 @@
-'use client';
-
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
 import { useAnimationPreference } from '@/hooks/useAnimationPreference';
@@ -8,36 +6,36 @@ interface PageTransitionProps {
   children: ReactNode;
 }
 
-export default function PageTransition({ children }: PageTransitionProps) {
-  const { isEnabled, isReduced } = useAnimationPreference();
-  
-  // If animations are disabled, just render children
-  if (!isEnabled) {
-    return <div className="w-full">{children}</div>;
+export const PageTransition = ({ children }: PageTransitionProps) => {
+  const { animationsEnabled, reducedMotion } = useAnimationPreference();
+
+  // If animations are disabled, render children directly
+  if (!animationsEnabled) {
+    return <>{children}</>;
   }
-  
-  // Use reduced animations if preferred
-  const transitionSettings = isReduced 
+
+  // Define transition settings based on reduced motion preference
+  const transition = reducedMotion
     ? {
         type: 'tween',
         duration: 0.2,
       }
     : {
         type: 'spring',
-        stiffness: 100,
+        stiffness: 260,
         damping: 20,
         duration: 0.3,
       };
-  
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: isReduced ? 10 : 20 }}
+      initial={{ opacity: 0, y: reducedMotion ? 10 : 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: isReduced ? 10 : 20 }}
-      transition={transitionSettings}
+      exit={{ opacity: 0, y: reducedMotion ? 10 : 20 }}
+      transition={transition}
       className="w-full"
     >
       {children}
     </motion.div>
   );
-} 
+}; 

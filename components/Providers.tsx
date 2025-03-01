@@ -1,45 +1,25 @@
 'use client';
 
-import { ThemeProvider } from 'next-themes';
-import { Toaster } from 'sonner';
+import { ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import { store } from '@/redux/store';
-import { WalletProvider } from '@/context/WalletContext';
+import { Toaster } from 'sonner';
+import { AnimatePresence } from 'framer-motion';
 import { AnimationProvider } from '@/hooks/useAnimationPreference';
-import AnimationSettings from './AnimationSettings';
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+interface ProvidersProps {
+  children: ReactNode;
+}
+
+export default function Providers({ children }: ProvidersProps) {
   return (
     <Provider store={store}>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="dark"
-        enableSystem
-        disableTransitionOnChange
-      >
-        <AnimationProvider>
-          <WalletProvider>
-            {children}
-            <AnimationSettings />
-            <Toaster
-              position="bottom-right"
-              toastOptions={{
-                style: {
-                  background: '#1e1e2a',
-                  color: '#ffffff',
-                  border: '1px solid #2a2a3a',
-                  borderLeft: '4px solid #e11d48',
-                  borderRadius: '8px',
-                  padding: '16px',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
-                  fontFamily: 'Montserrat, sans-serif',
-                },
-                duration: 4000,
-              }}
-            />
-          </WalletProvider>
-        </AnimationProvider>
-      </ThemeProvider>
+      <AnimationProvider>
+        <AnimatePresence mode="wait">
+          {children}
+        </AnimatePresence>
+      </AnimationProvider>
+      <Toaster position="bottom-right" duration={4000} />
     </Provider>
   );
 } 

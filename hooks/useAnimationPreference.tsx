@@ -1,48 +1,71 @@
 'use client';
 
-import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type AnimationPreference = 'full' | 'reduced' | 'off';
 
 interface AnimationContextType {
+  animationsEnabled: boolean;
+  reducedMotion: boolean;
   preference: AnimationPreference;
-  setPreference: (pref: AnimationPreference) => void;
-  isEnabled: boolean;
-  isReduced: boolean;
+  setPreference: (preference: AnimationPreference) => void;
 }
 
 const AnimationContext = createContext<AnimationContextType | undefined>(undefined);
 
 export function AnimationProvider({ children }: { children: ReactNode }) {
-  // Default to full animations, but respect user's system preferences
   const [preference, setPreference] = useState<AnimationPreference>('full');
-  
+  const [systemReducedMotion, setSystemReducedMotion] = useState<boolean>(false);
+
+  // Check for system preference on mount
   useEffect(() => {
-    // Check for saved preference in localStorage
-    const savedPreference = localStorage.getItem('animation-preference') as AnimationPreference | null;
-    
-    if (savedPreference) {
-      setPreference(savedPreference);
-    } else if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      // If no saved preference but user has reduced motion preference
-      setPreference('reduced');
+    // Check if localStorage is available (client-side)
+    if (typeof window !== 'undefined') {
+      // Get saved preference from localStorage
+      const savedPreference = localStorage.getItem('animationPreference') as AnimationPreference | null;
+      if (savedPreference) {
+        setPreference(savedPreference);
+      }
+
+      // Check for system preference for reduced motion
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      setSystemReducedMotion(mediaQuery.matches);
+
+      // Update if system preference changes
+      const handleChange = (e: MediaQueryListEvent) => {
+        setSystemReducedMotion(e.matches);
+      };
+
+      mediaQuery.addEventListener('change', handleChange);
+      return () => {
+        mediaQuery.removeEventListener('change', handleChange);
+      };
     }
   }, []);
-  
-  const updatePreference = (pref: AnimationPreference) => {
-    setPreference(pref);
-    localStorage.setItem('animation-preference', pref);
-  };
-  
-  const value = {
-    preference,
-    setPreference: updatePreference,
-    isEnabled: preference !== 'off',
-    isReduced: preference === 'reduced'
-  };
-  
+
+  // Save preference to localStorage when it changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('animationPreference', preference);
+    }
+  }, [preference]);
+
+  // Determine if animations should be enabled based on preference
+  const animationsEnabled = preference !== 'off';
+
+  // Determine if reduced motion should be used
+  // Use reduced motion if preference is 'reduced' or if system preference is set and preference is 'full'
+  const reducedMotion = preference === 'reduced' || (systemReducedMotion && preference === 'full');
+
   return (
-    <AnimationContext.Provider value={value}>
+    <AnimationContext.Provider
+      value={{
+        animationsEnabled,
+        reducedMotion,
+        preference,
+        setPreference,
+      }}
+    >
       {children}
     </AnimationContext.Provider>
   );
@@ -50,10 +73,8 @@ export function AnimationProvider({ children }: { children: ReactNode }) {
 
 export function useAnimationPreference() {
   const context = useContext(AnimationContext);
-  
   if (context === undefined) {
     throw new Error('useAnimationPreference must be used within an AnimationProvider');
   }
-  
   return context;
 } 

@@ -5,6 +5,7 @@ const TOKEN_KEY = 'token_muse_auth_token';
 const PUBLIC_KEY = 'token_muse_public_key';
 
 // Connect to wallet and authenticate with backend
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const connectAndAuthenticate = async (): Promise<{ user: any; publicKey: string } | null> => {
   try {
     // Connect to wallet

@@ -13,6 +13,7 @@ interface PhantomProvider {
 // Get the Phantom provider from the window object
 export const getProvider = (): PhantomProvider | null => {
   if (typeof window !== 'undefined') {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const provider = (window as any).solana;
     if (provider?.isPhantom) {
       return provider as PhantomProvider;

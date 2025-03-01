@@ -76,7 +76,7 @@ export async function POST(
     }
     
     // Check if the agent is already in the network
-    const { data: existingNetworkAgent, error: checkError } = await supabase
+    const { data: existingNetworkAgent } = await supabase
       .from('network_agents')
       .select('*')
       .eq('network_id', networkId)

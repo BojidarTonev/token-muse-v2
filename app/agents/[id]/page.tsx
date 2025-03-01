@@ -128,7 +128,7 @@ export default function AgentDetailsPage({ params }: { params: { id: string } })
         <main className="pt-24 pb-16 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
           <div className="text-center">
             <h1 className="text-3xl font-bold mb-4">Agent Not Found</h1>
-            <p className="mb-8">The agent you're looking for doesn't exist or has been removed.</p>
+            <p className="mb-8">The agent you&lsquo;re looking for doesn&lsquo;t exist or has been removed.</p>
             <Link href="/agents">
               <Button variant="app">Back to Agents</Button>
             </Link>
