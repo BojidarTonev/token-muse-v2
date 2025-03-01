@@ -1,5 +1,7 @@
-import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
+'use client';
+
+import { motion, AnimatePresence } from 'framer-motion';
+import { ReactNode, useId } from 'react';
 import { useAnimationPreference } from '@/hooks/useAnimationPreference';
 
 interface PageTransitionProps {
@@ -8,6 +10,8 @@ interface PageTransitionProps {
 
 export const PageTransition = ({ children }: PageTransitionProps) => {
   const { animationsEnabled, reducedMotion } = useAnimationPreference();
+  // Generate a stable ID for the key
+  const contentId = useId();
 
   // If animations are disabled, render children directly
   if (!animationsEnabled) {
@@ -28,14 +32,17 @@ export const PageTransition = ({ children }: PageTransitionProps) => {
       };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: reducedMotion ? 10 : 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: reducedMotion ? 10 : 20 }}
-      transition={transition}
-      className="w-full"
-    >
-      {children}
-    </motion.div>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={contentId}
+        initial={{ opacity: 0, y: reducedMotion ? 10 : 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: reducedMotion ? 10 : 20 }}
+        transition={transition}
+        className="w-full"
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
   );
 }; 

@@ -2,7 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
-import { Plus, Network, ArrowRight, Zap, Users, Sparkles } from "lucide-react";
+import { Plus, Network, ArrowRight, Zap, Users, Sparkles, Construction } from "lucide-react";
 import Image from "next/image";
 import { PageTransition, AnimatedElement, StaggerContainer, ScrollReveal } from "@/components/motion";
 
@@ -42,22 +42,54 @@ export default function NetworkPage() {
       <PageTransition>
         <main className="pt-24 pb-16 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
           <AnimatedElement animation="fadeIn" delay={0.1}>
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
               <div>
-                <h1 className="text-3xl font-bold mb-2">Agent Networks</h1>
+                <div className="flex items-center gap-2 mb-2">
+                  <h1 className="text-3xl font-bold">Agent Networks</h1>
+                  <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+                    <Construction className="w-3 h-3" />
+                    Coming Soon
+                  </span>
+                </div>
                 <p className="text-foreground/70 max-w-xl">
                   Connect multiple AI agents into collaborative networks to tackle complex creative and problem-solving tasks.
                 </p>
               </div>
-              
-              <div className="mt-4 md:mt-0">
-                <Button variant="app" className="flex items-center gap-2">
-                  <Plus className="w-4 h-4" />
-                  Create Network
-                </Button>
-              </div>
             </div>
           </AnimatedElement>
+          
+          {/* Development Banner */}
+          <ScrollReveal animation="fadeIn" delay={0.2}>
+            <div className="feature-card mb-12 border-primary/20 bg-primary/5">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 rounded-full bg-primary/20">
+                  <Construction className="w-6 h-6 text-primary" />
+                </div>
+                <h2 className="text-xl font-semibold">This Feature is Under Development</h2>
+              </div>
+              <p className="text-foreground/80 mb-4">
+                We're working hard to bring you Agent Networks - a revolutionary way to connect multiple specialized AI agents 
+                into powerful collaborative systems. Stay tuned for the release!
+              </p>
+              <div className="bg-background/50 p-4 rounded-lg">
+                <h3 className="font-medium mb-2">What to expect:</h3>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2">
+                    <Sparkles className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
+                    <span>Create networks of specialized agents that work together on complex tasks</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Sparkles className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
+                    <span>Design custom workflows where outputs from one agent become inputs for another</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Sparkles className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
+                    <span>Solve problems that require multiple types of expertise and capabilities</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </ScrollReveal>
           
           {/* Featured Network */}
           <ScrollReveal animation="fadeIn" delay={0.2}>
@@ -65,7 +97,7 @@ export default function NetworkPage() {
               <div className="feature-card overflow-hidden">
                 <div className="flex flex-col md:flex-row gap-8">
                   <AnimatedElement animation="slideRight" delay={0.3} className="md:w-1/2">
-                    <h2 className="text-2xl font-semibold mb-4">Featured Network</h2>
+                    <h2 className="text-2xl font-semibold mb-4">Featured Network Preview</h2>
                     <h3 className="text-xl font-medium mb-2 text-primary">Narrative Engine</h3>
                     <p className="text-foreground/70 mb-6">
                       A powerful network of specialized agents that collaborate to create immersive narratives across multiple media formats.
@@ -89,8 +121,8 @@ export default function NetworkPage() {
                       </div>
                     </div>
                     
-                    <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
-                      View Network Details
+                    <Button variant="outline" className="border-primary text-primary hover:bg-primary/10" disabled>
+                      Coming Soon
                     </Button>
                   </AnimatedElement>
                   
@@ -153,12 +185,15 @@ export default function NetworkPage() {
           {/* Network List */}
           <ScrollReveal animation="fadeIn" delay={0.3}>
             <section>
-              <h2 className="text-2xl font-semibold mb-8">Your Networks</h2>
+              <h2 className="text-2xl font-semibold mb-4">Planned Network Templates</h2>
+              <p className="text-foreground/70 mb-8">
+                These are some of the network templates we're developing for the initial release. Each template will provide a starting point that you can customize for your specific needs.
+              </p>
               
               <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6" delay={0.1}>
                 {networks.map((network, index) => (
                   <ScrollReveal key={network.id} animation="slideUp" delay={index * 0.05}>
-                    <div className="feature-card group cursor-pointer h-full">
+                    <div className="feature-card group h-full">
                       <div className="relative w-full h-48 mb-4 rounded-md overflow-hidden bg-background/50">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <Image
@@ -183,28 +218,28 @@ export default function NetworkPage() {
                       </p>
                       
                       <div className="flex justify-between items-center">
-                        <span className="text-xs text-foreground/60">{network.outputs} Outputs</span>
-                        <Button variant="outline" size="sm" className="text-primary border-primary hover:bg-primary/10 flex items-center gap-1">
-                          <Sparkles className="w-3 h-3" />
-                          Run Network
+                        <span className="text-xs text-foreground/60">Coming Soon</span>
+                        <Button variant="outline" size="sm" className="text-primary border-primary hover:bg-primary/10 flex items-center gap-1" disabled>
+                          <Construction className="w-3 h-3" />
+                          In Development
                         </Button>
                       </div>
                     </div>
                   </ScrollReveal>
                 ))}
                 
-                {/* Create New Network Card */}
+                {/* Join Waitlist Card */}
                 <ScrollReveal animation="fadeIn" delay={0.4}>
-                  <div className="border-2 border-dashed border-border rounded-lg p-6 flex flex-col items-center justify-center text-center h-[350px] hover:border-primary/50 transition-colors cursor-pointer">
+                  <div className="border-2 border-dashed border-border rounded-lg p-6 flex flex-col items-center justify-center text-center h-[350px] hover:border-primary/50 transition-colors">
                     <div className="w-16 h-16 rounded-full bg-background flex items-center justify-center mb-4">
                       <Plus className="w-8 h-8 text-primary" />
                     </div>
-                    <h3 className="text-xl font-semibold mb-2">Create New Network</h3>
+                    <h3 className="text-xl font-semibold mb-2">Join the Waitlist</h3>
                     <p className="text-sm text-foreground/70 mb-6">
-                      Connect your agents into a collaborative network to solve complex problems.
+                      Be the first to know when Agent Networks are available and get early access to this powerful feature.
                     </p>
                     <Button variant="app" size="sm" className="flex items-center gap-2">
-                      Get Started
+                      Join Waitlist
                       <ArrowRight className="w-4 h-4" />
                     </Button>
                   </div>

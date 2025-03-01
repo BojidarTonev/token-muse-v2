@@ -7,11 +7,9 @@ export async function GET(request: NextRequest) {
     // Get the public key from the request headers
     const publicKey = request.headers.get('x-public-key');
     
+    // If no public key is provided, return an empty array instead of an error
     if (!publicKey) {
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      );
+      return NextResponse.json({ agents: [] });
     }
     
     // Fetch the agents from the database
@@ -45,10 +43,11 @@ export async function POST(request: NextRequest) {
     // Get the public key from the request headers
     const publicKey = request.headers.get('x-public-key');
     
+    // If no public key is provided, return a user-friendly error message
     if (!publicKey) {
       return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
+        { error: 'Please connect your wallet to create an agent' },
+        { status: 400 }
       );
     }
     

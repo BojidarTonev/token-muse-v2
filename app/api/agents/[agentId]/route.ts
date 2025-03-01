@@ -10,11 +10,23 @@ export async function GET(
     const { agentId } = params;
     const publicKey = request.headers.get('x-public-key');
     
+    // If no public key is provided, try to fetch the agent as a public resource
     if (!publicKey) {
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      );
+      // Fetch the agent from the database without owner check
+      const { data: agent, error } = await supabase
+        .from('agents')
+        .select('*')
+        .eq('id', agentId)
+        .single();
+      
+      if (error || !agent) {
+        return NextResponse.json(
+          { error: 'Agent not found' },
+          { status: 404 }
+        );
+      }
+      
+      return NextResponse.json({ agent });
     }
     
     // Fetch the agent from the database
@@ -22,7 +34,6 @@ export async function GET(
       .from('agents')
       .select('*')
       .eq('id', agentId)
-      .eq('owner_key', publicKey)
       .single();
     
     if (error) {
@@ -60,16 +71,17 @@ export async function PUT(
     const { agentId } = params;
     const publicKey = request.headers.get('x-public-key');
     
+    // If no public key is provided, return a user-friendly error message
     if (!publicKey) {
       return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
+        { error: 'Please connect your wallet to update this agent' },
+        { status: 400 }
       );
     }
     
     // Parse the request body
     const body = await request.json();
-    const { name, description, type, capabilities, parameters, image_url, token_id } = body;
+    const { name, description, type, capabilities, parameters, image_url } = body;
     
     // Validate the request
     if (!name || !type) {
@@ -87,41 +99,31 @@ export async function PUT(
       .eq('owner_key', publicKey)
       .single();
     
-    if (fetchError) {
-      console.error('Error fetching agent:', fetchError);
+    if (fetchError || !existingAgent) {
       return NextResponse.json(
-        { error: 'Error fetching agent' },
-        { status: 500 }
-      );
-    }
-    
-    if (!existingAgent) {
-      return NextResponse.json(
-        { error: 'Agent not found' },
+        { error: 'Agent not found or you do not have permission to update it' },
         { status: 404 }
       );
     }
     
     // Update the agent in the database
-    const { data: updatedAgent, error: updateError } = await supabase
+    const { data: agent, error } = await supabase
       .from('agents')
       .update({
         name,
         description,
         type,
-        capabilities: capabilities || existingAgent.capabilities,
-        parameters: parameters || existingAgent.parameters,
-        image_url,
-        token_id,
-        updated_at: new Date().toISOString()
+        capabilities: capabilities || [],
+        parameters: parameters || {},
+        image_url
       })
       .eq('id', agentId)
       .eq('owner_key', publicKey)
       .select()
       .single();
     
-    if (updateError) {
-      console.error('Error updating agent:', updateError);
+    if (error) {
+      console.error('Error updating agent:', error);
       return NextResponse.json(
         { error: 'Error updating agent' },
         { status: 500 }
@@ -129,7 +131,7 @@ export async function PUT(
     }
     
     // Return the updated agent
-    return NextResponse.json({ agent: updatedAgent });
+    return NextResponse.json({ agent });
   } catch (error) {
     console.error('Error in PUT /api/agents/[agentId]:', error);
     return NextResponse.json(
@@ -148,10 +150,11 @@ export async function DELETE(
     const { agentId } = params;
     const publicKey = request.headers.get('x-public-key');
     
+    // If no public key is provided, return a user-friendly error message
     if (!publicKey) {
       return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
+        { error: 'Please connect your wallet to delete this agent' },
+        { status: 400 }
       );
     }
     
@@ -163,30 +166,22 @@ export async function DELETE(
       .eq('owner_key', publicKey)
       .single();
     
-    if (fetchError) {
-      console.error('Error fetching agent:', fetchError);
+    if (fetchError || !existingAgent) {
       return NextResponse.json(
-        { error: 'Error fetching agent' },
-        { status: 500 }
-      );
-    }
-    
-    if (!existingAgent) {
-      return NextResponse.json(
-        { error: 'Agent not found' },
+        { error: 'Agent not found or you do not have permission to delete it' },
         { status: 404 }
       );
     }
     
     // Delete the agent from the database
-    const { error: deleteError } = await supabase
+    const { error } = await supabase
       .from('agents')
       .delete()
       .eq('id', agentId)
       .eq('owner_key', publicKey);
     
-    if (deleteError) {
-      console.error('Error deleting agent:', deleteError);
+    if (error) {
+      console.error('Error deleting agent:', error);
       return NextResponse.json(
         { error: 'Error deleting agent' },
         { status: 500 }

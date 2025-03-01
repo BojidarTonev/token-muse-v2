@@ -2,7 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
-import { Vote, Users, FileText, BarChart3, Shield, Lightbulb, ArrowRight } from "lucide-react";
+import { Vote, Users, FileText, BarChart3, Shield, Lightbulb, ArrowRight, Clock, Construction, Calendar } from "lucide-react";
 import Image from "next/image";
 import { PageTransition, AnimatedElement, StaggerContainer, ScrollReveal } from "@/components/motion";
 
@@ -46,8 +46,88 @@ export default function DAOPage() {
               <p className="text-foreground/70 max-w-2xl mx-auto">
                 A decentralized governance system that puts the future of the platform in the hands of the community.
               </p>
+              
+              {/* Development Banner */}
+              <div className="mt-6 mx-auto max-w-3xl">
+                <div className="bg-secondary/10 border border-secondary/20 rounded-lg p-4 flex items-center gap-4">
+                  <div className="p-3 rounded-full bg-secondary/20 flex-shrink-0">
+                    <Construction className="w-5 h-5 text-secondary-foreground" />
+                  </div>
+                  <div className="text-left">
+                    <h3 className="font-semibold text-secondary-foreground mb-1">Under Development</h3>
+                    <p className="text-sm text-foreground/70">
+                      The TokenMuse DAO is currently in development and will launch at the end of Q1 2025. This preview showcases the planned functionality.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </AnimatedElement>
+          
+          {/* Launch Timeline */}
+          <section className="mb-12">
+            <ScrollReveal animation="fadeIn">
+              <div className="feature-card p-6 border-primary/20 bg-primary/5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-primary/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl"></div>
+                
+                <div className="flex flex-col md:flex-row gap-8 relative">
+                  <div className="md:w-2/3">
+                    <h2 className="text-2xl font-bold mb-4">DAO Launch Timeline</h2>
+                    <p className="text-foreground/80 mb-6">
+                      We&apos;re working hard to build a robust governance system that will empower our community to shape the future of TokenMuse. The DAO will launch at the end of Q1 2025 with full voting capabilities.
+                    </p>
+                    
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 rounded-full bg-primary/10 mt-1">
+                          <Calendar className="w-4 h-4 text-primary" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold">Q4 2024</h3>
+                          <p className="text-sm text-foreground/70">Smart contract development and security audits</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 rounded-full bg-primary/10 mt-1">
+                          <Calendar className="w-4 h-4 text-primary" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold">Q1 2025</h3>
+                          <p className="text-sm text-foreground/70">Governance interface testing and community onboarding</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 rounded-full bg-primary/10 mt-1">
+                          <Lightbulb className="w-4 h-4 text-primary" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold">End of Q1 2025</h3>
+                          <p className="text-sm text-foreground/70">Official DAO launch with full voting capabilities</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="md:w-1/3 flex items-center justify-center">
+                    <div className="relative w-48 h-48">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-32 h-32 rounded-full bg-primary/20 flex items-center justify-center animate-pulse-slow">
+                          <div className="w-24 h-24 rounded-full bg-primary/30 flex items-center justify-center">
+                            <div className="w-16 h-16 rounded-full bg-primary/40 flex items-center justify-center">
+                              <Vote className="w-8 h-8 text-primary" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          </section>
           
           {/* DAO Overview */}
           <section className="mb-12">
@@ -56,7 +136,7 @@ export default function DAOPage() {
                 <div>
                   <h2 className="text-2xl font-bold mb-4">Governance Overview</h2>
                   <p className="text-foreground/70 mb-6 text-sm">
-                    The TokenMuse DAO enables token holders to participate in platform governance through proposal creation, voting, and implementation oversight.
+                    The TokenMuse DAO will enable token holders to participate in platform governance through proposal creation, voting, and implementation oversight.
                   </p>
                   
                   <div className="space-y-4">
@@ -156,14 +236,29 @@ export default function DAOPage() {
             </StaggerContainer>
           </section>
           
-          {/* Active Proposals */}
+          {/* Active Proposals - Preview */}
           <ScrollReveal animation="fadeIn" delay={0.2}>
             <section className="mb-12">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold">Active Proposals</h2>
-                <Button variant="app" className="rounded-full text-sm">
-                  Submit Proposal
-                </Button>
+                <h2 className="text-2xl font-bold">Preview: Active Proposals</h2>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-secondary-foreground bg-secondary/10 px-3 py-1 rounded-full">
+                    <Clock className="w-3 h-3 inline-block mr-1" />
+                    Coming Q1 2025
+                  </span>
+                  <Button variant="app" className="rounded-full text-sm" disabled>
+                    Submit Proposal
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="feature-card p-5 border-secondary/20 bg-secondary/5 mb-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <Construction className="w-5 h-5 text-secondary-foreground" />
+                  <p className="text-sm font-medium text-secondary-foreground">
+                    This is a preview of how proposals will work when the DAO launches in Q1 2025. The data shown is simulated.
+                  </p>
+                </div>
               </div>
               
               <StaggerContainer className="space-y-4" delay={0.1}>
@@ -203,7 +298,7 @@ export default function DAOPage() {
                             </div>
                           </div>
                           
-                          <Button variant="outline" size="sm" className="whitespace-nowrap">
+                          <Button variant="outline" size="sm" className="whitespace-nowrap" disabled>
                             Cast Vote
                           </Button>
                         </div>
@@ -215,7 +310,7 @@ export default function DAOPage() {
               
               <AnimatedElement animation="fadeIn" delay={0.5}>
                 <div className="mt-6 text-center">
-                  <Button variant="outline" className="text-sm">
+                  <Button variant="outline" className="text-sm" disabled>
                     View All Proposals
                   </Button>
                 </div>
@@ -223,10 +318,25 @@ export default function DAOPage() {
             </section>
           </ScrollReveal>
           
-          {/* DAO Stats */}
+          {/* DAO Stats - Preview */}
           <ScrollReveal animation="fadeIn" delay={0.3}>
             <section>
-              <h2 className="text-2xl font-bold mb-6 text-center">DAO Statistics</h2>
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <h2 className="text-2xl font-bold text-center">Preview: DAO Statistics</h2>
+                <span className="text-xs text-secondary-foreground bg-secondary/10 px-3 py-1 rounded-full">
+                  <Clock className="w-3 h-3 inline-block mr-1" />
+                  Coming Q1 2025
+                </span>
+              </div>
+              
+              <div className="feature-card p-5 border-secondary/20 bg-secondary/5 mb-6 text-center">
+                <div className="flex items-center justify-center gap-3 mb-1">
+                  <Construction className="w-5 h-5 text-secondary-foreground" />
+                  <p className="text-sm font-medium text-secondary-foreground">
+                    These statistics are simulated projections for the DAO launch
+                  </p>
+                </div>
+              </div>
               
               <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" delay={0.1}>
                 <ScrollReveal animation="slideUp" delay={0.1}>
