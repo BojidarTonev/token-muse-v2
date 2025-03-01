@@ -381,7 +381,7 @@ export default function NetworkDetailsPage() {
                 </div>
                 
                 <p className="text-sm text-foreground/70 mb-4">
-                  The Automated Content Engine analyzes your network's agent composition and capabilities to create an 
+                  The Automated Content Engine analyzes your network&lsquo;s agent composition and capabilities to create an 
                   intelligent content generation pipeline. Each agent contributes its specialized expertise:
                 </p>
                 
