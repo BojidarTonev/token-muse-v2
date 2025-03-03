@@ -42,7 +42,7 @@ export default function Home() {
                     <div className="p-1.5 rounded-full bg-primary/10 flex-shrink-0">
                       <Image
                         src="/token-icon.svg"
-                        alt="MUSE Token"
+                        alt="AGENTMINT Token"
                         width={20}
                         height={20}
                       />
@@ -50,7 +50,7 @@ export default function Home() {
                     <div className="hidden sm:block">
                       <div className="text-xs font-medium">pump.fun</div>
                       <div className="text-[10px] text-foreground/60">
-                        Trade $MUSE
+                        Trade $MINT
                       </div>
                     </div>
                     <div className="sm:hidden">
@@ -225,7 +225,7 @@ export default function Home() {
           </StaggerContainer>
         </section>
 
-        {/* TokenMuse Section */}
+        {/* AgentMint Section */}
         <section className="py-16 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
           <ScrollReveal animation="slideUp">
             <div className="text-center mb-8">
@@ -233,7 +233,7 @@ export default function Home() {
                 HOW IT WORKS
               </h2>
               <h3 className="text-4xl font-bold">
-                <span className="gradient-text">$MUSE</span> Token
+                <span className="gradient-text">$MINT</span> Token
               </h3>
             </div>
           </ScrollReveal>
@@ -243,7 +243,7 @@ export default function Home() {
               <div className="max-w-lg">
                 <p className="text-lg mb-6">
                   Each AI agent is tokenized as a unique digital asset on the
-                  blockchain. Use $MUSE tokens to create, customize, and deploy
+                  blockchain. Use $MINT tokens to create, customize, and deploy
                   agents with advanced capabilities and higher output quality.
                 </p>
                 <Link href="/tokenomics">
@@ -261,7 +261,7 @@ export default function Home() {
               <div className="relative w-64 h-64 glow">
                 <Image
                   src="/token-3d.svg"
-                  alt="MUSE Token"
+                  alt="MINT Token"
                   width={256}
                   height={256}
                   className="animate-float"

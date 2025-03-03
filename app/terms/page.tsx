@@ -6,122 +6,225 @@ export default function TermsPage() {
   return (
     <div className="bg-background text-foreground">
       <Navbar />
-      
+
       <main className="pt-24 pb-16 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1000px] mx-auto">
         <div className="mb-8">
-          <Link href="/" className="inline-flex items-center text-sm text-foreground/60 hover:text-primary transition-colors">
+          <Link
+            href="/"
+            className="inline-flex items-center text-sm text-foreground/60 hover:text-primary transition-colors"
+          >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Link>
         </div>
-        
+
         <h1 className="text-3xl md:text-4xl font-bold mb-8">
           Terms & Conditions
         </h1>
-        
+
         <div className="space-y-8 text-foreground/80">
           <section>
-            <h2 className="text-xl font-semibold mb-4 text-foreground">1. Introduction</h2>
+            <h2 className="text-xl font-semibold mb-4 text-foreground">
+              1. Introduction
+            </h2>
             <p className="mb-4">
-              Welcome to TokenMuse. These terms and conditions outline the rules and regulations for the use of the TokenMuse platform.
+              Welcome to AgentMint. These terms and conditions outline the rules
+              and regulations for the use of the AgentMint platform.
             </p>
             <p>
-              By accessing this platform, we assume you accept these terms and conditions in full. Do not continue to use TokenMuse if you do not accept all of the terms and conditions stated on this page.
+              By accessing this platform, we assume you accept these terms and
+              conditions in full. Do not continue to use AgentMint if you do not
+              accept all of the terms and conditions stated on this page.
             </p>
           </section>
-          
+
           <section>
-            <h2 className="text-xl font-semibold mb-4 text-foreground">2. Platform Description</h2>
+            <h2 className="text-xl font-semibold mb-4 text-foreground">
+              2. Platform Description
+            </h2>
             <p className="mb-4">
-              TokenMuse is a decentralized platform for AI agent creation, customization, and deployment. The platform utilizes blockchain technology for tokenization of AI agents and operates a DAO (Decentralized Autonomous Organization) for governance.
+              AgentMint is a decentralized platform for AI agent creation,
+              customization, and deployment. The platform utilizes blockchain
+              technology for tokenization of AI agents and operates a DAO
+              (Decentralized Autonomous Organization) for governance.
             </p>
             <p>
-              Our platform allows users to create, customize, and interact with AI agents, participate in governance through the DAO, and engage in various activities related to the TokenMuse ecosystem.
+              Our platform allows users to create, customize, and interact with
+              AI agents, participate in governance through the DAO, and engage
+              in various activities related to the AgentMint ecosystem.
             </p>
           </section>
-          
+
           <section>
-            <h2 className="text-xl font-semibold mb-4 text-foreground">3. User Accounts</h2>
+            <h2 className="text-xl font-semibold mb-4 text-foreground">
+              3. User Accounts
+            </h2>
             <p className="mb-4">
-              To access certain features of the platform, you may be required to create an account and connect a blockchain wallet. You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.
+              To access certain features of the platform, you may be required to
+              create an account and connect a blockchain wallet. You are
+              responsible for maintaining the confidentiality of your account
+              information and for all activities that occur under your account.
             </p>
             <p>
-              You agree to immediately notify us of any unauthorized use of your account or any other breach of security. We cannot and will not be liable for any loss or damage arising from your failure to comply with this provision.
+              You agree to immediately notify us of any unauthorized use of your
+              account or any other breach of security. We cannot and will not be
+              liable for any loss or damage arising from your failure to comply
+              with this provision.
             </p>
           </section>
-          
+
           <section>
-            <h2 className="text-xl font-semibold mb-4 text-foreground">4. Intellectual Property</h2>
+            <h2 className="text-xl font-semibold mb-4 text-foreground">
+              4. Intellectual Property
+            </h2>
             <p className="mb-4">
-              The TokenMuse platform, including but not limited to its code, design, functionality, and branding, is owned by TokenMuse or its licensors and is protected by copyright, trademark, and other intellectual property laws.
+              The AgentMint platform, including but not limited to its code,
+              design, functionality, and branding, is owned by AgentMint or its
+              licensors and is protected by copyright, trademark, and other
+              intellectual property laws.
             </p>
             <p className="mb-4">
-              Content generated by AI agents on our platform is subject to the following ownership rules:
+              Content generated by AI agents on our platform is subject to the
+              following ownership rules:
             </p>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Content generated by users through our AI agents belongs to the user who initiated the generation, subject to our license to use such content as described below.</li>
-              <li>Users grant TokenMuse a non-exclusive, worldwide, royalty-free license to use, reproduce, modify, adapt, publish, translate, and distribute content generated through our platform for the purposes of operating, promoting, and improving our services.</li>
-              <li>TokenMuse does not claim ownership of user-provided prompts or inputs.</li>
+              <li>
+                Content generated by users through our AI agents belongs to the
+                user who initiated the generation, subject to our license to use
+                such content as described below.
+              </li>
+              <li>
+                Users grant AgentMint a non-exclusive, worldwide, royalty-free
+                license to use, reproduce, modify, adapt, publish, translate,
+                and distribute content generated through our platform for the
+                purposes of operating, promoting, and improving our services.
+              </li>
+              <li>
+                AgentMint does not claim ownership of user-provided prompts or
+                inputs.
+              </li>
             </ul>
           </section>
-          
+
           <section>
-            <h2 className="text-xl font-semibold mb-4 text-foreground">5. Tokenomics and Blockchain Interactions</h2>
+            <h2 className="text-xl font-semibold mb-4 text-foreground">
+              5. Tokenomics and Blockchain Interactions
+            </h2>
             <p className="mb-4">
-              The TokenMuse platform utilizes the $MUSE token for various functions within the ecosystem. By using our platform, you acknowledge and agree to the following:
+              The AgentMint platform utilizes the $MINT token for various
+              functions within the ecosystem. By using our platform, you
+              acknowledge and agree to the following:
             </p>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Blockchain transactions are irreversible and we cannot recover tokens sent to incorrect addresses.</li>
-              <li>You are responsible for securing your private keys and wallet access.</li>
-              <li>Token values may fluctuate and we make no guarantees regarding the value of $MUSE tokens.</li>
-              <li>Participation in the DAO is governed by smart contracts and on-chain voting mechanisms.</li>
-              <li>Gas fees and other blockchain-related costs are the responsibility of the user.</li>
+              <li>
+                Blockchain transactions are irreversible and we cannot recover
+                tokens sent to incorrect addresses.
+              </li>
+              <li>
+                You are responsible for securing your private keys and wallet
+                access.
+              </li>
+              <li>
+                Token values may fluctuate and we make no guarantees regarding
+                the value of $MINT tokens.
+              </li>
+              <li>
+                Participation in the DAO is governed by smart contracts and
+                on-chain voting mechanisms.
+              </li>
+              <li>
+                Gas fees and other blockchain-related costs are the
+                responsibility of the user.
+              </li>
             </ul>
           </section>
-          
+
           <section>
-            <h2 className="text-xl font-semibold mb-4 text-foreground">6. Acceptable Use Policy</h2>
-            <p className="mb-4">
-              When using our platform, you agree not to:
-            </p>
+            <h2 className="text-xl font-semibold mb-4 text-foreground">
+              6. Acceptable Use Policy
+            </h2>
+            <p className="mb-4">When using our platform, you agree not to:</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Use the platform to generate illegal, harmful, threatening, abusive, harassing, defamatory, or otherwise objectionable content.</li>
-              <li>Attempt to circumvent any technological measures implemented to protect the platform or its content.</li>
-              <li>Use the platform to infringe upon the intellectual property rights of others.</li>
-              <li>Interfere with or disrupt the platform or servers or networks connected to the platform.</li>
-              <li>Use the platform to distribute malware, viruses, or other malicious code.</li>
-              <li>Engage in any activity that could disable, overburden, or impair the proper functioning of the platform.</li>
+              <li>
+                Use the platform to generate illegal, harmful, threatening,
+                abusive, harassing, defamatory, or otherwise objectionable
+                content.
+              </li>
+              <li>
+                Attempt to circumvent any technological measures implemented to
+                protect the platform or its content.
+              </li>
+              <li>
+                Use the platform to infringe upon the intellectual property
+                rights of others.
+              </li>
+              <li>
+                Interfere with or disrupt the platform or servers or networks
+                connected to the platform.
+              </li>
+              <li>
+                Use the platform to distribute malware, viruses, or other
+                malicious code.
+              </li>
+              <li>
+                Engage in any activity that could disable, overburden, or impair
+                the proper functioning of the platform.
+              </li>
             </ul>
           </section>
-          
+
           <section>
-            <h2 className="text-xl font-semibold mb-4 text-foreground">7. Limitation of Liability</h2>
+            <h2 className="text-xl font-semibold mb-4 text-foreground">
+              7. Limitation of Liability
+            </h2>
             <p>
-              To the maximum extent permitted by applicable law, TokenMuse and its affiliates, officers, employees, agents, partners, and licensors shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the platform.
+              To the maximum extent permitted by applicable law, AgentMint and
+              its affiliates, officers, employees, agents, partners, and
+              licensors shall not be liable for any indirect, incidental,
+              special, consequential, or punitive damages, including without
+              limitation, loss of profits, data, use, goodwill, or other
+              intangible losses, resulting from your access to or use of or
+              inability to access or use the platform.
             </p>
           </section>
-          
+
           <section>
-            <h2 className="text-xl font-semibold mb-4 text-foreground">8. Modifications to Terms</h2>
+            <h2 className="text-xl font-semibold mb-4 text-foreground">
+              8. Modifications to Terms
+            </h2>
             <p>
-              We reserve the right to modify these terms at any time. If we make changes to these terms, we will provide notice of such changes by updating the &ldquo;Last Updated&ldquo; date at the bottom of these terms and by providing additional notification if required by applicable law. Your continued use of the platform following the posting of revised terms means that you accept and agree to the changes.
+              We reserve the right to modify these terms at any time. If we make
+              changes to these terms, we will provide notice of such changes by
+              updating the &ldquo;Last Updated&ldquo; date at the bottom of
+              these terms and by providing additional notification if required
+              by applicable law. Your continued use of the platform following
+              the posting of revised terms means that you accept and agree to
+              the changes.
             </p>
           </section>
-          
+
           <section>
-            <h2 className="text-xl font-semibold mb-4 text-foreground">9. Governing Law</h2>
+            <h2 className="text-xl font-semibold mb-4 text-foreground">
+              9. Governing Law
+            </h2>
             <p>
-              These terms shall be governed and construed in accordance with the laws of [Jurisdiction], without regard to its conflict of law provisions. Our failure to enforce any right or provision of these terms will not be considered a waiver of those rights.
+              These terms shall be governed and construed in accordance with the
+              laws of [Jurisdiction], without regard to its conflict of law
+              provisions. Our failure to enforce any right or provision of these
+              terms will not be considered a waiver of those rights.
             </p>
           </section>
-          
+
           <section>
-            <h2 className="text-xl font-semibold mb-4 text-foreground">10. Contact Us</h2>
+            <h2 className="text-xl font-semibold mb-4 text-foreground">
+              10. Contact Us
+            </h2>
             <p>
-              If you have any questions about these Terms, please contact us at legal@tokenmuse.io.
+              If you have any questions about these Terms, please contact us at
+              legal@agentmint.io.
             </p>
           </section>
-          
+
           <div className="pt-8 text-sm text-foreground/60">
             Last Updated: June 15, 2024
           </div>
@@ -129,4 +232,4 @@ export default function TermsPage() {
       </main>
     </div>
   );
-} 
+}

@@ -16,8 +16,9 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "TokenMuse AI",
-  description: "Decentralized. Scalable. Liquid. A platform for multimodal AI agents with blockchain tokenization.",
+  title: "AgentMint AI",
+  description:
+    "Decentralized. Scalable. Liquid. A platform for multimodal AI agents with blockchain tokenization.",
 };
 
 export default function RootLayout({
@@ -40,9 +41,7 @@ export default function RootLayout({
       >
         <Providers>
           <Navbar />
-          <main className="flex-grow pt-20">
-            {children}
-          </main>
+          <main className="flex-grow pt-20">{children}</main>
           <Footer />
         </Providers>
       </body>

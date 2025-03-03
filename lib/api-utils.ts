@@ -3,7 +3,7 @@
  */
 
 // Constants for local storage keys
-const TOKEN_KEY = 'token_muse_auth_token';
+const TOKEN_KEY = 'agent_mint__auth_token';
 
 /**
  * Gets the auth token from local storage

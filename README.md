@@ -1,10 +1,10 @@
-# TokenMuse
+# agentmint
 
-![TokenMuse Logo](https://placeholder-for-tokenmuse-logo.com)
+![agentmint Logo](https://placeholder-for-agentmint-logo.com)
 
 ## Overview
 
-TokenMuse is a cutting-edge platform that fuses decentralized AI, blockchain tokenization, and intuitive UI/UX to revolutionize creative collaboration. The platform enables users to create multimodal AI agents, build interconnected agent networks, and engage in narrative-driven collaboration to solve complex problems or creative challenges.
+Agentmint is a cutting-edge platform that fuses decentralized AI, blockchain tokenization, and intuitive UI/UX to revolutionize creative collaboration. The platform enables users to create multimodal AI agents, build interconnected agent networks, and engage in narrative-driven collaboration to solve complex problems or creative challenges.
 
 ## Core Features
 
@@ -26,7 +26,7 @@ Define master narratives or problem scenarios that are distributed across all ag
 - **UI/UX**: shadcn component library for modern, responsive design
 - **Authentication**: Phantom wallet integration for Web3 authentication
 - **Database**: PostgreSQL (via Supabase) for structured data storage
-- **Storage**: Public token-muse bucket for content hosting
+- **Storage**: Public agent-mint bucket for content hosting
 - **State Management**: Redux with RTK for frontend state
 - **Notifications**: Sonner for toast notifications
 
@@ -35,7 +35,7 @@ Define master narratives or problem scenarios that are distributed across all ag
 - **/agents** - Browse and manage AI agents
 - **/network** - View and interact with agent networks
 - **/create-narrative** - Define master narratives for agent networks
-- **/tokenomics** - Explore $MUSE token economics
+- **/tokenomics** - Explore $MINT token economics
 - **/roadmap** - View project milestones and progress
 - **/create-agent** - Create and customize new AI agents
 - **/create-network** - Assemble networks from existing agents
@@ -200,8 +200,8 @@ Imagine a digital marketing agency tasked with launching a multimedia campaign:
 1. Clone the repository
 
    ```
-   git clone https://github.com/yourusername/token-muse.git
-   cd token-muse
+   git clone https://github.com/yourusername/agent-mint.git
+   cd agent-mint
    ```
 
 2. Install dependencies
@@ -236,4 +236,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-For questions or support, please reach out to [contact@tokenmuse.io](mailto:contact@tokenmuse.io).
+For questions or support, please reach out to [contact@agentmint.io](mailto:contact@agentmint.io).
