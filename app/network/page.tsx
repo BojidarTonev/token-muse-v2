@@ -18,14 +18,16 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   PageTransition,
   AnimatedElement,
   ScrollReveal,
 } from "@/components/motion";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
 import { useAppSelector } from "@/redux/store";
 import { fetchWithPublicKey } from "@/lib/api-utils";
+import { toast } from "sonner";
 
 // Featured network with existing agents
 const featuredNetwork = {
@@ -88,23 +90,23 @@ interface Network {
   agent_count?: number;
 }
 
-export default function NetworkPage() {
+// Create a client component for the network page content
+function NetworkPageContent() {
   const [showContent, setShowContent] = useState(false);
-  const [viewMode, setViewMode] = useState<"featured" | "my">("featured");
+  const [viewMode, setViewMode] = useState<"featured" | "my">("my");
   const [userNetworks, setUserNetworks] = useState<Network[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isMounted, setIsMounted] = useState(false);
 
+  // Get search params to check if network was just created
+  const searchParams = useSearchParams();
+  const justCreated = searchParams.get("created") === "true";
+
   // Get authentication state from Redux
   const auth = useAppSelector((state) => state.appState);
   const isAuthenticated = auth?.isAuthenticated;
   const publicKey = auth?.publicKey;
-
-  // Set mounted state on client
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   // Function to fetch user networks - wrapped in useCallback
   const fetchUserNetworks = useCallback(async () => {
@@ -121,18 +123,117 @@ export default function NetworkPage() {
       );
       if (response.ok) {
         const data = await response.json();
-        setUserNetworks(data);
+
+        // Define a type guard for Network objects
+        const isNetworkObject = (item: unknown): item is Network => {
+          return (
+            !!item &&
+            typeof item === "object" &&
+            "id" in item &&
+            typeof (item as { id: unknown }).id === "string"
+          );
+        };
+
+        // Handle different response formats
+        if (Array.isArray(data)) {
+          // If data is already an array, use it directly
+          // Ensure each item conforms to Network interface
+          const validNetworks = data.filter(isNetworkObject);
+          setUserNetworks(validNetworks);
+        } else if (data && typeof data === "object") {
+          // If data is an object (like the one shown in the screenshot)
+          if (
+            "networks" in data &&
+            Array.isArray((data as Record<string, unknown>).networks)
+          ) {
+            // If it has a networks property that's an array
+            const validNetworks = (
+              (data as Record<string, unknown>).networks as unknown[]
+            ).filter(isNetworkObject);
+            setUserNetworks(validNetworks);
+          } else if (
+            Object.keys(data as object).some((key) => !isNaN(Number(key)))
+          ) {
+            // If it's an object with numeric keys (like an array-like object)
+            const networksArray = Object.values(data as object).filter(
+              isNetworkObject
+            );
+            setUserNetworks(networksArray);
+          } else {
+            // If we can't determine the structure, set empty array
+            setUserNetworks([]);
+            setError("Invalid data format received from server");
+          }
+        } else {
+          setUserNetworks([]);
+          setError("Invalid data format received from server");
+        }
       } else {
-        console.error("Failed to fetch networks");
         setError("Failed to load your networks. Please try again.");
       }
-    } catch (error) {
-      console.error("Error fetching networks:", error);
+    } catch {
       setError("Error fetching networks. Please try again.");
+      setUserNetworks([]); // Reset to empty array on error
     } finally {
       setIsLoading(false);
     }
   }, [isAuthenticated, publicKey]);
+
+  // Set mounted state on client and clean up Dark Reader attributes
+  useEffect(() => {
+    setIsMounted(true);
+
+    // If network was just created, ensure we're on the "my" tab
+    if (justCreated) {
+      setViewMode("my");
+      // Show a success toast
+      toast.success("Network created successfully!");
+
+      // Fetch user networks if authenticated
+      if (isAuthenticated && publicKey) {
+        fetchUserNetworks();
+      }
+    }
+
+    // Clean up Dark Reader attributes on the HTML element
+    const htmlElement = document.documentElement;
+    if (htmlElement.hasAttribute("data-darkreader-mode")) {
+      htmlElement.removeAttribute("data-darkreader-mode");
+    }
+    if (htmlElement.hasAttribute("data-darkreader-scheme")) {
+      htmlElement.removeAttribute("data-darkreader-scheme");
+    }
+    if (htmlElement.hasAttribute("data-darkreader-proxy-injected")) {
+      htmlElement.removeAttribute("data-darkreader-proxy-injected");
+    }
+
+    // Set up a MutationObserver to watch for Dark Reader attributes on the HTML element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === "attributes") {
+          const attributeName = mutation.attributeName;
+          if (attributeName && attributeName.includes("data-darkreader")) {
+            // Remove the attribute
+            htmlElement.removeAttribute(attributeName);
+          }
+        }
+      });
+    });
+
+    // Start observing the HTML element
+    observer.observe(htmlElement, {
+      attributes: true,
+      attributeFilter: [
+        "data-darkreader-mode",
+        "data-darkreader-scheme",
+        "data-darkreader-proxy-injected",
+      ],
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [justCreated, isAuthenticated, publicKey, fetchUserNetworks]);
 
   // Fetch user networks when in "My Networks" mode
   useEffect(() => {
@@ -487,9 +588,35 @@ export default function NetworkPage() {
                         <Button
                           variant="app"
                           size="lg"
-                          className="flex items-center gap-2 cursor-pointer"
+                          className="flex items-center gap-2 cursor-pointer shadow-md hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
                         >
-                          <Plus className="w-4 h-4" />
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="text-primary-foreground"
+                          >
+                            <circle
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              className="fill-current opacity-20"
+                            />
+                            <path
+                              d="M12 8V16"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                            />
+                            <path
+                              d="M8 12H16"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                            />
+                          </svg>
                           Create Your First Network
                         </Button>
                       </Link>
@@ -551,9 +678,35 @@ export default function NetworkPage() {
                         <Button
                           variant="app"
                           size="lg"
-                          className="flex items-center gap-2 cursor-pointer"
+                          className="flex items-center gap-2 cursor-pointer shadow-md hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
                         >
-                          <Plus className="w-4 h-4" />
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="text-primary-foreground"
+                          >
+                            <circle
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              className="fill-current opacity-20"
+                            />
+                            <path
+                              d="M12 8V16"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                            />
+                            <path
+                              d="M8 12H16"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                            />
+                          </svg>
                           Create Your First Network
                         </Button>
                       </Link>
@@ -566,48 +719,160 @@ export default function NetworkPage() {
                       <Link href="/create-network">
                         <Button
                           variant="app"
-                          className="flex items-center gap-2 cursor-pointer"
+                          className="flex items-center gap-2 cursor-pointer shadow-md hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
                         >
-                          <Plus className="w-4 h-4" />
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="text-primary-foreground"
+                          >
+                            <circle
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              className="fill-current opacity-20"
+                            />
+                            <path
+                              d="M12 8V16"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                            />
+                            <path
+                              d="M8 12H16"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                            />
+                          </svg>
                           Create New Network
                         </Button>
                       </Link>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {userNetworks.map((network) => (
-                        <Link href={`/network/${network.id}`} key={network.id}>
-                          <div className="feature-card h-full hover:border-primary/50 transition-colors cursor-pointer">
-                            <div className="flex items-center gap-4 mb-4">
-                              <div className="p-3 rounded-full bg-primary/10">
-                                <Plus className="w-5 h-5 text-primary" />
+                      {Array.isArray(userNetworks) ? (
+                        userNetworks.map((network) => (
+                          <Link
+                            href={`/network/${network.id}`}
+                            key={network.id}
+                          >
+                            <div className="feature-card h-full hover:border-primary/50 transition-colors cursor-pointer hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
+                              <div className="flex items-center gap-4 mb-4">
+                                <div className="p-3 rounded-full bg-primary/10 relative group">
+                                  {/* Network icon SVG */}
+                                  <svg
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="text-primary"
+                                  >
+                                    <circle
+                                      cx="12"
+                                      cy="12"
+                                      r="3"
+                                      className="fill-primary"
+                                    />
+                                    <circle
+                                      cx="4"
+                                      cy="8"
+                                      r="2"
+                                      className="fill-primary/70"
+                                    />
+                                    <circle
+                                      cx="20"
+                                      cy="8"
+                                      r="2"
+                                      className="fill-primary/70"
+                                    />
+                                    <circle
+                                      cx="4"
+                                      cy="16"
+                                      r="2"
+                                      className="fill-primary/70"
+                                    />
+                                    <circle
+                                      cx="20"
+                                      cy="16"
+                                      r="2"
+                                      className="fill-primary/70"
+                                    />
+                                    <path
+                                      d="M12 9C10.3431 9 9 7.65685 9 6C9 4.34315 10.3431 3 12 3C13.6569 3 15 4.34315 15 6C15 7.65685 13.6569 9 12 9Z"
+                                      className="fill-primary/40"
+                                    />
+                                    <line
+                                      x1="6"
+                                      y1="8"
+                                      x2="10"
+                                      y2="10"
+                                      stroke="currentColor"
+                                      strokeWidth="1"
+                                    />
+                                    <line
+                                      x1="18"
+                                      y1="8"
+                                      x2="14"
+                                      y2="10"
+                                      stroke="currentColor"
+                                      strokeWidth="1"
+                                    />
+                                    <line
+                                      x1="6"
+                                      y1="16"
+                                      x2="10"
+                                      y2="14"
+                                      stroke="currentColor"
+                                      strokeWidth="1"
+                                    />
+                                    <line
+                                      x1="18"
+                                      y1="16"
+                                      x2="14"
+                                      y2="14"
+                                      stroke="currentColor"
+                                      strokeWidth="1"
+                                    />
+                                  </svg>
+                                  <div className="absolute inset-0 rounded-full bg-primary/5 scale-0 group-hover:scale-150 transition-transform duration-300 opacity-0 group-hover:opacity-100"></div>
+                                </div>
+                                <h3 className="text-lg font-medium truncate">
+                                  {network.name}
+                                </h3>
                               </div>
-                              <h3 className="text-lg font-medium truncate">
-                                {network.name}
-                              </h3>
-                            </div>
 
-                            {network.description && (
-                              <p className="text-foreground/70 mb-4 line-clamp-2">
-                                {network.description}
-                              </p>
-                            )}
+                              {network.description && (
+                                <p className="text-foreground/70 mb-4 line-clamp-2">
+                                  {network.description}
+                                </p>
+                              )}
 
-                            <div className="mt-auto pt-4 flex justify-between items-center text-sm text-foreground/60">
-                              <div>
-                                Created:{" "}
-                                {new Date(
-                                  network.created_at
-                                ).toLocaleDateString()}
-                              </div>
-                              <div className="flex items-center gap-1">
-                                <Users className="w-4 h-4" />
-                                {network.agent_count || 0} agents
+                              <div className="mt-auto pt-4 flex justify-between items-center text-sm text-foreground/60 border-t border-border/30">
+                                <div>
+                                  Created:{" "}
+                                  {new Date(
+                                    network.created_at
+                                  ).toLocaleDateString()}
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <Users className="w-4 h-4" />
+                                  {network.agent_count || 0} agents
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </Link>
-                      ))}
+                          </Link>
+                        ))
+                      ) : (
+                        <div className="col-span-full text-center py-8 text-foreground/70">
+                          Error loading networks. Please try refreshing the
+                          page.
+                        </div>
+                      )}
                     </div>
                   </>
                 )}
@@ -617,5 +882,36 @@ export default function NetworkPage() {
         </main>
       </PageTransition>
     </div>
+  );
+}
+
+// Main page component with Suspense boundary
+export default function NetworkPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-background text-foreground">
+          <Navbar />
+          <main className="pt-24 pb-16 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row justify-center items-center text-center md:items-center mb-6">
+              <div>
+                <div className="mb-4">
+                  <h1 className="text-3xl font-bold">Agent Networks</h1>
+                </div>
+                <p className="text-foreground/70 max-w-xl">
+                  Connect multiple AI agents into collaborative networks to
+                  tackle complex creative and problem-solving tasks.
+                </p>
+              </div>
+            </div>
+            <div className="h-64 flex items-center justify-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+            </div>
+          </main>
+        </div>
+      }
+    >
+      <NetworkPageContent />
+    </Suspense>
   );
 }
