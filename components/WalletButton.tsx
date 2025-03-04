@@ -1,138 +1,215 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/hooks/useAuth';
-import { Loader2, Wallet, LogOut } from 'lucide-react';
-import { toast } from 'sonner';
+"use client";
 
-// Type guard to check if an error has a message property
-function isErrorWithMessage(error: unknown): error is { message: string } {
-  return (
-    typeof error === 'object' &&
-    error !== null &&
-    'message' in error &&
-    typeof (error as Record<string, unknown>).message === 'string'
-  );
-}
-
-// Function to extract error message
-function getErrorMessage(error: unknown): string {
-  if (isErrorWithMessage(error)) {
-    return error.message;
-  }
-  return String(error);
-}
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Wallet, LogOut, Copy, Check, ExternalLink } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import {
+  setAuthenticated,
+  clearAuthentication,
+} from "@/redux/features/app-state-slice";
+import { toast } from "sonner";
 
 interface WalletButtonProps {
   showText?: boolean;
 }
 
 export const WalletButton = ({ showText = true }: WalletButtonProps) => {
-  const { isAuthenticated, publicKey, isLoading, error, isWalletInstalled, connect, disconnect } = useAuth();
+  const [isPhantomInstalled, setIsPhantomInstalled] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [isDisconnecting, setIsDisconnecting] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [hasCopied, setHasCopied] = useState(false);
 
-  // Handle connect button click
-  const handleConnect = async () => {
-    if (!isWalletInstalled) {
-      toast.error('Wallet Not Found', {
-        description: 'Please install Phantom wallet to continue',
-      });
-      window.open('https://phantom.app/', '_blank');
-      return;
-    }
+  const dispatch = useAppDispatch();
+  const { isAuthenticated, publicKey } = useAppSelector(
+    (state) => state.appState
+  );
 
-    setIsConnecting(true);
+  // Check if Phantom wallet is installed
+  useEffect(() => {
+    const checkPhantomWallet = () => {
+      const isPhantom =
+        typeof window !== "undefined" &&
+        window.solana &&
+        window.solana.isPhantom;
+      setIsPhantomInstalled(!!isPhantom);
+    };
+
+    checkPhantomWallet();
+    window.addEventListener("load", checkPhantomWallet);
+    return () => window.removeEventListener("load", checkPhantomWallet);
+  }, []);
+
+  // Handle wallet connection
+  const connectWallet = async () => {
     try {
-      const success = await connect();
-      if (success) {
-        toast.success('Connected', {
-          description: 'Successfully connected to wallet',
-        });
-      } else if (error) {
-        toast.error('Connection Failed', {
-          description: error,
-        });
+      if (!isPhantomInstalled) {
+        window.open("https://phantom.app/", "_blank");
+        return;
       }
-    } catch (err: unknown) {
-      toast.error('Connection Error', {
-        description: getErrorMessage(err),
-      });
+
+      setIsConnecting(true);
+      if (window.solana) {
+        const resp = await window.solana.connect();
+        const walletPublicKey = resp.publicKey.toString();
+
+        // Set wallet info in Redux store
+        dispatch(setAuthenticated({ publicKey: walletPublicKey }));
+
+        toast.success("Wallet connected successfully!");
+      }
+    } catch (error) {
+      console.error("Error connecting wallet:", error);
+      toast.error("Failed to connect wallet. Please try again.");
     } finally {
       setIsConnecting(false);
     }
   };
 
-  // Handle disconnect button click
-  const handleDisconnect = async () => {
-    setIsDisconnecting(true);
+  // Handle wallet disconnection
+  const disconnectWallet = async () => {
     try {
-      const success = await disconnect();
-      if (success) {
-        toast.success('Disconnected', {
-          description: 'Successfully disconnected from wallet',
-        });
-      } else if (error) {
-        toast.error('Disconnect Failed', {
-          description: error,
-        });
+      if (window.solana) {
+        await window.solana.disconnect();
+        dispatch(clearAuthentication());
+        setIsDropdownOpen(false);
+        toast.success("Wallet disconnected successfully!");
       }
-    } catch (err: unknown) {
-      toast.error('Disconnect Error', {
-        description: getErrorMessage(err),
-      });
-    } finally {
-      setIsDisconnecting(false);
+    } catch (error) {
+      console.error("Error disconnecting wallet:", error);
+      toast.error("Failed to disconnect wallet. Please try again.");
     }
   };
 
-  // Format public key for display
-  const formatPublicKey = (key: string) => {
-    if (!key) return '';
-    return `${key.slice(0, 4)}...${key.slice(-4)}`;
+  // Copy wallet address to clipboard
+  const copyAddress = () => {
+    if (publicKey) {
+      navigator.clipboard.writeText(publicKey);
+      setHasCopied(true);
+      setTimeout(() => setHasCopied(false), 2000);
+    }
   };
 
-  // If not authenticated, show connect button
-  if (!isAuthenticated) {
-    return (
-      <Button
-        onClick={handleConnect}
-        disabled={isLoading || isConnecting}
-        className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700"
-      >
-        {isLoading || isConnecting ? (
-          <>
-            <Loader2 className={`h-4 w-4 animate-spin ${showText ? 'mr-2' : ''}`} />
-            {showText && 'Connecting...'}
-          </>
-        ) : (
-          <>
-            <Wallet className={`h-4 w-4 ${showText ? 'mr-2' : ''}`} />
-            {showText && 'Connect Wallet'}
-          </>
-        )}
-      </Button>
-    );
-  }
+  // Format wallet address for display
+  const formatAddress = (address: string) => {
+    if (!address) return "";
+    return `${address.substring(0, 4)}...${address.substring(
+      address.length - 4
+    )}`;
+  };
 
-  // If authenticated, show button with public key and sign out icon
+  // Toggle dropdown menu
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (
+        isDropdownOpen &&
+        !target.closest(".wallet-dropdown") &&
+        !target.closest(".wallet-button")
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
   return (
-    <Button
-      onClick={handleDisconnect}
-      disabled={isLoading || isDisconnecting}
-      variant="outline"
-      className="border-pink-500 text-pink-500 hover:bg-pink-50 hover:text-pink-600 transition-colors"
-    >
-      {isLoading || isDisconnecting ? (
+    <div className="relative">
+      {isAuthenticated && publicKey ? (
         <>
-          <Loader2 className={`h-4 w-4 animate-spin ${showText ? 'mr-2' : ''}`} />
-          {showText && 'Disconnecting...'}
+          <Button
+            variant="outline"
+            size="sm"
+            className="wallet-button px-3 py-2 h-auto rounded-lg border-white/10 bg-white/5 backdrop-blur-xl hover:bg-primary/10 hover:border-primary/30 transition-all"
+            onClick={toggleDropdown}
+          >
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+                <Wallet className="w-3 h-3 text-primary" />
+              </div>
+              {showText && (
+                <span className="text-sm font-medium">
+                  {formatAddress(publicKey)}
+                </span>
+              )}
+            </div>
+          </Button>
+
+          {isDropdownOpen && (
+            <div className="wallet-dropdown absolute right-0 mt-2 w-64 bg-card/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-lg overflow-hidden z-50">
+              <div className="p-4 border-b border-white/10">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs text-foreground/60">
+                    Connected as
+                  </span>
+                  <a
+                    href={`https://solscan.io/account/${publicKey}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-primary flex items-center gap-1 hover:underline"
+                  >
+                    View <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium truncate max-w-[180px]">
+                    {formatAddress(publicKey)}
+                  </span>
+                  <button
+                    onClick={copyAddress}
+                    className="p-1 rounded-md hover:bg-white/5 text-foreground/60 hover:text-primary transition-colors"
+                  >
+                    {hasCopied ? (
+                      <Check className="w-4 h-4 text-green-500" />
+                    ) : (
+                      <Copy className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
+              </div>
+              <div className="p-2">
+                <button
+                  onClick={disconnectWallet}
+                  className="w-full flex items-center gap-2 p-2 text-sm text-foreground/80 hover:text-destructive hover:bg-destructive/5 rounded-lg transition-colors"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Disconnect Wallet
+                </button>
+              </div>
+            </div>
+          )}
         </>
       ) : (
-        <>
-          <LogOut className={`h-4 w-4 ${showText ? 'mr-2' : ''}`} />
-          {showText && formatPublicKey(publicKey || '')}
-        </>
+        <Button
+          variant="app"
+          size="sm"
+          className="px-3 py-2 h-auto rounded-lg"
+          onClick={connectWallet}
+          disabled={isConnecting}
+        >
+          <div className="flex items-center gap-2">
+            <Wallet className="w-4 h-4" />
+            {showText && (
+              <span>
+                {isConnecting
+                  ? "Connecting..."
+                  : isPhantomInstalled
+                  ? "Connect Wallet"
+                  : "Install Phantom"}
+              </span>
+            )}
+          </div>
+        </Button>
       )}
-    </Button>
+    </div>
   );
-}; 
+};

@@ -3,53 +3,60 @@ import { Package, Heart } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-background border-t border-border/10 py-8 px-4">
-      <div className="max-w-[1400px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="bg-background/20 backdrop-blur-xl border-t border-white/5 py-10 px-6 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent opacity-20 pointer-events-none"></div>
+      <div className="max-w-[1400px] mx-auto relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Logo and Description */}
           <div className="space-y-4">
-            <Link href="/" className="text-xl font-bold gradient-text">
-              AgentMint
+            <Link href="/" className="flex items-center gap-2">
+              <span className="text-xl font-bold gradient-text">AgentMint</span>
             </Link>
-            <p className="text-sm text-foreground/60 max-w-xs">
+            <p className="text-sm text-foreground/70 max-w-xs leading-relaxed">
               Empowering creators with AI agents and decentralized tokenization
               on the blockchain.
             </p>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold">Quick Links</h3>
-            <ul className="space-y-2">
+          <div className="space-y-5">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground/80">
+              Quick Links
+            </h3>
+            <ul className="space-y-3">
               <li>
                 <Link
                   href="/agents"
-                  className="text-sm text-foreground/60 hover:text-primary transition-colors"
+                  className="text-sm text-foreground/60 hover:text-primary transition-colors flex items-center gap-2"
                 >
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary/70"></span>
                   Agents
                 </Link>
               </li>
               <li>
                 <Link
                   href="/network"
-                  className="text-sm text-foreground/60 hover:text-primary transition-colors"
+                  className="text-sm text-foreground/60 hover:text-primary transition-colors flex items-center gap-2"
                 >
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary/70"></span>
                   Networks
                 </Link>
               </li>
               <li>
                 <Link
                   href="/dao"
-                  className="text-sm text-foreground/60 hover:text-primary transition-colors"
+                  className="text-sm text-foreground/60 hover:text-primary transition-colors flex items-center gap-2"
                 >
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary/70"></span>
                   DAO
                 </Link>
               </li>
               <li>
                 <Link
                   href="/roadmap"
-                  className="text-sm text-foreground/60 hover:text-primary transition-colors"
+                  className="text-sm text-foreground/60 hover:text-primary transition-colors flex items-center gap-2"
                 >
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary/70"></span>
                   Roadmap
                 </Link>
               </li>
@@ -57,35 +64,41 @@ const Footer = () => {
           </div>
 
           {/* Legal and Social */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold">Legal</h3>
-            <ul className="space-y-2">
+          <div className="space-y-5">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground/80">
+              Legal
+            </h3>
+            <ul className="space-y-3">
               <li>
                 <Link
                   href="/privacy-policy"
-                  className="text-sm text-foreground/60 hover:text-primary transition-colors"
+                  className="text-sm text-foreground/60 hover:text-primary transition-colors flex items-center gap-2"
                 >
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary/70"></span>
                   Privacy Policy
                 </Link>
               </li>
               <li>
                 <Link
                   href="/terms"
-                  className="text-sm text-foreground/60 hover:text-primary transition-colors"
+                  className="text-sm text-foreground/60 hover:text-primary transition-colors flex items-center gap-2"
                 >
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary/70"></span>
                   Terms & Conditions
                 </Link>
               </li>
             </ul>
 
             <div className="pt-4">
-              <h3 className="text-sm font-semibold mb-3">Connect</h3>
-              <div className="flex space-x-4">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground/80 mb-4">
+                Connect
+              </h3>
+              <div className="flex space-x-3">
                 <a
                   href="https://x.com/AgnetMint_AI"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-full bg-background hover:bg-primary/10 text-foreground/60 hover:text-primary transition-colors"
+                  className="p-2 rounded-lg bg-white/5 hover:bg-primary/10 text-foreground/60 hover:text-primary transition-colors border border-white/10"
                 >
                   <svg
                     className="w-5 h-5"
@@ -96,7 +109,7 @@ const Footer = () => {
                   </svg>
                 </a>
                 <a
-                  className="p-2 rounded-full bg-background text-foreground/40 cursor-not-allowed relative"
+                  className="p-2 rounded-lg bg-white/5 text-foreground/40 cursor-not-allowed relative border border-white/10"
                   aria-disabled="true"
                 >
                   <Package className="w-5 h-5" />
@@ -109,11 +122,11 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-border/10 flex flex-col md:flex-row justify-between items-center">
+        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center">
           <p className="text-xs text-foreground/40">
             &copy; {new Date().getFullYear()} AgentMint. All rights reserved.
           </p>
-          <p className="text-xs text-foreground/40 flex items-center mt-2 md:mt-0">
+          <p className="text-xs text-foreground/40 flex items-center mt-3 md:mt-0">
             Made with <Heart className="w-3 h-3 mx-1 text-primary" /> by the
             AgentMint Team
           </p>

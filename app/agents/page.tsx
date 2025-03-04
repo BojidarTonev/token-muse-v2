@@ -127,12 +127,12 @@ export default function AgentsPage() {
     // Show login prompt if trying to view my agents but not authenticated
     if (activeTab === "my-agents" && !isAuthenticated) {
       return (
-        <div className="bg-card rounded-lg p-8 text-center shadow-sm">
-          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="bg-card/80 backdrop-blur-sm rounded-lg p-8 text-center shadow-sm border border-border/30">
+          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
             <Wallet className="w-8 h-8 text-primary" />
           </div>
-          <h3 className="text-xl font-semibold mb-2">Connect Your Wallet</h3>
-          <p className="text-foreground/70 mb-6 max-w-md mx-auto">
+          <h3 className="text-xl font-semibold mb-3">Connect Your Wallet</h3>
+          <p className="text-foreground/70 mb-8 max-w-md mx-auto leading-relaxed">
             You need to connect your wallet to view your agents and create new
             ones.
           </p>
@@ -143,12 +143,12 @@ export default function AgentsPage() {
     // Show login prompt if viewing all agents but not authenticated
     if (activeTab === "all-agents" && !isAuthenticated) {
       return (
-        <div className="bg-card rounded-lg p-8 text-center shadow-sm">
-          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="bg-card/80 backdrop-blur-sm rounded-lg p-8 text-center shadow-sm border border-border/30">
+          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
             <Users className="w-8 h-8 text-primary" />
           </div>
-          <h3 className="text-xl font-semibold mb-2">Connect Your Wallet</h3>
-          <p className="text-foreground/70 mb-6 max-w-md mx-auto">
+          <h3 className="text-xl font-semibold mb-3">Connect Your Wallet</h3>
+          <p className="text-foreground/70 mb-8 max-w-md mx-auto leading-relaxed">
             Connect your wallet to browse all available agents and interact with
             the Agent Mint ecosystem.
           </p>
@@ -158,14 +158,14 @@ export default function AgentsPage() {
 
     if (displayedAgents.length === 0) {
       return (
-        <div className="bg-card rounded-lg p-8 text-center shadow-sm">
+        <div className="bg-card/80 backdrop-blur-sm rounded-lg p-8 text-center shadow-sm border border-border/30">
           {activeTab === "my-agents" ? (
             <>
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Sparkles className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">No Agents Found</h3>
-              <p className="text-foreground/70 mb-6 max-w-md mx-auto">
+              <h3 className="text-xl font-semibold mb-3">No Agents Found</h3>
+              <p className="text-foreground/70 mb-8 max-w-md mx-auto leading-relaxed">
                 You haven&apos;t created any agents yet. Create your first agent
                 to get started.
               </p>
@@ -173,7 +173,7 @@ export default function AgentsPage() {
                 <Link href="/create-agent">
                   <Button
                     variant="app"
-                    className="flex items-center gap-2 cursor-pointer"
+                    className="flex items-center gap-2 cursor-pointer rounded-full px-6 py-3 h-auto"
                   >
                     <Sparkles className="w-4 h-4" />
                     Create Your First Agent
@@ -183,13 +183,13 @@ export default function AgentsPage() {
             </>
           ) : (
             <>
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Users className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">
+              <h3 className="text-xl font-semibold mb-3">
                 No Public Agents Available
               </h3>
-              <p className="text-foreground/70 mb-6 max-w-md mx-auto">
+              <p className="text-foreground/70 mb-8 max-w-md mx-auto leading-relaxed">
                 There are no public agents available at the moment. Be the first
                 to create one!
               </p>
@@ -201,7 +201,7 @@ export default function AgentsPage() {
 
     return (
       <StaggerContainer
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
         delay={0.1}
       >
         {displayedAgents.map((agent, index) => (
@@ -225,12 +225,12 @@ export default function AgentsPage() {
                       }}
                     />
                   </div>
-                  <div className="absolute top-2 right-2 bg-card px-2 py-1 rounded-full text-xs font-medium">
+                  <div className="absolute top-2 right-2 bg-card/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium border border-border/20">
                     {agent.type || "Unknown"}
                   </div>
                   {activeTab === "all-agents" &&
                     agent.owner_key === publicKey && (
-                      <div className="absolute top-2 left-2 bg-primary/10 text-primary px-2 py-1 rounded-full text-xs font-medium">
+                      <div className="absolute top-2 left-2 bg-primary/10 text-primary px-2 py-1 rounded-full text-xs font-medium border border-primary/20">
                         Your Agent
                       </div>
                     )}
@@ -239,7 +239,7 @@ export default function AgentsPage() {
                 <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
                   {agent.name}
                 </h3>
-                <p className="text-sm text-foreground/70 mb-4 line-clamp-2">
+                <p className="text-sm text-foreground/70 mb-4 line-clamp-2 leading-relaxed">
                   {agent.description || "No description provided."}
                 </p>
 
@@ -250,7 +250,7 @@ export default function AgentsPage() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="text-primary border-primary hover:bg-primary/10 cursor-pointer"
+                    className="text-xs px-3 py-1 h-auto rounded-full border-primary/20 text-primary hover:bg-primary/10"
                   >
                     View Details
                   </Button>
@@ -264,64 +264,67 @@ export default function AgentsPage() {
   };
 
   return (
-    <div className="bg-background text-foreground">
-      <PageTransition>
-        <main className="pt-24 pb-16 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
-          <AnimatedElement animation="fadeIn" delay={0.1}>
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-              <div>
-                <h1 className="text-3xl font-bold mb-2">AI Agents</h1>
-                <p className="text-foreground/70 max-w-xl">
-                  Browse our collection of specialized AI agents, each tokenized
-                  as a unique digital asset on the blockchain.
-                </p>
-              </div>
-
-              <div className="mt-4 md:mt-0">
-                <Link href="/create-agent">
-                  <Button
-                    variant="app"
-                    className="flex items-center gap-2 cursor-pointer"
-                    disabled={!isAuthenticated}
-                  >
-                    <Sparkles className="w-4 h-4" />
-                    Create Agent
-                  </Button>
-                </Link>
-              </div>
-            </div>
+    <PageTransition>
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 py-12">
+        <div className="mb-12">
+          <AnimatedElement animation="slideUp" delay={0.1}>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">AI Agents</h1>
           </AnimatedElement>
-
           <AnimatedElement animation="fadeIn" delay={0.2}>
-            <div className="flex mb-8 border-b border-border">
-              <button
-                className={`px-4 py-2 font-medium text-sm flex items-center gap-2 cursor-pointer ${
-                  activeTab === "my-agents"
-                    ? "text-primary border-b-2 border-primary"
-                    : "text-foreground/70 hover:text-foreground"
-                }`}
-                onClick={() => setActiveTab("my-agents")}
-              >
-                <Wallet className="w-4 h-4" />
-                My Agents
-              </button>
-              <button
-                className={`px-4 py-2 font-medium text-sm flex items-center gap-2 cursor-pointer ${
-                  activeTab === "all-agents"
-                    ? "text-primary border-b-2 border-primary"
-                    : "text-foreground/70 hover:text-foreground"
-                }`}
-                onClick={() => setActiveTab("all-agents")}
-              >
-                <Users className="w-4 h-4" />
-                All Agents
-              </button>
+            <p className="text-foreground/70 max-w-2xl leading-relaxed">
+              Browse and interact with AI agents that can generate creative
+              outputs including art, music, text, and code. Connect your wallet
+              to create your own agents.
+            </p>
+          </AnimatedElement>
+        </div>
+
+        <AnimatedElement animation="fadeIn" delay={0.3}>
+          <div className="flex flex-wrap gap-2 mb-8 p-1 bg-background/50 backdrop-blur-sm rounded-full border border-border/20 inline-flex">
+            <button
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                activeTab === "my-agents"
+                  ? "bg-primary text-white shadow-md"
+                  : "text-foreground/70 hover:text-foreground hover:bg-background/80"
+              }`}
+              onClick={() => setActiveTab("my-agents")}
+            >
+              My Agents
+            </button>
+            <button
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                activeTab === "all-agents"
+                  ? "bg-primary text-white shadow-md"
+                  : "text-foreground/70 hover:text-foreground hover:bg-background/80"
+              }`}
+              onClick={() => setActiveTab("all-agents")}
+            >
+              All Agents
+            </button>
+          </div>
+        </AnimatedElement>
+
+        <AnimatedElement animation="fadeIn" delay={0.4}>
+          {renderContent()}
+        </AnimatedElement>
+
+        {isAuthenticated && activeTab === "my-agents" && (
+          <AnimatedElement animation="slideUp" delay={0.5}>
+            <div className="mt-12 flex justify-center">
+              <Link href="/create-agent">
+                <Button
+                  variant="app"
+                  size="lg"
+                  className="rounded-full px-6 py-6 h-auto text-base"
+                >
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Create New Agent
+                </Button>
+              </Link>
             </div>
           </AnimatedElement>
-
-          {renderContent()}
-        </main>
-      </PageTransition>
-    </div>
+        )}
+      </div>
+    </PageTransition>
   );
 }

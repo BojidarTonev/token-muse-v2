@@ -18,7 +18,7 @@ export default function TokenomicsPage() {
       <PageTransition>
         <main className="pt-24 pb-16 px-4 sm:px-6 md:px-8 lg:px-12 max-w-[1400px] mx-auto">
           <AnimatedElement animation="fadeIn" delay={0.1}>
-            <div className="text-center mb-12">
+            <div className="text-center mb-12 relative">
               <h1 className="text-3xl md:text-4xl font-bold mb-4">
                 <span className="gradient-text">$MINT</span> Tokenomics
               </h1>
@@ -35,7 +35,18 @@ export default function TokenomicsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <AnimatedElement animation="slideRight" delay={0.2}>
                   <div>
-                    <h2 className="text-2xl font-bold mb-4">Token Overview</h2>
+                    <div className="flex items-center gap-3 mb-4">
+                      <h2 className="text-2xl font-bold">Token Overview</h2>
+                      <div className="w-6 h-6">
+                        <Image
+                          src="/token-neurolink-icon.svg"
+                          alt="MINT Token"
+                          width={24}
+                          height={24}
+                          className="w-full h-full"
+                        />
+                      </div>
+                    </div>
                     <p className="text-foreground/70 mb-6">
                       The $MINT token is the native utility token of the
                       AgentMint AI platform, powering the ecosystem and
@@ -85,14 +96,21 @@ export default function TokenomicsPage() {
                 </AnimatedElement>
 
                 <AnimatedElement animation="scale" delay={0.3}>
-                  <div className="relative">
-                    <div className="relative w-full h-64 md:h-80 glow">
+                  <div className="flex flex-col items-center mb-16">
+                    <div className="relative w-[250px] h-[250px]">
                       <Image
-                        src="/token-3d.svg"
+                        src="/token-neurolink-icon.svg"
                         alt="MINT Token"
-                        fill
-                        className="object-contain animate-float"
+                        width={250}
+                        height={250}
+                        className="animate-float w-full h-full"
                       />
+                    </div>
+                    <div className="text-center mt-4">
+                      <h1 className="text-4xl font-bold">AGENTMINT</h1>
+                      <p className="text-xl text-muted-foreground">
+                        The native token of the AgentMint platform
+                      </p>
                     </div>
                   </div>
                 </AnimatedElement>
@@ -375,9 +393,20 @@ export default function TokenomicsPage() {
           {/* Token Distribution */}
           <ScrollReveal animation="fadeIn" delay={0.3}>
             <section className="mb-16">
-              <h2 className="text-2xl font-bold mb-8 text-center">
-                Token Distribution
-              </h2>
+              <div className="flex items-center justify-center gap-3 mb-8">
+                <h2 className="text-2xl font-bold text-center">
+                  Token Distribution
+                </h2>
+                <div className="w-6 h-6">
+                  <Image
+                    src="/token-neurolink-icon.svg"
+                    alt="MINT Token"
+                    width={24}
+                    height={24}
+                    className="w-full h-full"
+                  />
+                </div>
+              </div>
 
               <StaggerContainer
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
@@ -420,7 +449,18 @@ export default function TokenomicsPage() {
 
           {/* Token Utility */}
           <section className="mb-16">
-            <h2 className="text-2xl font-bold mb-8">Token Utility</h2>
+            <div className="flex items-center gap-3 mb-8">
+              <h2 className="text-2xl font-bold">Token Utility</h2>
+              <div className="w-6 h-6">
+                <Image
+                  src="/token-neurolink-icon.svg"
+                  alt="MINT Token"
+                  width={24}
+                  height={24}
+                  className="w-full h-full"
+                />
+              </div>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="feature-card">

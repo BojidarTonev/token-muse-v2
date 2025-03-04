@@ -1,0 +1,350 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <!-- Filters for enhanced glow effects -->
+  <defs>
+    <!-- Node glow filters -->
+    <filter id="cyanGlow" x="-300%" y="-300%" width="600%" height="600%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    
+    <filter id="purpleGlow" x="-300%" y="-300%" width="600%" height="600%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    
+    <!-- Path glow filters -->
+    <filter id="cyanPathGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    
+    <filter id="purplePathGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    
+    <!-- Gradients -->
+    <linearGradient id="cyanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00FFFF" stop-opacity="1" />
+      <stop offset="100%" stop-color="#00BFFF" stop-opacity="0.7" />
+    </linearGradient>
+    
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF00FF" stop-opacity="1" />
+      <stop offset="100%" stop-color="#9932CC" stop-opacity="0.7" />
+    </linearGradient>
+    
+    <linearGradient id="centerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00FFFF" stop-opacity="1" />
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="1" />
+      <stop offset="100%" stop-color="#FF00FF" stop-opacity="1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Black background -->
+  <rect width="800" height="800" fill="#000000" />
+  
+  <!-- Center connection point -->
+  <circle cx="400" cy="400" r="15" fill="url(#centerGradient)" filter="url(#cyanGlow)">
+    <animate attributeName="r" values="12;18;12" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Cyan flowing paths (top to center) -->
+  <g filter="url(#cyanPathGlow)">
+    <!-- Path 1 -->
+    <path d="M250,150 C300,200 350,250 400,400" stroke="url(#cyanGradient)" stroke-width="1.5" fill="none" opacity="0.8">
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="4s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Path 2 -->
+    <path d="M300,100 C320,180 350,300 400,400" stroke="url(#cyanGradient)" stroke-width="1.2" fill="none" opacity="0.7">
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="5s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Path 3 -->
+    <path d="M350,80 C360,150 380,350 400,400" stroke="url(#cyanGradient)" stroke-width="1" fill="none" opacity="0.9">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="4.5s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Path 4 -->
+    <path d="M400,60 C400,150 400,350 400,400" stroke="url(#cyanGradient)" stroke-width="1.3" fill="none" opacity="0.8">
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3.5s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Path 5 -->
+    <path d="M450,80 C440,150 420,350 400,400" stroke="url(#cyanGradient)" stroke-width="1.1" fill="none" opacity="0.7">
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="4.2s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Path 6 -->
+    <path d="M500,100 C480,180 450,300 400,400" stroke="url(#cyanGradient)" stroke-width="1.4" fill="none" opacity="0.9">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="3.8s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Path 7 -->
+    <path d="M550,150 C500,200 450,250 400,400" stroke="url(#cyanGradient)" stroke-width="1.2" fill="none" opacity="0.8">
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="4.7s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Additional paths -->
+    <path d="M200,180 C250,220 350,300 400,400" stroke="url(#cyanGradient)" stroke-width="0.9" fill="none" opacity="0.7">
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="5.2s" repeatCount="indefinite" />
+    </path>
+    
+    <path d="M600,180 C550,220 450,300 400,400" stroke="url(#cyanGradient)" stroke-width="0.9" fill="none" opacity="0.7">
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="5.5s" repeatCount="indefinite" />
+    </path>
+    
+    <path d="M280,120 C320,200 370,320 400,400" stroke="url(#cyanGradient)" stroke-width="1" fill="none" opacity="0.8">
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="4.3s" repeatCount="indefinite" />
+    </path>
+    
+    <path d="M520,120 C480,200 430,320 400,400" stroke="url(#cyanGradient)" stroke-width="1" fill="none" opacity="0.8">
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="4.6s" repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- Purple flowing paths (center to bottom) -->
+  <g filter="url(#purplePathGlow)">
+    <!-- Path 1 -->
+    <path d="M400,400 C350,550 300,600 250,650" stroke="url(#purpleGradient)" stroke-width="1.5" fill="none" opacity="0.8">
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="4s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Path 2 -->
+    <path d="M400,400 C350,500 320,620 300,700" stroke="url(#purpleGradient)" stroke-width="1.2" fill="none" opacity="0.7">
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="5s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Path 3 -->
+    <path d="M400,400 C380,550 360,650 350,720" stroke="url(#purpleGradient)" stroke-width="1" fill="none" opacity="0.9">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="4.5s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Path 4 -->
+    <path d="M400,400 C400,550 400,650 400,740" stroke="url(#purpleGradient)" stroke-width="1.3" fill="none" opacity="0.8">
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3.5s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Path 5 -->
+    <path d="M400,400 C420,550 440,650 450,720" stroke="url(#purpleGradient)" stroke-width="1.1" fill="none" opacity="0.7">
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="4.2s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Path 6 -->
+    <path d="M400,400 C450,500 480,620 500,700" stroke="url(#purpleGradient)" stroke-width="1.4" fill="none" opacity="0.9">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="3.8s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Path 7 -->
+    <path d="M400,400 C450,550 500,600 550,650" stroke="url(#purpleGradient)" stroke-width="1.2" fill="none" opacity="0.8">
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="4.7s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Additional paths -->
+    <path d="M400,400 C350,500 250,580 200,620" stroke="url(#purpleGradient)" stroke-width="0.9" fill="none" opacity="0.7">
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="5.2s" repeatCount="indefinite" />
+    </path>
+    
+    <path d="M400,400 C450,500 550,580 600,620" stroke="url(#purpleGradient)" stroke-width="0.9" fill="none" opacity="0.7">
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="5.5s" repeatCount="indefinite" />
+    </path>
+    
+    <path d="M400,400 C370,480 320,600 280,680" stroke="url(#purpleGradient)" stroke-width="1" fill="none" opacity="0.8">
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="4.3s" repeatCount="indefinite" />
+    </path>
+    
+    <path d="M400,400 C430,480 480,600 520,680" stroke="url(#purpleGradient)" stroke-width="1" fill="none" opacity="0.8">
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="4.6s" repeatCount="indefinite" />
+    </path>
+  </g>
+  
+  <!-- Cyan nodes (top) -->
+  <g>
+    <!-- Node 1 -->
+    <circle cx="250" cy="150" r="5" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.9">
+      <animate attributeName="r" values="4;6;4" dur="3s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="2.5s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Node 2 -->
+    <circle cx="300" cy="100" r="4" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.8">
+      <animate attributeName="r" values="3;5;3" dur="2.8s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3.2s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Node 3 -->
+    <circle cx="350" cy="80" r="6" fill="#00FFFF" filter="url(#cyanGlow)" opacity="1">
+      <animate attributeName="r" values="5;7;5" dur="3.5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="2.7s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Node 4 -->
+    <circle cx="400" cy="60" r="5" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.9">
+      <animate attributeName="r" values="4;6;4" dur="3.2s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="2.9s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Node 5 -->
+    <circle cx="450" cy="80" r="6" fill="#00FFFF" filter="url(#cyanGlow)" opacity="1">
+      <animate attributeName="r" values="5;7;5" dur="3.7s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="2.6s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Node 6 -->
+    <circle cx="500" cy="100" r="4" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.8">
+      <animate attributeName="r" values="3;5;3" dur="2.5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3.4s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Node 7 -->
+    <circle cx="550" cy="150" r="5" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.9">
+      <animate attributeName="r" values="4;6;4" dur="3.3s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="2.8s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Additional nodes -->
+    <circle cx="200" cy="180" r="4" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.8">
+      <animate attributeName="r" values="3;5;3" dur="2.9s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3.6s" repeatCount="indefinite" />
+    </circle>
+    
+    <circle cx="600" cy="180" r="4" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.8">
+      <animate attributeName="r" values="3;5;3" dur="3.1s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3.8s" repeatCount="indefinite" />
+    </circle>
+    
+    <circle cx="280" cy="120" r="3" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.7">
+      <animate attributeName="r" values="2;4;2" dur="2.7s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="3.3s" repeatCount="indefinite" />
+    </circle>
+    
+    <circle cx="520" cy="120" r="3" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.7">
+      <animate attributeName="r" values="2;4;2" dur="2.6s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="3.5s" repeatCount="indefinite" />
+    </circle>
+  </g>
+  
+  <!-- Purple nodes (bottom) -->
+  <g>
+    <!-- Node 1 -->
+    <circle cx="250" cy="650" r="5" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.9">
+      <animate attributeName="r" values="4;6;4" dur="3s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="2.5s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Node 2 -->
+    <circle cx="300" cy="700" r="4" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.8">
+      <animate attributeName="r" values="3;5;3" dur="2.8s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3.2s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Node 3 -->
+    <circle cx="350" cy="720" r="6" fill="#FF00FF" filter="url(#purpleGlow)" opacity="1">
+      <animate attributeName="r" values="5;7;5" dur="3.5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="2.7s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Node 4 -->
+    <circle cx="400" cy="740" r="5" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.9">
+      <animate attributeName="r" values="4;6;4" dur="3.2s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="2.9s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Node 5 -->
+    <circle cx="450" cy="720" r="6" fill="#FF00FF" filter="url(#purpleGlow)" opacity="1">
+      <animate attributeName="r" values="5;7;5" dur="3.7s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="2.6s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Node 6 -->
+    <circle cx="500" cy="700" r="4" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.8">
+      <animate attributeName="r" values="3;5;3" dur="2.5s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3.4s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Node 7 -->
+    <circle cx="550" cy="650" r="5" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.9">
+      <animate attributeName="r" values="4;6;4" dur="3.3s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="2.8s" repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Additional nodes -->
+    <circle cx="200" cy="620" r="4" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.8">
+      <animate attributeName="r" values="3;5;3" dur="2.9s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3.6s" repeatCount="indefinite" />
+    </circle>
+    
+    <circle cx="600" cy="620" r="4" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.8">
+      <animate attributeName="r" values="3;5;3" dur="3.1s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3.8s" repeatCount="indefinite" />
+    </circle>
+    
+    <circle cx="280" cy="680" r="3" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.7">
+      <animate attributeName="r" values="2;4;2" dur="2.7s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="3.3s" repeatCount="indefinite" />
+    </circle>
+    
+    <circle cx="520" cy="680" r="3" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.7">
+      <animate attributeName="r" values="2;4;2" dur="2.6s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="3.5s" repeatCount="indefinite" />
+    </circle>
+  </g>
+  
+  <!-- Small decorative nodes along paths (cyan top) -->
+  <g>
+    <circle cx="270" cy="170" r="2" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="320" cy="140" r="2" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3.2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="370" cy="120" r="2" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3.4s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="430" cy="120" r="2" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3.6s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="480" cy="140" r="2" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3.8s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="530" cy="170" r="2" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="4s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="230" cy="200" r="2" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="4.2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="570" cy="200" r="2" fill="#00FFFF" filter="url(#cyanGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="4.4s" repeatCount="indefinite" />
+    </circle>
+  </g>
+  
+  <!-- Small decorative nodes along paths (purple bottom) -->
+  <g>
+    <circle cx="270" cy="630" r="2" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="320" cy="660" r="2" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3.2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="370" cy="680" r="2" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3.4s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="430" cy="680" r="2" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3.6s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="480" cy="660" r="2" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3.8s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="530" cy="630" r="2" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="4s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="230" cy="600" r="2" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="4.2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="570" cy="600" r="2" fill="#FF00FF" filter="url(#purpleGlow)" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="4.4s" repeatCount="indefinite" />
+    </circle>
+  </g>
+</svg> 

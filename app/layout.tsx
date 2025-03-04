@@ -37,12 +37,25 @@ export default function RootLayout({
         <Analytics />
       </head>
       <body
-        className={`${montserrat.variable} font-montserrat antialiased min-h-screen flex flex-col`}
+        className={`${montserrat.variable} font-montserrat antialiased min-h-screen flex flex-col bg-background`}
       >
+        {/* Background elements */}
+        <div className="fixed inset-0 dot-pattern opacity-10 pointer-events-none z-0"></div>
+
+        {/* Gradient orbs */}
+        <div className="fixed top-0 left-1/4 w-[500px] h-[500px] orb -translate-x-1/2 -translate-y-1/2 z-0"></div>
+        <div className="fixed bottom-0 right-1/4 w-[600px] h-[600px] orb translate-x-1/3 translate-y-1/3 z-0"></div>
+
+        {/* Radial gradient overlay */}
+        <div className="fixed inset-0 bg-gradient-radial from-transparent to-background z-0"></div>
+
+        {/* Content */}
         <Providers>
-          <Navbar />
-          <main className="flex-grow pt-20">{children}</main>
-          <Footer />
+          <div className="relative z-10 flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-grow pt-16">{children}</main>
+            <Footer />
+          </div>
         </Providers>
       </body>
     </html>

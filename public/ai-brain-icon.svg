@@ -1,0 +1,46 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Glow effect -->
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="8" result="blur" />
+    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+  </filter>
+  
+  <!-- Brain outline with glow -->
+  <path d="M100 40C70 40 50 60 50 90C50 110 60 120 70 130C80 140 90 150 100 150C110 150 120 140 130 130C140 120 150 110 150 90C150 60 130 40 100 40Z" 
+        stroke="#8A5CF6" stroke-width="2" fill="url(#brain-gradient)" filter="url(#glow)" />
+  
+  <!-- Circuit patterns -->
+  <path d="M70 90H90M110 90H130M100 60V80M80 110H120M90 130H110" 
+        stroke="#C4B5FD" stroke-width="2" stroke-linecap="round" />
+  
+  <!-- Connection nodes -->
+  <circle cx="70" cy="90" r="3" fill="#8A5CF6" />
+  <circle cx="90" cy="90" r="3" fill="#8A5CF6" />
+  <circle cx="110" cy="90" r="3" fill="#8A5CF6" />
+  <circle cx="130" cy="90" r="3" fill="#8A5CF6" />
+  <circle cx="100" cy="60" r="3" fill="#8A5CF6" />
+  <circle cx="100" cy="80" r="3" fill="#8A5CF6" />
+  <circle cx="80" cy="110" r="3" fill="#8A5CF6" />
+  <circle cx="120" cy="110" r="3" fill="#8A5CF6" />
+  <circle cx="90" cy="130" r="3" fill="#8A5CF6" />
+  <circle cx="110" cy="130" r="3" fill="#8A5CF6" />
+  
+  <!-- Pulse animation -->
+  <circle cx="100" cy="100" r="30" fill="url(#pulse-gradient)" opacity="0.3">
+    <animate attributeName="r" values="30;40;30" dur="2s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.3;0.1;0.3" dur="2s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Gradients -->
+  <defs>
+    <linearGradient id="brain-gradient" x1="50" y1="40" x2="150" y2="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#A78BFA" stop-opacity="0.1" />
+      <stop offset="50%" stop-color="#8A5CF6" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0.1" />
+    </linearGradient>
+    <radialGradient id="pulse-gradient" cx="100" cy="100" r="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8A5CF6" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#8A5CF6" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+</svg> 
