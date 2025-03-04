@@ -13,13 +13,11 @@ import {
 } from "@/components/motion";
 
 // Flag to control visibility of trading cards
-const SHOW_TRADING_CARDS = true;
+const SHOW_TRADING_CARDS = false;
 
 export default function Home() {
-  const pumpfunUrl =
-    "https://pump.fun/coin/CWCWYMjdUtzG7irTaor4hraen3FtaM3xDSBNfprbXzVm";
-  const dexscreenerUrl =
-    "https://dexscreener.com/solana/CWCWYMjdUtzG7irTaor4hraen3FtaM3xDSBNfprbXzVm";
+  const pumpfunUrl = "https://pump.fun/coin/";
+  const dexscreenerUrl = "https://dexscreener.com/solana/";
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -91,8 +89,8 @@ export default function Home() {
             <div className="absolute top-20 right-20 opacity-80">
               <div className="relative w-64 h-64 glow">
                 <Image
-                  src="/cube-icon.svg"
-                  alt="Cube Icon"
+                  src="/ai-brain.svg"
+                  alt="AI Brain"
                   width={256}
                   height={256}
                   className="animate-float w-full h-full"
@@ -100,23 +98,23 @@ export default function Home() {
               </div>
             </div>
             <div className="absolute top-60 right-60 opacity-60">
-              <div className="relative w-16 h-16 glow">
+              <div className="relative w-24 h-24 glow">
                 <Image
-                  src="/coin-icon.svg"
-                  alt="Coin Icon"
-                  width={64}
-                  height={64}
+                  src="/neural-node.svg"
+                  alt="Neural Node"
+                  width={96}
+                  height={96}
                   className="animate-float-slow w-full h-full"
                 />
               </div>
             </div>
             <div className="absolute top-80 right-40 opacity-70">
-              <div className="relative w-24 h-24 glow">
+              <div className="relative w-32 h-32 glow">
                 <Image
-                  src="/coin-icon.svg"
-                  alt="Coin Icon"
-                  width={96}
-                  height={96}
+                  src="/neural-connection.svg"
+                  alt="Neural Connection"
+                  width={128}
+                  height={128}
                   className="animate-float-reverse w-full h-full"
                 />
               </div>

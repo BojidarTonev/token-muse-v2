@@ -1,0 +1,42 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <linearGradient id="brainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8A2BE2" />
+      <stop offset="100%" stop-color="#4169E1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Glow effect -->
+  <ellipse cx="128" cy="128" rx="100" ry="90" fill="#8A2BE2" opacity="0.2" filter="url(#glow)" />
+  
+  <!-- Brain outline -->
+  <path d="M128 60C94.9 60 68 86.9 68 120C68 153.1 94.9 180 128 180C161.1 180 188 153.1 188 120C188 86.9 161.1 60 128 60Z" stroke="url(#brainGradient)" stroke-width="3" fill="none" />
+  
+  <!-- Brain connections -->
+  <path d="M88 100C88 100 108 80 128 80C148 80 168 100 168 100" stroke="url(#brainGradient)" stroke-width="2" fill="none" />
+  <path d="M88 140C88 140 108 160 128 160C148 160 168 140 168 140" stroke="url(#brainGradient)" stroke-width="2" fill="none" />
+  <path d="M98 120H158" stroke="url(#brainGradient)" stroke-width="2" fill="none" />
+  
+  <!-- Neural network nodes -->
+  <circle cx="88" cy="100" r="5" fill="url(#brainGradient)" />
+  <circle cx="168" cy="100" r="5" fill="url(#brainGradient)" />
+  <circle cx="88" cy="140" r="5" fill="url(#brainGradient)" />
+  <circle cx="168" cy="140" r="5" fill="url(#brainGradient)" />
+  <circle cx="98" cy="120" r="5" fill="url(#brainGradient)" />
+  <circle cx="158" cy="120" r="5" fill="url(#brainGradient)" />
+  <circle cx="128" cy="80" r="5" fill="url(#brainGradient)" />
+  <circle cx="128" cy="160" r="5" fill="url(#brainGradient)" />
+  <circle cx="128" cy="120" r="8" fill="url(#brainGradient)" />
+  
+  <!-- Neural connections -->
+  <path d="M88 100L128 80L168 100" stroke="url(#brainGradient)" stroke-width="1.5" fill="none" />
+  <path d="M88 140L128 160L168 140" stroke="url(#brainGradient)" stroke-width="1.5" fill="none" />
+  <path d="M88 100L98 120L88 140" stroke="url(#brainGradient)" stroke-width="1.5" fill="none" />
+  <path d="M168 100L158 120L168 140" stroke="url(#brainGradient)" stroke-width="1.5" fill="none" />
+  <path d="M128 80L128 120L128 160" stroke="url(#brainGradient)" stroke-width="1.5" fill="none" />
+  <path d="M98 120L128 120L158 120" stroke="url(#brainGradient)" stroke-width="1.5" fill="none" />
+</svg> 

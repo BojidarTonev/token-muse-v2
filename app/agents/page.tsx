@@ -13,6 +13,7 @@ import {
 import { Agent } from "@/lib/supabase";
 import { useAppSelector } from "@/redux/store";
 import { fetchWithPublicKey } from "@/lib/api-utils";
+import Image from "next/image";
 
 type AgentTab = "my-agents" | "all-agents";
 
@@ -214,9 +215,11 @@ export default function AgentsPage() {
               <div className="feature-card group cursor-pointer h-full hover:border-primary/50 transition-colors">
                 <div className="relative w-full h-48 mb-4 rounded-md overflow-hidden bg-background/50">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <img
+                    <Image
                       src={`/agent-${(agent.type || "text").toLowerCase()}.svg`}
                       alt={agent.name || "AI Agent"}
+                      width={96}
+                      height={96}
                       className="w-24 h-24 object-contain transition-transform duration-300 group-hover:scale-110"
                       onError={(e) => {
                         // Fallback to a default image if the specified one fails to load

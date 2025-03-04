@@ -1,0 +1,78 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="timelineGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <linearGradient id="timelineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8A2BE2" />
+      <stop offset="100%" stop-color="#00BFFF" />
+    </linearGradient>
+    <linearGradient id="nodeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF00FF" />
+      <stop offset="100%" stop-color="#4169E1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background glow -->
+  <rect x="48" y="48" width="160" height="160" rx="16" fill="#8A2BE2" opacity="0.1" filter="url(#timelineGlow)" />
+  
+  <!-- Central timeline line -->
+  <line x1="128" y1="48" x2="128" y2="208" stroke="url(#timelineGradient)" stroke-width="2" stroke-dasharray="4 2" />
+  
+  <!-- Timeline nodes -->
+  <circle cx="128" cy="80" r="12" fill="url(#nodeGradient)" opacity="0.8" />
+  <circle cx="128" cy="128" r="12" fill="url(#nodeGradient)" opacity="0.8" />
+  <circle cx="128" cy="176" r="12" fill="url(#nodeGradient)" opacity="0.8" />
+  
+  <!-- Node inner circles -->
+  <circle cx="128" cy="80" r="6" fill="white" opacity="0.6" />
+  <circle cx="128" cy="128" r="6" fill="white" opacity="0.6" />
+  <circle cx="128" cy="176" r="6" fill="white" opacity="0.6" />
+  
+  <!-- Timeline labels -->
+  <rect x="148" y="70" width="60" height="20" rx="4" stroke="url(#timelineGradient)" stroke-width="1.5" fill="none" />
+  <text x="178" y="84" font-family="Arial" font-size="10" fill="url(#timelineGradient)" text-anchor="middle">Q4 2024</text>
+  
+  <rect x="148" y="118" width="60" height="20" rx="4" stroke="url(#timelineGradient)" stroke-width="1.5" fill="none" />
+  <text x="178" y="132" font-family="Arial" font-size="10" fill="url(#timelineGradient)" text-anchor="middle">Q1 2025</text>
+  
+  <rect x="148" y="166" width="60" height="20" rx="4" stroke="url(#timelineGradient)" stroke-width="1.5" fill="none" />
+  <text x="178" y="180" font-family="Arial" font-size="10" fill="url(#timelineGradient)" text-anchor="middle">Q2 2025</text>
+  
+  <!-- Connection lines -->
+  <line x1="140" y1="80" x2="148" y2="80" stroke="url(#timelineGradient)" stroke-width="1.5" />
+  <line x1="140" y1="128" x2="148" y2="128" stroke="url(#timelineGradient)" stroke-width="1.5" />
+  <line x1="140" y1="176" x2="148" y2="176" stroke="url(#timelineGradient)" stroke-width="1.5" />
+  
+  <!-- AI elements on left side -->
+  <rect x="48" y="70" width="60" height="20" rx="4" stroke="url(#nodeGradient)" stroke-width="1.5" fill="none" />
+  <text x="78" y="84" font-family="Arial" font-size="8" fill="url(#nodeGradient)" text-anchor="middle">SMART CONTRACTS</text>
+  
+  <rect x="48" y="118" width="60" height="20" rx="4" stroke="url(#nodeGradient)" stroke-width="1.5" fill="none" />
+  <text x="78" y="132" font-family="Arial" font-size="8" fill="url(#nodeGradient)" text-anchor="middle">AI GOVERNANCE</text>
+  
+  <rect x="48" y="166" width="60" height="20" rx="4" stroke="url(#nodeGradient)" stroke-width="1.5" fill="none" />
+  <text x="78" y="180" font-family="Arial" font-size="8" fill="url(#nodeGradient)" text-anchor="middle">FULL DAO LAUNCH</text>
+  
+  <!-- Connection lines -->
+  <line x1="108" y1="80" x2="116" y2="80" stroke="url(#nodeGradient)" stroke-width="1.5" />
+  <line x1="108" y1="128" x2="116" y2="128" stroke="url(#nodeGradient)" stroke-width="1.5" />
+  <line x1="108" y1="176" x2="116" y2="176" stroke="url(#nodeGradient)" stroke-width="1.5" />
+  
+  <!-- Animated pulse effects -->
+  <circle cx="128" cy="80" r="16" stroke="url(#nodeGradient)" stroke-width="1" fill="none">
+    <animate attributeName="r" values="12;20;12" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.8;0;0.8" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <circle cx="128" cy="128" r="16" stroke="url(#nodeGradient)" stroke-width="1" fill="none">
+    <animate attributeName="r" values="12;20;12" dur="3s" repeatCount="indefinite" begin="1s" />
+    <animate attributeName="opacity" values="0.8;0;0.8" dur="3s" repeatCount="indefinite" begin="1s" />
+  </circle>
+  
+  <circle cx="128" cy="176" r="16" stroke="url(#nodeGradient)" stroke-width="1" fill="none">
+    <animate attributeName="r" values="12;20;12" dur="3s" repeatCount="indefinite" begin="2s" />
+    <animate attributeName="opacity" values="0.8;0;0.8" dur="3s" repeatCount="indefinite" begin="2s" />
+  </circle>
+</svg> 

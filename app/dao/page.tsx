@@ -147,13 +147,13 @@ export default function DAOPage() {
                   <div className="md:w-1/3 flex items-center justify-center">
                     <div className="relative w-48 h-48">
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-32 h-32 rounded-full bg-primary/20 flex items-center justify-center animate-pulse-slow">
-                          <div className="w-24 h-24 rounded-full bg-primary/30 flex items-center justify-center">
-                            <div className="w-16 h-16 rounded-full bg-primary/40 flex items-center justify-center">
-                              <Vote className="w-8 h-8 text-primary" />
-                            </div>
-                          </div>
-                        </div>
+                        <Image
+                          src="/ai-timeline.svg"
+                          alt="DAO Timeline"
+                          width={192}
+                          height={192}
+                          className="w-full h-full animate-pulse-slow"
+                        />
                       </div>
                     </div>
                   </div>
@@ -221,7 +221,7 @@ export default function DAOPage() {
                 <div className="relative">
                   <div className="relative w-full h-48 md:h-64 glow">
                     <Image
-                      src="/token-icon.svg"
+                      src="/ai-governance.svg"
                       alt="DAO Governance"
                       fill
                       className="object-contain animate-float"
@@ -301,9 +301,36 @@ export default function DAOPage() {
             </StaggerContainer>
           </section>
 
-          {/* Active Proposals - Preview */}
-          <ScrollReveal animation="fadeIn" delay={0.2}>
-            <section className="mb-12">
+          {/* Active Proposals */}
+          <section className="mb-12">
+            <ScrollReveal animation="fadeIn">
+              <h2 className="text-2xl font-bold mb-6 text-center">
+                Active Proposals
+              </h2>
+
+              <div className="flex flex-col md:flex-row gap-8 items-center mb-8">
+                <div className="md:w-1/3">
+                  <div className="relative w-64 h-64">
+                    <Image
+                      src="/ai-proposal.svg"
+                      alt="AI Proposal System"
+                      width={256}
+                      height={256}
+                      className="w-full h-full"
+                    />
+                  </div>
+                </div>
+
+                <div className="md:w-2/3">
+                  <p className="text-foreground/70 mb-6">
+                    The following proposals showcase examples of the types of
+                    decisions that will be voted on by the DAO. AI-assisted
+                    proposal analysis will help token holders make informed
+                    decisions.
+                  </p>
+                </div>
+              </div>
+
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold">
                   Preview: Active Proposals
@@ -398,8 +425,8 @@ export default function DAOPage() {
                   </Button>
                 </div>
               </AnimatedElement>
-            </section>
-          </ScrollReveal>
+            </ScrollReveal>
+          </section>
 
           {/* DAO Stats - Preview */}
           <ScrollReveal animation="fadeIn" delay={0.3}>

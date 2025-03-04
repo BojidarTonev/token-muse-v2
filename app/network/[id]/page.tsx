@@ -529,7 +529,7 @@ export default function NetworkDetailsPage() {
                           Code
                         </div>
                         <div className="px-2 py-1 bg-background/50 rounded-md text-xs flex items-center gap-1">
-                          <Image className="w-3 h-3" />
+                          <Image className="w-3 h-3" aria-label="Image icon" />
                           Images
                         </div>
                         <div className="px-2 py-1 bg-background/50 rounded-md text-xs flex items-center gap-1">

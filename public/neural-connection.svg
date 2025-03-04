@@ -1,0 +1,46 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="connectionGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4169E1" />
+      <stop offset="100%" stop-color="#00FFFF" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Glow effect -->
+  <ellipse cx="64" cy="64" r="40" fill="#4169E1" opacity="0.15" filter="url(#connectionGlow)" />
+  
+  <!-- Connection lines -->
+  <path d="M24 44C24 44 44 24 64 24C84 24 104 44 104 44" stroke="url(#connectionGradient)" stroke-width="2" fill="none" />
+  <path d="M24 84C24 84 44 104 64 104C84 104 104 84 104 84" stroke="url(#connectionGradient)" stroke-width="2" fill="none" />
+  <path d="M24 44L24 84" stroke="url(#connectionGradient)" stroke-width="2" fill="none" />
+  <path d="M104 44L104 84" stroke="url(#connectionGradient)" stroke-width="2" fill="none" />
+  <path d="M64 24L64 104" stroke="url(#connectionGradient)" stroke-width="2" fill="none" />
+  
+  <!-- Connection nodes -->
+  <circle cx="24" cy="44" r="6" fill="url(#connectionGradient)" />
+  <circle cx="24" cy="84" r="6" fill="url(#connectionGradient)" />
+  <circle cx="104" cy="44" r="6" fill="url(#connectionGradient)" />
+  <circle cx="104" cy="84" r="6" fill="url(#connectionGradient)" />
+  <circle cx="64" cy="24" r="6" fill="url(#connectionGradient)" />
+  <circle cx="64" cy="104" r="6" fill="url(#connectionGradient)" />
+  
+  <!-- Data flow animation -->
+  <circle cx="44" cy="34" r="3" fill="white" opacity="0.8">
+    <animate attributeName="cx" from="24" to="64" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="cy" from="44" to="24" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <circle cx="84" cy="34" r="3" fill="white" opacity="0.8">
+    <animate attributeName="cx" from="64" to="104" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="cy" from="24" to="44" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <circle cx="44" cy="94" r="3" fill="white" opacity="0.8">
+    <animate attributeName="cx" from="24" to="64" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="cy" from="84" to="104" dur="3s" repeatCount="indefinite" />
+  </circle>
+</svg> 
