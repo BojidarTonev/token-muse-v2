@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { motion, useInView } from 'framer-motion';
-import { ReactNode, useRef } from 'react';
-import { useAnimationPreference } from '@/hooks/useAnimationPreference';
+import { motion, useInView } from "framer-motion";
+import { ReactNode, useRef } from "react";
+import { useAnimationPreference } from "@/hooks/useAnimationPreference";
 
-type AnimationType = 'fadeIn' | 'slideUp' | 'slideRight' | 'scale' | 'bounce';
+type AnimationType = "fadeIn" | "slideUp" | "slideRight" | "scale" | "bounce";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -17,18 +17,19 @@ interface ScrollRevealProps {
 
 export const ScrollReveal = ({
   children,
-  animation = 'fadeIn',
+  animation = "fadeIn",
   delay = 0,
   duration = 0.5,
   threshold = 0.1,
-  className = '',
+  className = "",
 }: ScrollRevealProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: threshold });
-  const { animationsEnabled, reducedMotion } = useAnimationPreference();
+  const { animationsEnabled, reducedMotion, isMounted } =
+    useAnimationPreference();
 
-  // If animations are disabled, render children directly
-  if (!animationsEnabled) {
+  // If not mounted yet or animations are disabled, render children directly
+  if (!isMounted || !animationsEnabled) {
     return <div className={className}>{children}</div>;
   }
 
@@ -40,62 +41,62 @@ export const ScrollReveal = ({
   const standardVariants = {
     fadeIn: {
       hidden: { opacity: 0 },
-      visible: { 
+      visible: {
         opacity: 1,
-        transition: { 
-          duration: adjustedDuration, 
+        transition: {
+          duration: adjustedDuration,
           delay: adjustedDelay,
-          ease: 'easeOut'
-        }
+          ease: "easeOut",
+        },
       },
     },
     slideUp: {
       hidden: { opacity: 0, y: 50 },
-      visible: { 
-        opacity: 1, 
+      visible: {
+        opacity: 1,
         y: 0,
-        transition: { 
-          duration: adjustedDuration, 
+        transition: {
+          duration: adjustedDuration,
           delay: adjustedDelay,
-          ease: 'easeOut'
-        }
+          ease: "easeOut",
+        },
       },
     },
     slideRight: {
       hidden: { opacity: 0, x: -50 },
-      visible: { 
-        opacity: 1, 
+      visible: {
+        opacity: 1,
         x: 0,
-        transition: { 
-          duration: adjustedDuration, 
+        transition: {
+          duration: adjustedDuration,
           delay: adjustedDelay,
-          ease: 'easeOut'
-        }
+          ease: "easeOut",
+        },
       },
     },
     scale: {
       hidden: { opacity: 0, scale: 0.8 },
-      visible: { 
-        opacity: 1, 
+      visible: {
+        opacity: 1,
         scale: 1,
-        transition: { 
-          duration: adjustedDuration, 
+        transition: {
+          duration: adjustedDuration,
           delay: adjustedDelay,
-          ease: 'easeOut'
-        }
+          ease: "easeOut",
+        },
       },
     },
     bounce: {
       hidden: { opacity: 0, y: 50 },
-      visible: { 
-        opacity: 1, 
+      visible: {
+        opacity: 1,
         y: 0,
-        transition: { 
-          type: 'spring',
+        transition: {
+          type: "spring",
           stiffness: 300,
           damping: 15,
           delay: adjustedDelay,
-        }
+        },
       },
     },
   };
@@ -104,61 +105,61 @@ export const ScrollReveal = ({
   const reducedMotionVariants = {
     fadeIn: {
       hidden: { opacity: 0 },
-      visible: { 
+      visible: {
         opacity: 1,
-        transition: { 
-          duration: adjustedDuration, 
+        transition: {
+          duration: adjustedDuration,
           delay: adjustedDelay,
-          ease: 'easeOut'
-        }
+          ease: "easeOut",
+        },
       },
     },
     slideUp: {
       hidden: { opacity: 0, y: 10 },
-      visible: { 
-        opacity: 1, 
+      visible: {
+        opacity: 1,
         y: 0,
-        transition: { 
-          duration: adjustedDuration, 
+        transition: {
+          duration: adjustedDuration,
           delay: adjustedDelay,
-          ease: 'easeOut'
-        }
+          ease: "easeOut",
+        },
       },
     },
     slideRight: {
       hidden: { opacity: 0, x: -10 },
-      visible: { 
-        opacity: 1, 
+      visible: {
+        opacity: 1,
         x: 0,
-        transition: { 
-          duration: adjustedDuration, 
+        transition: {
+          duration: adjustedDuration,
           delay: adjustedDelay,
-          ease: 'easeOut'
-        }
+          ease: "easeOut",
+        },
       },
     },
     scale: {
       hidden: { opacity: 0, scale: 0.95 },
-      visible: { 
-        opacity: 1, 
+      visible: {
+        opacity: 1,
         scale: 1,
-        transition: { 
-          duration: adjustedDuration, 
+        transition: {
+          duration: adjustedDuration,
           delay: adjustedDelay,
-          ease: 'easeOut'
-        }
+          ease: "easeOut",
+        },
       },
     },
     bounce: {
       hidden: { opacity: 0, y: 10 },
-      visible: { 
-        opacity: 1, 
+      visible: {
+        opacity: 1,
         y: 0,
-        transition: { 
-          duration: adjustedDuration, 
+        transition: {
+          duration: adjustedDuration,
           delay: adjustedDelay,
-          ease: 'easeOut'
-        }
+          ease: "easeOut",
+        },
       },
     },
   };
@@ -177,4 +178,4 @@ export const ScrollReveal = ({
       {children}
     </motion.div>
   );
-}; 
+};

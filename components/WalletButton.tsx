@@ -9,6 +9,7 @@ import {
   clearAuthentication,
 } from "@/redux/features/app-state-slice";
 import { toast } from "sonner";
+import { connectAndAuthenticate, disconnectAndLogout } from "@/lib/auth";
 
 interface WalletButtonProps {
   showText?: boolean;
@@ -19,14 +20,22 @@ export const WalletButton = ({ showText = true }: WalletButtonProps) => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [hasCopied, setHasCopied] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const dispatch = useAppDispatch();
   const { isAuthenticated, publicKey } = useAppSelector(
     (state) => state.appState
   );
 
+  // Set mounted state on client
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   // Check if Phantom wallet is installed
   useEffect(() => {
+    if (!isMounted) return;
+
     const checkPhantomWallet = () => {
       const isPhantom =
         typeof window !== "undefined" &&
@@ -38,7 +47,7 @@ export const WalletButton = ({ showText = true }: WalletButtonProps) => {
     checkPhantomWallet();
     window.addEventListener("load", checkPhantomWallet);
     return () => window.removeEventListener("load", checkPhantomWallet);
-  }, []);
+  }, [isMounted]);
 
   // Handle wallet connection
   const connectWallet = async () => {
@@ -49,14 +58,16 @@ export const WalletButton = ({ showText = true }: WalletButtonProps) => {
       }
 
       setIsConnecting(true);
-      if (window.solana) {
-        const resp = await window.solana.connect();
-        const walletPublicKey = resp.publicKey.toString();
 
+      // Use the connectAndAuthenticate function from lib/auth.ts
+      const result = await connectAndAuthenticate();
+
+      if (result && result.publicKey) {
         // Set wallet info in Redux store
-        dispatch(setAuthenticated({ publicKey: walletPublicKey }));
-
+        dispatch(setAuthenticated({ publicKey: result.publicKey }));
         toast.success("Wallet connected successfully!");
+      } else {
+        throw new Error("Failed to authenticate with wallet");
       }
     } catch (error) {
       console.error("Error connecting wallet:", error);
@@ -69,11 +80,15 @@ export const WalletButton = ({ showText = true }: WalletButtonProps) => {
   // Handle wallet disconnection
   const disconnectWallet = async () => {
     try {
-      if (window.solana) {
-        await window.solana.disconnect();
+      // Use the disconnectAndLogout function from lib/auth.ts
+      const success = await disconnectAndLogout();
+
+      if (success) {
         dispatch(clearAuthentication());
         setIsDropdownOpen(false);
         toast.success("Wallet disconnected successfully!");
+      } else {
+        throw new Error("Failed to disconnect wallet");
       }
     } catch (error) {
       console.error("Error disconnecting wallet:", error);
@@ -105,6 +120,8 @@ export const WalletButton = ({ showText = true }: WalletButtonProps) => {
 
   // Close dropdown when clicking outside
   useEffect(() => {
+    if (!isMounted) return;
+
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       if (
@@ -120,7 +137,24 @@ export const WalletButton = ({ showText = true }: WalletButtonProps) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isDropdownOpen]);
+  }, [isDropdownOpen, isMounted]);
+
+  // Don't render anything on the server
+  if (!isMounted) {
+    return (
+      <Button
+        variant="outline"
+        size="sm"
+        className="px-3 py-2 h-auto rounded-lg border-white/10 bg-white/5 backdrop-blur-xl"
+        disabled
+      >
+        <div className="flex items-center gap-2">
+          <Wallet className="w-4 h-4" />
+          {showText && <span>Loading...</span>}
+        </div>
+      </Button>
+    );
+  }
 
   return (
     <div className="relative">

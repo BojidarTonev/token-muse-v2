@@ -94,11 +94,17 @@ export default function NetworkPage() {
   const [userNetworks, setUserNetworks] = useState<Network[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Get authentication state from Redux
   const auth = useAppSelector((state) => state.appState);
   const isAuthenticated = auth?.isAuthenticated;
   const publicKey = auth?.publicKey;
+
+  // Set mounted state on client
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Function to fetch user networks - wrapped in useCallback
   const fetchUserNetworks = useCallback(async () => {
@@ -130,10 +136,51 @@ export default function NetworkPage() {
 
   // Fetch user networks when in "My Networks" mode
   useEffect(() => {
-    if (viewMode === "my" && isAuthenticated && publicKey) {
+    if (isMounted && viewMode === "my" && isAuthenticated && publicKey) {
       fetchUserNetworks();
     }
-  }, [viewMode, isAuthenticated, publicKey, fetchUserNetworks]);
+  }, [viewMode, isAuthenticated, publicKey, fetchUserNetworks, isMounted]);
+
+  // Don't render anything on the server or until client-side hydration is complete
+  if (!isMounted) {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <Navbar />
+        <main className="pt-24 pb-16 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-center items-center text-center md:items-center mb-6">
+            <div>
+              <div className="mb-4">
+                <h1 className="text-3xl font-bold">Agent Networks</h1>
+              </div>
+              <p className="text-foreground/70 max-w-xl">
+                Connect multiple AI agents into collaborative networks to tackle
+                complex creative and problem-solving tasks.
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-center mb-8">
+            <div className="bg-background/50 border border-border rounded-full p-1 flex">
+              <button
+                className="px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer"
+                disabled
+              >
+                Information
+              </button>
+              <button
+                className="px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer"
+                disabled
+              >
+                My Networks
+              </button>
+            </div>
+          </div>
+          <div className="h-64 flex items-center justify-center">
+            <p className="text-foreground/50">Loading...</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">

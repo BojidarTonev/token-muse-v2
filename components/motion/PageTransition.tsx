@@ -1,31 +1,32 @@
-'use client';
+"use client";
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { ReactNode, useId } from 'react';
-import { useAnimationPreference } from '@/hooks/useAnimationPreference';
+import { motion, AnimatePresence } from "framer-motion";
+import { ReactNode, useId } from "react";
+import { useAnimationPreference } from "@/hooks/useAnimationPreference";
 
 interface PageTransitionProps {
   children: ReactNode;
 }
 
 export const PageTransition = ({ children }: PageTransitionProps) => {
-  const { animationsEnabled, reducedMotion } = useAnimationPreference();
+  const { animationsEnabled, reducedMotion, isMounted } =
+    useAnimationPreference();
   // Generate a stable ID for the key
   const contentId = useId();
 
-  // If animations are disabled, render children directly
-  if (!animationsEnabled) {
+  // If not mounted yet or animations are disabled, render children directly
+  if (!isMounted || !animationsEnabled) {
     return <>{children}</>;
   }
 
   // Define transition settings based on reduced motion preference
   const transition = reducedMotion
     ? {
-        type: 'tween',
+        type: "tween",
         duration: 0.2,
       }
     : {
-        type: 'spring',
+        type: "spring",
         stiffness: 260,
         damping: 20,
         duration: 0.3,
@@ -45,4 +46,4 @@ export const PageTransition = ({ children }: PageTransitionProps) => {
       </motion.div>
     </AnimatePresence>
   );
-}; 
+};

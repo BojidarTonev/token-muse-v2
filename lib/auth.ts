@@ -4,9 +4,14 @@ import { connectWallet, disconnectWallet, signMessage } from './wallet';
 const TOKEN_KEY = 'agent_mint_auth_token';
 const PUBLIC_KEY = 'agent_mint_public_key';
 
+// Check if code is running in browser
+const isBrowser = typeof window !== 'undefined';
+
 // Connect to wallet and authenticate with backend
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const connectAndAuthenticate = async (): Promise<{ user: any; publicKey: string } | null> => {
+  if (!isBrowser) return null;
+  
   try {
     // Connect to wallet
     const publicKey = await connectWallet();
@@ -63,6 +68,8 @@ export const connectAndAuthenticate = async (): Promise<{ user: any; publicKey: 
 
 // Disconnect from wallet and clear auth data
 export const disconnectAndLogout = async (): Promise<boolean> => {
+  if (!isBrowser) return false;
+  
   try {
     // Disconnect from wallet
     await disconnectWallet();
@@ -80,7 +87,7 @@ export const disconnectAndLogout = async (): Promise<boolean> => {
 
 // Check if user is authenticated
 export const isAuthenticated = (): boolean => {
-  if (typeof window === 'undefined') {
+  if (!isBrowser) {
     return false;
   }
   
@@ -89,7 +96,7 @@ export const isAuthenticated = (): boolean => {
 
 // Get the stored auth token
 export const getAuthToken = (): string | null => {
-  if (typeof window === 'undefined') {
+  if (!isBrowser) {
     return null;
   }
   
@@ -98,7 +105,7 @@ export const getAuthToken = (): string | null => {
 
 // Get the stored public key
 export const getPublicKey = (): string | null => {
-  if (typeof window === 'undefined') {
+  if (!isBrowser) {
     return null;
   }
   

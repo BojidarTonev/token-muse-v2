@@ -1,5 +1,8 @@
 import { PublicKey } from '@solana/web3.js';
 
+// Check if code is running in browser
+const isBrowser = typeof window !== 'undefined';
+
 // Define the Phantom provider interface
 interface PhantomProvider {
   connect: () => Promise<{ publicKey: PublicKey }>;
@@ -12,7 +15,7 @@ interface PhantomProvider {
 
 // Get the Phantom provider from the window object
 export const getProvider = (): PhantomProvider | null => {
-  if (typeof window !== 'undefined') {
+  if (isBrowser) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const provider = (window as any).solana;
     if (provider?.isPhantom) {
@@ -29,6 +32,8 @@ export const isPhantomInstalled = (): boolean => {
 
 // Connect to Phantom wallet
 export const connectWallet = async (): Promise<string | null> => {
+  if (!isBrowser) return null;
+  
   try {
     const provider = getProvider();
     
@@ -48,6 +53,8 @@ export const connectWallet = async (): Promise<string | null> => {
 
 // Disconnect from Phantom wallet
 export const disconnectWallet = async (): Promise<boolean> => {
+  if (!isBrowser) return false;
+  
   try {
     const provider = getProvider();
     
@@ -65,6 +72,8 @@ export const disconnectWallet = async (): Promise<boolean> => {
 
 // Sign a message with Phantom wallet
 export const signMessage = async (message: string): Promise<{ signature: string } | null> => {
+  if (!isBrowser) return null;
+  
   try {
     const provider = getProvider();
     

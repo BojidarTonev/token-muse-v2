@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     }
     
     let user = existingUser;
-    
+    console.log('user', user)
     // If the user doesn't exist, create a new user
     if (!existingUser) {
       const { data: newUser, error: insertError } = await supabase
@@ -44,6 +44,7 @@ export async function POST(request: NextRequest) {
         .select()
         .single();
       
+        console.log('data', newUser)
       if (insertError) {
         console.error('Error creating user:', insertError);
         return NextResponse.json(
